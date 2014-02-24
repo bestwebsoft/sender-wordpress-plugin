@@ -1,0 +1,250 @@
+/**
+ * General elemsnts
+ */
+div #icon-options-general.icon32-bws {
+	background: url("../images/icon_36.png") no-repeat scroll left top transparent;
+	padding-top: 5px;
+}
+
+/**
+ * BWS menu styles
+ */
+a.toplevel_page_mail_send_user,
+a.toplevel_page_bws_plugins{
+	background: url('../images/icon_16.png') no-repeat 5px center transparent;
+}
+#toplevel_page_bws_plugins:hover div.wp-menu-image a{
+	background: url('../images/icon_16_c.png') no-repeat 5px center transparent;
+}
+a.toplevel_page_mail_send_user:hover,
+#toplevel_page_mail_send_user:hover  div.wp-menu-image a{
+	background: url('../images/icon_16_c.png') no-repeat 5px center transparent;
+}
+#toplevel_page_mail_send_user.wp-has-current-submenu .wp-menu-image,
+#toplevel_page_bws_plugins.wp-has-current-submenu .wp-menu-image{
+	background: url('../images/icon_16_c.png') no-repeat 5px center transparent;
+}
+
+#toplevel_page_bws_plugins .wp-submenu .wp-first-item, .cntctfrm_hidden {
+	display:none;
+}
+
+
+/**
+ * Settings page
+ */
+#sndr-mail h3 { 
+	padding-top: 17px; 
+}
+
+#sndr-settings-table tr td,
+#sndr-send-table tr td{
+	padding-left: 8px;
+}
+
+
+.sndr-mail-set{
+	font-size: 25px;
+	font-weight: normal;
+	margin-top: 15px;
+}
+
+.sndr_info {
+	font-size: 10px;
+	color: #888;
+}
+
+#sndr-calculate {
+	color: green;
+	font-weight: bold;
+}
+
+.sndr-preloader {
+	position: absolute;
+	top: 23px;
+	left: -9px;
+	width: 16px;
+	height: 16px;
+	background: url( '../images/preloader.gif' );
+	background-size: 100%;
+}
+
+/**
+ * Mail editor page
+ */
+#sndr-mail-subject {
+	width: 100%;
+}
+#sndr-mail-body {
+	width: 100%;
+	height: 250px;
+}
+
+.sndr-user-roles{
+	width: 100px;
+	float: left;
+}
+
+/**
+ * Report page
+ */
+.wp-list-table {
+	table-layout: auto !important;
+}
+
+.preloader {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	background: url( '../images/preloader.gif' );
+}
+.sndr-inprogress-row th,
+.sndr-inprogress-row td {
+	background: #fefaf7;
+}
+.sndr-inprogress-row .check-column {
+	border-left: 4px solid #d54e21;
+}
+/* table columns */
+
+.column-status {
+	width: 100px;
+	text-align: center;
+}
+.sndr-done-status {
+	color: #006505;
+}
+.sndr-unknown-status {
+	color: red;
+}
+
+.column-subject {
+	position: relative;
+}
+
+.column-subject .row-actions .show_report a,
+.column-subject .row-actions .untrash_report a,
+.column-subject .row-actions .close_report a {
+	color: #006505;
+}
+
+.column-subject .row-actions .show_report a:hover,
+.column-subject .row-actions .untrash_report a:hover,
+.column-subject .row-actions .close_report a:hover {
+	color: green;
+}
+
+.column-subject .row-actions .trash_report a,
+.column-subject .row-actions .delete_report a {
+	color: #a00;
+}
+
+.column-subject .row-actions .trash_report a:hover,
+.column-subject .row-actions .delete_report a:hover {
+	color: red;
+}
+
+.sndr-inprogress-row .check-column input[type="checkbox"] {
+	margin-left: 4px !important;
+}
+
+/* Report list */
+.wp-lidt-table {
+	table-layout: auto !important;
+}
+
+.report {
+	width: 94%;
+	margin: 0 3%;
+}
+
+.sndr_th,
+.report thead th,
+.report tfoot tr td,
+.report tbody tr:first-child td {
+	border-top: 1px solid #e5e5e5;
+}
+
+/* pagination */
+.sndr-pagination {
+	float: right;
+}
+
+.sndr-pagination div {
+	float: left;
+}
+
+.sndr-pagination a,
+.sndr-pagination span {
+	font-size: 24px;
+	line-height: 24px;
+	padding: 0 5px;
+	vertical-align: top;
+}
+
+.total_pages {
+	display: inline-block;
+	padding-top: 3px !important;
+	font-size: 13px !important;
+}
+
+.total-users {
+	text-align: center;
+}
+
+
+@media only screen and ( max-width: 782px ) {
+	input[type="radio"] {
+		margin-bottom: 10px;
+	}
+
+	#sndr-mail-send-table label {
+		float: none;
+		vertical-align: top;
+	}
+
+	.sndr-count {
+		vertical-align: top;
+	}
+
+	.sndr-check-all, 
+	.sndr-role {
+		margin-bottom: 15px !important;
+	}
+}
+
+@media only screen and ( max-width: 600px ) {
+	.column-subject {
+		overflow: visible !important;
+	}
+
+	.column-status {
+		display: none;
+	}
+
+	.sndr-pagination {
+		float: left;
+	}
+
+	.report {
+		display: block;
+		position: relative;
+		left: -60px;
+	}
+	
+}
+
+@media only screen and ( max-width: 450px ) {
+	.sndr-pagination div {
+		float: none;
+	}
+
+	.sndr-pagination .list-per-page {
+		margin: 0 0 10px 42px;
+	}
+
+	.sndr-username {
+		max-width: 120px;
+		word-wrap: break-word;
+	}
+}
