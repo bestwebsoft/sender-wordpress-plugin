@@ -61,6 +61,23 @@ div #icon-options-general.icon32-bws {
 	background-size: 100%;
 }
 
+/*
+ * styles for rate-support div on the settings page
+ */
+.bws-plugin-reviews {
+	background: none repeat scroll 0 0 #BEE1F1;
+	border: 1px solid #70A8C2;
+	border-radius: 3px;
+	max-width: 700px;
+}
+.bws-plugin-reviews-rate {
+	padding: 10px;
+	border-bottom: 1px dashed #70A8C2;
+}
+.bws-plugin-reviews-support {
+	padding: 10px;
+}
+
 /**
  * Mail editor page
  */
@@ -95,40 +112,42 @@ div #icon-options-general.icon32-bws {
 }
 /* table columns */
 
-.column-status {
+.sndr-report-list-page .column-status {
 	width: 100px;
 	text-align: center;
 }
+
 .sndr-done-status {
 	color: #006505;
 }
+
 .sndr-unknown-status {
 	color: red;
 }
 
-.column-subject {
+.sndr-report-list-page .column-subject {
 	position: relative;
 }
 
-.column-subject .row-actions .show_report a,
-.column-subject .row-actions .untrash_report a,
-.column-subject .row-actions .close_report a {
+.sndr-report-list-page .column-subject .row-actions .show_report a,
+.sndr-report-list-page .column-subject .row-actions .untrash_report a,
+.sndr-report-list-page .column-subject .row-actions .close_report a {
 	color: #006505;
 }
 
-.column-subject .row-actions .show_report a:hover,
-.column-subject .row-actions .untrash_report a:hover,
-.column-subject .row-actions .close_report a:hover {
+.sndr-report-list-page .column-subject .row-actions .show_report a:hover,
+.sndr-report-list-page .column-subject .row-actions .untrash_report a:hover,
+.sndr-report-list-page .column-subject .row-actions .close_report a:hover {
 	color: green;
 }
 
-.column-subject .row-actions .trash_report a,
-.column-subject .row-actions .delete_report a {
+.sndr-report-list-page .column-subject .row-actions .trash_report a,
+.sndr-report-list-page .column-subject .row-actions .delete_report a {
 	color: #a00;
 }
 
-.column-subject .row-actions .trash_report a:hover,
-.column-subject .row-actions .delete_report a:hover {
+.sndr-report-list-page .column-subject .row-actions .trash_report a:hover,
+.sndr-report-list-page .column-subject .row-actions .delete_report a:hover {
 	color: red;
 }
 
@@ -198,11 +217,11 @@ div #icon-options-general.icon32-bws {
 }
 
 @media only screen and ( max-width: 600px ) {
-	.column-subject {
+	.sndr-report-list-page .column-subject {
 		overflow: visible !important;
 	}
 
-	.column-status {
+	.sndr-report-list-page .column-status {
 		display: none;
 	}
 

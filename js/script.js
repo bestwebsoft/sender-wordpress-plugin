@@ -79,7 +79,7 @@
 		});
 
 		/**
-		 * 
+		 * Select/deselect neccessary elements
 		 */
 		$( 'select[name="sndr_from_admin_name"]' ).focus( function() {
 			$( '#sndr_select_from_field' ).attr( 'checked', 'checked' );

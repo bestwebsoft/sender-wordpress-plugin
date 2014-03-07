@@ -4,7 +4,7 @@ Donate link: https://www.2checkout.com/checkout/purchase?sid=1430388&quantity=10
 Tags: mail, send mail, email
 Requires at least: 3.1
 Tested up to: 3.8.1
-Stable tag: 0.2
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,7 +78,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 1. the link to the page where the problem occurs
 2. the name of the plugin and its version. If you are using a pro version - your order number.
 3. the version of your WordPress installation
-4. copy and paste into the message your system status report. Please read more here: <a href="http://bestwebsoft.com/wp-content/uploads/manual/wp_plugin/general/System_Status.pdf" target="_blank">System_Status.pdf</a>
+4. copy and paste into the message your system status report. Please read more here: <a href="https://docs.google.com/document/d/1Wi2X8RdRGXk9kMszQy1xItJrpN0ncXgioH935MaBKtc/edit?pli=1" target="_blank">System Status</a>
 
 == Screenshots ==
 
@@ -89,6 +89,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
+= V0.3 - 06.03.2014 =
+* NEW: The possibility to attach a message links in the text to unsubscribe from newsletter ( if Subscriber plugin By BestWebSoft is installed ).
+* Update: Optimized functions register and update the plugin settings.
+
 = V0.2 - 20.02.2014 =
 * Update: Database tables is renamed. 
 * Update: Changed structure of settings page.
@@ -97,6 +101,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW: Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V0.3 =
+The possibility to attach a message links in the text to unsubscribe from newsletter ( if Subscriber plugin By BestWebSoft is installed  ). Optimized functions register and update the plugin settings.
 
 = V0.2 =
 Database tables is renamed.  Changed structure of settings page.
