@@ -4,7 +4,7 @@ Plugin Name: Sender
 Plugin URI: http://bestwebsoft.com/plugin/
 Description: This plugin send mail to registered users.
 Author: BestWebSoft
-Version: 0.3
+Version: 0.4
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -29,16 +29,55 @@ License: GPLv2 or later
 * Add menu and submenu.
 * @return void
 */
-require_once( dirname( __FILE__ ) . '/bws_menu/bws_menu.php' );
 
 if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 	function sndr_admin_default_setup() {
-		global $wp_version;
+		global $wp_version, $bstwbsftwppdtplgns_options, $wpmu, $bstwbsftwppdtplgns_added_menu;
+		$bws_menu_version = '1.2.3';
+		$base = plugin_basename( __FILE__ );
+
+		if ( ! isset( $bstwbsftwppdtplgns_options ) ) {
+			if ( 1 == $wpmu ) {
+				if ( ! get_site_option( 'bstwbsftwppdtplgns_options' ) )
+					add_site_option( 'bstwbsftwppdtplgns_options', array(), '', 'yes' );
+				$bstwbsftwppdtplgns_options = get_site_option( 'bstwbsftwppdtplgns_options' );
+			} else {
+				if ( ! get_option( 'bstwbsftwppdtplgns_options' ) )
+					add_option( 'bstwbsftwppdtplgns_options', array(), '', 'yes' );
+				$bstwbsftwppdtplgns_options = get_option( 'bstwbsftwppdtplgns_options' );
+			}
+		}
+
+		if ( isset( $bstwbsftwppdtplgns_options['bws_menu_version'] ) ) {
+			$bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] = $bws_menu_version;
+			unset( $bstwbsftwppdtplgns_options['bws_menu_version'] );
+			update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
+			require_once( dirname( __FILE__ ) . '/bws_menu/bws_menu.php' );
+		} else if ( ! isset( $bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] ) || $bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] < $bws_menu_version ) {
+			$bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] = $bws_menu_version;
+			update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
+			require_once( dirname( __FILE__ ) . '/bws_menu/bws_menu.php' );
+		} else if ( ! isset( $bstwbsftwppdtplgns_added_menu ) ) {
+			$plugin_with_newer_menu = $base;
+			foreach ( $bstwbsftwppdtplgns_options['bws_menu']['version'] as $key => $value ) {
+				if ( $bws_menu_version < $value && is_plugin_active( $base ) ) {
+					$plugin_with_newer_menu = $key;
+				}
+			}
+			$plugin_with_newer_menu = explode( '/', $plugin_with_newer_menu );
+			$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? basename( WP_CONTENT_DIR ) : 'wp-content';
+			if ( file_exists( ABSPATH . $wp_content_dir . '/plugins/' . $plugin_with_newer_menu[0] . '/bws_menu/bws_menu.php' ) )
+				require_once( ABSPATH . $wp_content_dir . '/plugins/' . $plugin_with_newer_menu[0] . '/bws_menu/bws_menu.php' );
+			else
+				require_once( dirname( __FILE__ ) . '/bws_menu/bws_menu.php' );
+			$bstwbsftwppdtplgns_added_menu = true;			
+		}
+
 		$icon_path    = $wp_version < 3.8 ? plugins_url( "images/plugin_icon_37.png",  __FILE__ ) : plugins_url( "images/plugin_icon_38.png",  __FILE__ );
 		$capabilities = is_multisite() ? 'manage_network_options' : 'manage_options';
 		add_menu_page( 'BWS Plugins', 'BWS Plugins', $capabilities, 'bws_plugins',  'bws_add_menu_render', plugins_url( "images/px.png", __FILE__ ), 1001 );
 		add_submenu_page( 'bws_plugins', __( 'Sender', 'sender'), __( 'Sender', 'sender' ), $capabilities, 'sndr_settings', 'sndr_admin_settings_content' );
-		add_menu_page( __( 'Sender', 'sender' ), __( 'Sender', 'sender' ), $capabilities, 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, 29 );
+		add_menu_page( __( 'Sender', 'sender' ), __( 'Sender', 'sender' ), $capabilities, 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, 32 );
 		$hook = add_submenu_page( 'sndr_send_user', __( 'Reports', 'sender' ), __( 'Reports', 'sender' ), $capabilities, 'view_mail_send', 'sndr_mail_view' );		
 		add_action( "load-$hook", 'sndr_screen_options' );
 	}
@@ -101,6 +140,12 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 
 		$admin_email = get_bloginfo( 'admin_email' );
 		$admin_data  = get_user_by( 'email', $admin_email );
+		if ( ! $admin_data ) {
+			$admin_list  = get_super_admins();
+			$admin_login = $admin_list[0];
+		} else {
+			$admin_login = $admin_data->user_login;
+		}
 
 		$sndr_options_default = array(
 			'plugin_option_version' 	=> $sndr_plugin_info["Version"],
@@ -109,7 +154,7 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 			'sndr_send_count'        	=> 2,
 			//'sndr_confirm'         	=> false,
 			'sndr_select_from_field' 	=> 'admin_name', /* <input type="radio"/> chosen user name or custom  name */
-			'sndr_from_admin_name'   	=> $admin_data->user_login, /* <select> admin list */
+			'sndr_from_admin_name'   	=> $admin_login, /* <select> admin list */
 			'sndr_from_custom_name'  	=> get_bloginfo( 'name' ), /* custom name in field 'From' */
 			'sndr_from_email'        	=> $admin_email,  /* admin email	*/		
 			'sndr_display_options'   	=> false,
@@ -454,7 +499,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 				<?php } ?>
 			</style>
 			<div id="icon-options-general" class="icon32 icon32-bws"></div>
-			<h3 class="sndr-mail-set"><?php echo $title; ?></h3>
+			<h3 class="sndr-mail-set"><?php _e( "Sender Settings", 'sender' ); ?></h3>
 			<div id="sndr-settings-notice" class="updated fade" style="display:none"><p><strong><?php _e( "Notice:", 'sender' ); ?></strong> <?php _e( "The plugin's settings have been changed. In order to save them please don't forget to click the 'Save Changes' button.", 'sender' ); ?></p></div>
 			<div class="updated fade" <?php if( empty( $message ) ) echo "style=\"display:none\""; ?>><p><strong><?php echo $message; ?></strong></p></div>
 			<div class="error" <?php if ( empty( $error ) ) echo "style=\"display:none\""; ?>><p><strong><?php echo $error; ?></strong></p></div>
@@ -1756,8 +1801,8 @@ if ( ! function_exists( 'sndr_send_deactivate' ) ) {
  * Performed at uninstal.
  * @return void
  */
-if ( ! function_exists( 'sndr_send_uninstal' ) ) {
-	function sndr_send_uninstal() {
+if ( ! function_exists( 'sndr_send_uninstall' ) ) {
+	function sndr_send_uninstall() {
 		global $wpdb;
 		wp_clear_scheduled_hook( 'sndr_mail_hook' );
 
@@ -1821,5 +1866,5 @@ add_action( 'wp_ajax_sndr_show_email', 'sndr_get_admin_email' );
 add_filter( 'sndr_subscriber_installed', 'sndr_check_subscriber_install' );
 
 register_deactivation_hook( plugin_basename( __FILE__ ), 'sndr_send_deactivate' );
-register_uninstall_hook( plugin_basename( __FILE__ ), 'sndr_send_uninstal' );
+register_uninstall_hook( plugin_basename( __FILE__ ), 'sndr_send_uninstall' );
 ?>
