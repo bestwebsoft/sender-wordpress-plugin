@@ -1,10 +1,10 @@
 === Sender ===
 Contributors: bestwebsoft
-Donate link: https://www.2checkout.com/checkout/purchase?sid=1430388&quantity=10&product_id=13
-Tags: mail, send mail, email
+Donate link: https://www.2checkout.com/checkout/purchase?sid=1430388&quantity=1&product_id=94
+Tags: bulk mailing, create mailout, email, e-mail, mail, mailout, php, send mail, send mail to administrator, send mail to users, send mail through smtp server, send mail to all users, send mail to categories of users, send mail with php functions, send mail with interval, send multiple messages, sender, sander, sendar, sendr, sender plugin, users, user categories
 Requires at least: 3.1
-Tested up to: 3.8.1
-Stable tag: 0.4
+Tested up to: 3.9.1
+Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,20 +16,26 @@ You can send mails to all users or to certain categories of users.
 To send letters, you can use the php functions such as sending emails, wordpress functions, or send an email through the SMTP server.
 You can also do a bulk mailing for a certain period of time.
 
+http://www.youtube.com/watch?v=kwbkOXrF10M
+
 <a href="http://wordpress.org/plugins/sender/faq/" target="_blank">FAQ</a>
 
 <a href="http://support.bestwebsoft.com" target="_blank">Support</a>
+
+<a href="http://bestwebsoft.com/plugin/sender-pro/?k=f658a48b03f44d5d82ec3cbccba9664b" target="_blank">Upgrade to Pro Version</a>
 
 = Recommended Plugins =
 
 The author of the Sender also recommends the following plugins:
 
+* <a href="http://wordpress.org/plugins/subscriber/">Subscriber</a> - This plugin is an exclusive add-on for the Sender Plugin. This plugin allows your site visitors to subscribe for newsletters, coming from your website.
 * <a href="http://wordpress.org/plugins/updater/">Updater</a> - This plugin updates WordPress core and the plugins to the recent versions. You can also use the auto mode or manual mode for updating and set email notifications.
 There is also a premium version of the plugin <a href="http://bestwebsoft.com/plugin/updater-pro/?k=94d3b6d567ade1cd7a988b80874cdee7">Updater Pro</a> with more useful features available. It can make backup of all your files and database before updating. Also it can forbid some plugins or WordPress Core update.
 
 = Translate =
 
 * Russian (ru_RU)
+* Ukrainian (uk)
 
 If you would like to create your own language pack or update the existing one, you can send <a href="http://codex.wordpress.org/Translating_WordPress" target="_blank">the text of PO and MO files</a> for <a href="http://support.bestwebsoft.com" target="_blank">BestWebSoft</a> and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO files  <a href="http://www.poedit.net/download.php" target="_blank">Poedit</a>.
 
@@ -78,7 +84,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 1. the link to the page where the problem occurs
 2. the name of the plugin and its version. If you are using a pro version - your order number.
 3. the version of your WordPress installation
-4. copy and paste into the message your system status report. Please read more here: <a href="https://docs.google.com/document/d/1Wi2X8RdRGXk9kMszQy1xItJrpN0ncXgioH935MaBKtc/edit?pli=1" target="_blank">System Status</a>
+4. copy and paste into the message your system status report. Please read more here: <a href="https://docs.google.com/document/d/1Wi2X8RdRGXk9kMszQy1xItJrpN0ncXgioH935MaBKtc/edit?pli=1" target="_blank">Instuction on System Status</a>
 
 == Screenshots ==
 
@@ -88,6 +94,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 4. Plugin`s "Report" page with subscribers list. 
 
 == Changelog ==
+
+= V0.5 - 28.05.2014 =
+* Update : We updated all functionality for wordpress 3.9.1.
+* NEW : The Ukrainian language file is added to the plugin.
 
 = V0.4 - 01.04.2014 =
 * Update : Screenshots are updated.
@@ -106,6 +116,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V0.5 =
+We updated all functionality for wordpress 3.9.1. The Ukrainian language file is added to the plugin.
 
 = V0.4 =
 Screenshots are updated. BWS plugins section is updated. Fixed output administrator`s login on settings page.

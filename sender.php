@@ -4,7 +4,7 @@ Plugin Name: Sender
 Plugin URI: http://bestwebsoft.com/plugin/
 Description: This plugin send mail to registered users.
 Author: BestWebSoft
-Version: 0.4
+Version: 0.5
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -33,7 +33,8 @@ License: GPLv2 or later
 if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 	function sndr_admin_default_setup() {
 		global $wp_version, $bstwbsftwppdtplgns_options, $wpmu, $bstwbsftwppdtplgns_added_menu;
-		$bws_menu_version = '1.2.3';
+		$bws_menu_info = get_plugin_data( plugin_dir_path( __FILE__ ) . "bws_menu/bws_menu.php" );
+		$bws_menu_version = $bws_menu_info["Version"];
 		$base = plugin_basename( __FILE__ );
 
 		if ( ! isset( $bstwbsftwppdtplgns_options ) ) {
@@ -80,6 +81,13 @@ if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 		add_menu_page( __( 'Sender', 'sender' ), __( 'Sender', 'sender' ), $capabilities, 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, 32 );
 		$hook = add_submenu_page( 'sndr_send_user', __( 'Reports', 'sender' ), __( 'Reports', 'sender' ), $capabilities, 'view_mail_send', 'sndr_mail_view' );		
 		add_action( "load-$hook", 'sndr_screen_options' );
+
+		/* pro pages */
+		add_submenu_page( 'sndr_send_user', __( 'New Mailout', 'sender' ), __( 'New Mailout', 'sender' ), $capabilities, 'sndrpr_create_mailout', 'sndr_create_mailout' );
+		add_submenu_page( 'sndr_send_user', __( 'Letters', 'sender' ), __( 'Letters', 'sender' ), $capabilities, 'sndrpr_letters_list', 'sndr_letters_list' );
+		add_submenu_page( 'sndr_send_user', __( 'Mailings Lists', 'sender' ), __( 'Mailings Lists', 'sender' ), $capabilities, 'sndrpr_distribution_list', 'sndr_distribution_list' );
+		add_submenu_page( 'sndr_send_user', __( 'Letters Templates', 'sender' ), __( 'Letters Templates', 'sender' ), $capabilities, 'sndrpr_letter_templates', 'sndr_letter_templates' );
+		add_submenu_page( 'sndr_send_user', __( 'Priorities', 'sender' ), __( 'Priorities', 'sender' ), $capabilities, 'sndrpr_priorities', 'sndr_priorities' );
 	}
 }
 
@@ -373,7 +381,7 @@ if ( ! function_exists ( 'sndr_admin_head' ) ) {
  */
 if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 	function sndr_admin_settings_content() {
-		global $wp_version, $wpdb, $wpmu, $sndr_options, $sndr_options_default, $title;
+		global $wp_version, $wpdb, $wpmu, $sndr_options, $sndr_options_default, $title, $sndr_plugin_info;
 		$display_add_options = $message = $error = '';
 
 		if ( empty( $sndr_options ) ) {
@@ -483,9 +491,120 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 				}
 				$message .= __( "Settings saved.", 'sender' );	
 			}			
-		} 
-		?>
-		<div class="sndr-mail" id="sndr-mail">
+		}
+
+		/* GO PRO */
+		if ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) {
+			global $wpmu, $bstwbsftwppdtplgns_options;
+
+			$bws_license_key = ( isset( $_POST['bws_license_key'] ) ) ? trim( $_POST['bws_license_key'] ) : "";
+
+			if ( isset( $_POST['bws_license_submit'] ) && check_admin_referer( plugin_basename( __FILE__ ), 'bws_license_nonce_name' ) ) {
+				if ( '' != $bws_license_key ) { 
+					if ( strlen( $bws_license_key ) != 18 ) {
+						$error = __( "Wrong license key", 'sender' );
+					} else {
+						$bws_license_plugin = trim( $_POST['bws_license_plugin'] );	
+						if ( isset( $bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['count'] ) && $bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['time'] < ( time() + (24 * 60 * 60) ) ) {
+							$bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['count'] = $bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['count'] + 1;
+						} else {
+							$bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['count'] = 1;
+							$bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['time'] = time();
+						}	
+
+						/* download Pro */
+						if ( !function_exists( 'get_plugins' ) )
+							require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+						if ( ! function_exists( 'is_plugin_active_for_network' ) )
+							require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+						$all_plugins = get_plugins();
+						$active_plugins = get_option( 'active_plugins' );
+						
+						if ( ! array_key_exists( $bws_license_plugin, $all_plugins ) ) {
+							$current = get_site_transient( 'update_plugins' );
+							if ( is_array( $all_plugins ) && !empty( $all_plugins ) && isset( $current ) && is_array( $current->response ) ) {
+								$to_send = array();
+								$to_send["plugins"][ $bws_license_plugin ] = array();
+								$to_send["plugins"][ $bws_license_plugin ]["bws_license_key"] = $bws_license_key;
+								$to_send["plugins"][ $bws_license_plugin ]["bws_illegal_client"] = true;
+								$options = array(
+									'timeout' => ( ( defined('DOING_CRON') && DOING_CRON ) ? 30 : 3 ),
+									'body' => array( 'plugins' => serialize( $to_send ) ),
+									'user-agent' => 'WordPress/' . $wp_version . '; ' . get_bloginfo( 'url' ) );
+								$raw_response = wp_remote_post( 'http://bestwebsoft.com/wp-content/plugins/paid-products/plugins/update-check/1.0/', $options );
+
+								if ( is_wp_error( $raw_response ) || 200 != wp_remote_retrieve_response_code( $raw_response ) ) {
+									$error = __( "Something went wrong. Try again later. If the error will appear again, please, contact us <a href=http://support.bestwebsoft.com>BestWebSoft</a>. We are sorry for inconvenience.", 'sender' );
+								} else {
+									$response = maybe_unserialize( wp_remote_retrieve_body( $raw_response ) );
+									
+									if ( is_array( $response ) && !empty( $response ) ) {
+										foreach ( $response as $key => $value ) {
+											if ( "wrong_license_key" == $value->package ) {
+												$error = __( "Wrong license key", 'sender' ); 
+											} elseif ( "wrong_domain" == $value->package ) {
+												$error = __( "This license key is bind to another site", 'sender' );
+											} elseif ( "you_are_banned" == $value->package ) {
+												$error = __( "Unfortunately, you have exceeded the number of available tries per day. Please, upload the plugin manually.", 'sender' );
+											}
+										}
+										if ( '' == $error ) {																	
+											$bstwbsftwppdtplgns_options[ $bws_license_plugin ] = $bws_license_key;
+
+											$url = 'http://bestwebsoft.com/wp-content/plugins/paid-products/plugins/downloads/?bws_first_download=' . $bws_license_plugin . '&bws_license_key=' . $bws_license_key . '&download_from=5';
+											$uploadDir = wp_upload_dir();
+											$zip_name = explode( '/', $bws_license_plugin );
+										    if ( file_put_contents( $uploadDir["path"] . "/" . $zip_name[0] . ".zip", file_get_contents( $url ) ) ) {
+										    	@chmod( $uploadDir["path"] . "/" . $zip_name[0] . ".zip", octdec( 755 ) );
+										    	if ( class_exists( 'ZipArchive' ) ) {
+													$zip = new ZipArchive();
+													if ( $zip->open( $uploadDir["path"] . "/" . $zip_name[0] . ".zip" ) === TRUE ) {
+														$zip->extractTo( WP_PLUGIN_DIR );
+														$zip->close();
+													} else {
+														$error = __( "Failed to open the zip archive. Please, upload the plugin manually", 'sender' );
+													}								
+												} elseif ( class_exists( 'Phar' ) ) {
+													$phar = new PharData( $uploadDir["path"] . "/" . $zip_name[0] . ".zip" );
+													$phar->extractTo( WP_PLUGIN_DIR );
+												} else {
+													$error = __( "Your server does not support either ZipArchive or Phar. Please, upload the plugin manually", 'sender' );
+												}
+												@unlink( $uploadDir["path"] . "/" . $zip_name[0] . ".zip" );										    
+											} else {
+												$error = __( "Failed to download the zip archive. Please, upload the plugin manually", 'sender' );
+											}
+
+											/* activate Pro */
+											if ( file_exists( WP_PLUGIN_DIR . '/' . $zip_name[0] ) ) {			
+												array_push( $active_plugins, $bws_license_plugin );
+												update_option( 'active_plugins', $active_plugins );
+												$pro_plugin_is_activated = true;
+											} elseif ( '' == $error ) {
+												$error = __( "Failed to download the zip archive. Please, upload the plugin manually", 'sender' );
+											}																				
+										}
+									} else {
+										$error = __( "Something went wrong. Try again later or upload the plugin manually. We are sorry for inconvenience.", 'sender' ); 
+					 				}
+					 			}
+				 			}
+						} else {
+							/* activate Pro */
+							if ( ! ( in_array( $bws_license_plugin, $active_plugins ) || is_plugin_active_for_network( $bws_license_plugin ) ) ) {			
+								array_push( $active_plugins, $bws_license_plugin );
+								update_option( 'active_plugins', $active_plugins );
+								$pro_plugin_is_activated = true;
+							}						
+						}
+						update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
+			 		}
+			 	} else {
+		 			$error = __( "Please, enter Your license key", 'sender' );
+		 		}
+		 	}
+		} ?>
+		<div class="sndr-mail wrap" id="sndr-mail">
 			<style>
 				<?php if ( ! $sndr_options['sndr_display_options'] ) { ?>
 					.ad_opt {
@@ -499,109 +618,166 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 				<?php } ?>
 			</style>
 			<div id="icon-options-general" class="icon32 icon32-bws"></div>
-			<h3 class="sndr-mail-set"><?php _e( "Sender Settings", 'sender' ); ?></h3>
-			<div id="sndr-settings-notice" class="updated fade" style="display:none"><p><strong><?php _e( "Notice:", 'sender' ); ?></strong> <?php _e( "The plugin's settings have been changed. In order to save them please don't forget to click the 'Save Changes' button.", 'sender' ); ?></p></div>
+			<h2><?php _e( "Sender Settings", 'sender' ); ?></h2>
+			<h2 class="nav-tab-wrapper">
+				<a class="nav-tab<?php if ( ! isset( $_GET['action'] ) ) echo ' nav-tab-active'; ?>" href="admin.php?page=sndr_settings"><?php _e( 'Settings', 'sender' ); ?></a>
+				<a class="nav-tab" href="http://bestwebsoft.com/plugin/sender/#faq" target="_blank"><?php _e( 'FAQ', 'sender' ); ?></a>
+				<a class="nav-tab bws_go_pro_tab<?php if ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=sndr_settings&amp;action=go_pro"><?php _e( 'Go PRO', 'sender' ); ?></a>
+			</h2>
 			<div class="updated fade" <?php if( empty( $message ) ) echo "style=\"display:none\""; ?>><p><strong><?php echo $message; ?></strong></p></div>
 			<div class="error" <?php if ( empty( $error ) ) echo "style=\"display:none\""; ?>><p><strong><?php echo $error; ?></strong></p></div>
-			<form id="sndr_settings_form" method="post" action="admin.php?page=sndr_settings">
-				<table id="sndr-settings-table" class="form-table">
-					<tr valign="top">
-						<th scope="row"><?php _e( 'Interval for sending mail', 'sender' ); ?></th>
-						<td><input id="sndr_mail_run_time" name='sndr_mail_run_time' type='text' value='<?php echo $sndr_options['sndr_run_time']; ?>'> <?php _e( '(min)', 'sender' ); ?></td>
-					</tr>
-					<tr>
-						<th><?php _e( 'Number of messages sent at one time', 'sender' ); ?></th>
-						<td>
-							<input id="sndr_mail_send_count" name='sndr_mail_send_count' type='text' value='<?php echo $sndr_options['sndr_send_count']; ?>'><br/>
-							<span class="sndr_info">
-								<?php $number = floor( ( 60 / intval( $sndr_options['sndr_run_time'] ) ) * intval( $sndr_options['sndr_send_count'] ) );
-								_e( 'maximum number of sent mails:', 'sender' );?>&nbsp;<span id="sndr-calculate"><?php echo $number; ?></span>&nbsp;<?php _e( 'per hour', 'sender' ); ?>.&nbsp;<br/><span id="sndr_calc_info"><?php _e( 'Please make sure that this number is smaller than max allowed number of sent mails from your hosting account.', 'sender' ); ?></span>
-							</span>
-						</td>
-					</tr>
-					<?php /* this function will be added in stable version of plugin
-					<tr>
-						<th><?php _e( 'Send email with confirmation', 'sender' ); ?></th>
-						<td><input type='checkbox' name='sndr_confirm' <?php if ( $sndr_options['sndr_confirm'] == true ) echo 'checked="checked"'; ?> /></td>
-					</tr>
-					*/ ?>
-					<tr valign="top">
-						<th scope="row" style="width:200px;"><?php _e( "The user on whose behalf mailout will be created", 'sender' ); ?></th>
-						<td colspan="2">
-							<input type="radio" id="sndr_select_from_field" name="sndr_select_from_field" value="admin_name" <?php if ( 'admin_name' == $sndr_options['sndr_select_from_field'] ) { echo "checked=\"checked\" "; } ?>/>
-							<select name="sndr_from_admin_name">
-								<?php foreach ( $admin_list as $user ) { ?>
-									<option value="<?php echo $user['display_name']; ?>" <?php if ( $user['display_name'] == $sndr_options['sndr_from_admin_name'] ) { echo "selected=\"selected\" "; } ?>><?php echo $user['user_login']; ?></option>
-								<? } ?>
-							</select>
-							<span class="sndr_info">(<?php _e( "The name of the user be used in the 'From' field.", 'sender' ); ?>)</span><br/>
-							<input type="radio" id="sndr_select_from_custom_field" name="sndr_select_from_field" value="custom_name" <?php if ( 'custom_name' == $sndr_options['sndr_select_from_field'] ) { echo "checked=\"checked\" "; } ?>/> 
-							<input type="text" style="width:200px;" name="sndr_from_custom_name" value="<?php echo stripslashes( $sndr_options['sndr_from_custom_name'] ); ?>"/>
-							<span  class="sndr_info">(<?php _e( "This text will be used in the 'FROM' field", 'sender' ); ?>)</span>
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row" style="width:200px;"><?php _e( "User Email", 'sender' ); ?></th>
-						<td colspan="2" style="position: relative;">
-							<input type="text" name="sndr_from_email" value="<?php echo $sndr_options['sndr_from_email']; ?>"/>
-							<span class="sndr_info">(<?php _e( "This email address will be used in the 'From' field.", 'sender' ); ?>)</span>
-						</td>
-					</tr>			
-					<tr style="height: 45px;">
-						<th>
-							<label>
-								<input type="checkbox" value="1" id="change_options" name="sndr_additions_options" <?php if ( $sndr_options['sndr_display_options'] ) echo 'checked="checked"'; ?> /> 
-								<?php _e( 'Additional options', 'sender' ); ?>
-							</label>
-						</th>
-					</tr>
-					<tr class="ad_opt">
-						<th><?php _e( 'What to use?', 'sender' ); ?></th>
-						<td>
-							<label>
-								<input id="sndr_wp_mail_radio" type='radio' name='sndr_mail_method' value='wp_mail' <?php if ( $sndr_options['sndr_method'] == 'wp_mail' ) echo 'checked="checked"'; ?>/> 
-								<?php _e( 'Wp-mail', 'sender' ); ?> <span class="sndr_info">(<?php _e( 'You can use the wp_mail function for mailing', 'sender' ); ?>)</span>
-							</label><br/>
-							<label>
-								<input id="sndr_php_mail_radio" type='radio' name='sndr_mail_method' value='mail' <?php if ( $sndr_options['sndr_method'] == 'mail' ) echo 'checked="checked"'; ?>/> 
-								<?php _e( 'Mail', 'sender' ); ?> <span class="sndr_info">(<?php _e( 'To send mail you can use the php mail function', 'sender' ); ?>)</span>
-							</label><br/>
-							<label>
-								<input id="sndr_smtp_mail_radio" type='radio' name='sndr_mail_method' value='smtp' <?php if ( $sndr_options['sndr_method'] == 'smtp' ) echo 'checked="checked"'; ?>/> 
-								<?php _e( 'SMTP', 'sender' ); ?> <span class="sndr_info">(<?php _e( 'You can use SMTP for sending mails', 'sender' ); ?>)</span>
-							</label>
-						</td>
-					</tr>
-					<tr class="ad_opt sndr_smtp_options">
-						<th><?php _e( 'SMTP Settings', 'sender' ); ?></td>
-						<td></td>
-					</tr>
-					<tr class="ad_opt sndr_smtp_options">
-						<th><?php _e( 'SMTP server', 'sender' ); ?></th>
-						<td><input type='text' name='sndr_mail_smtp_host' value='<?php echo $sndr_options['sndr_smtp_settings']['host']; ?>' /></td>
-					</tr>
-					<tr class="ad_opt sndr_smtp_options">
-						<th><?php _e( 'SMTP port', 'sender' ); ?></th>
-						<td><input type='text' name='sndr_mail_smtp_port' value='<?php echo $sndr_options['sndr_smtp_settings']['port']; ?>' /></td>
-					</tr>
-					<tr class="ad_opt sndr_smtp_options">
-						<th><?php _e( 'SMTP account', 'sender' ); ?></th>
-						<td><input type='text' name='sndr_mail_smtp_accaunt' value='<?php echo $sndr_options['sndr_smtp_settings']['accaunt']; ?>' /></td>
-					</tr>
-					<tr class="ad_opt sndr_smtp_options">
-						<th><?php _e( 'SMTP password', 'sender' ); ?></th>
-						<td><input type='password' name='sndr_mail_smtp_password' value='<?php echo $sndr_options['sndr_smtp_settings']['password']; ?>' /></td>
-					</tr>
-					<tr class="ad_opt sndr_smtp_options">
-						<th><?php _e( 'Use SMTP SSL', 'sender' ); ?></th>
-						<td><input type='checkbox' name='sndr_ssl' <?php if ( isset( $sndr_options['sndr_smtp_settings']['ssl'] ) ) echo 'checked="checked"'; ?>/></td>
-					</tr>
-				</table>
-				<input type="hidden" name="sndr_form_submit" value="submit" />
-				<p class="submit">
-					<input type="submit" id="settings-form-submit" class="button-primary" value="<?php _e( 'Save Changes', 'sender' ) ?>" />
-				</p>
-				<?php wp_nonce_field( plugin_basename( __FILE__ ), 'sndr_nonce_name' ); ?>
+			<?php if ( ! isset( $_GET['action'] ) ) { ?>
+				<div id="sndr-settings-notice" class="updated fade" style="display:none"><p><strong><?php _e( "Notice:", 'sender' ); ?></strong> <?php _e( "The plugin's settings have been changed. In order to save them please don't forget to click the 'Save Changes' button.", 'sender' ); ?></p></div>
+				<form id="sndr_settings_form" method="post" action="admin.php?page=sndr_settings">
+					<table id="sndr-settings-table" class="form-table">
+						<tr valign="top">
+							<th scope="row"><?php _e( 'Interval for sending mail', 'sender' ); ?></th>
+							<td><input id="sndr_mail_run_time" name='sndr_mail_run_time' type='text' value='<?php echo $sndr_options['sndr_run_time']; ?>'> <?php _e( '(min)', 'sender' ); ?></td>
+						</tr>
+						<tr>
+							<th><?php _e( 'Number of messages sent at one time', 'sender' ); ?></th>
+							<td>
+								<input id="sndr_mail_send_count" name='sndr_mail_send_count' type='text' value='<?php echo $sndr_options['sndr_send_count']; ?>'><br/>
+								<span class="sndr_info">
+									<?php $number = floor( ( 60 / intval( $sndr_options['sndr_run_time'] ) ) * intval( $sndr_options['sndr_send_count'] ) );
+									_e( 'maximum number of sent mails:', 'sender' );?>&nbsp;<span id="sndr-calculate"><?php echo $number; ?></span>&nbsp;<?php _e( 'per hour', 'sender' ); ?>.&nbsp;<br/><span id="sndr_calc_info"><?php _e( 'Please make sure that this number is smaller than max allowed number of sent mails from your hosting account.', 'sender' ); ?></span>
+								</span>
+							</td>
+						</tr>
+					</table>
+					<div class="bws_pro_version_bloc">
+						<div class="bws_pro_version_table_bloc">	
+							<div class="bws_table_bg"></div>											
+							<table class="form-table bws_pro_version">
+								<tr valign="top">
+									<th><?php _e( 'Attempts number', 'sender' ); ?></th>
+									<td>
+										<input name='sndrpr_max_try_count' type='text' value=''><br/>
+										<span class="sndr_info">( <?php _e( 'Maximum number of attempts to send a message to a single user', 'sender' ); ?> )</span>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th><?php _e( "Email in HTML format sending", 'sender' ); ?></th>
+									<td><input type="checkbox" name="sndrpr_html_email" value="1" /></td>
+								</tr>
+								<tr class="sndrpr-add-set" valign="top">
+									<th><?php _e( 'Send email with confirmation', 'sender' ); ?></th>
+									<td>
+										<input type='checkbox' name='sndrpr_confirm' value="1" />
+										<br/>
+										<span  class="sndr_info">( <?php _e( "This function works not on all mail servers.", 'sender' ); ?> )</span>
+									</td>
+								</tr>								
+								<tr valign="top">
+									<th><?php _e( 'Display fonts list on "Edit letter" or "Edit Template" Pages', 'sender' ); ?></th>
+									<td>
+										<input type='checkbox' name='sndrpr_display_fonts_list' value="1" />
+										<br/>
+										<span class="sndr_info">( <?php _e( "Due to security reasons, the additional fonts may not be reflected on some postal services.", 'sender' ); ?> )</span>
+									</td>
+								</tr>	
+								<tr valign="top">
+									<th scope="row" colspan="2">
+										* <?php _e( 'If you upgrade to Pro version all your settings will be saved.', 'sender' ); ?>
+									</th>
+								</tr>				
+							</table>	
+						</div>
+						<div class="bws_pro_version_tooltip">
+							<div class="bws_info">
+								<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
+								<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>			
+							</div>
+							<div class="bws_pro_links">
+								<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+									<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
+								</a>
+							</div>	
+							<div class="clear"></div>					
+						</div>
+					</div>
+					<table class="form-table">
+						<tr valign="top">
+							<th scope="row" style="width:200px;"><?php _e( "The user on whose behalf mailout will be created", 'sender' ); ?></th>
+							<td colspan="2">
+								<input type="radio" id="sndr_select_from_field" name="sndr_select_from_field" value="admin_name" <?php if ( 'admin_name' == $sndr_options['sndr_select_from_field'] ) { echo "checked=\"checked\" "; } ?>/>
+								<select name="sndr_from_admin_name">
+									<?php foreach ( $admin_list as $user ) { ?>
+										<option value="<?php echo $user['display_name']; ?>" <?php if ( $user['display_name'] == $sndr_options['sndr_from_admin_name'] ) { echo "selected=\"selected\" "; } ?>><?php echo $user['user_login']; ?></option>
+									<?php } ?>
+								</select>
+								<span class="sndr_info">(<?php _e( "The name of the user be used in the 'From' field.", 'sender' ); ?>)</span><br/>
+								<input type="radio" id="sndr_select_from_custom_field" name="sndr_select_from_field" value="custom_name" <?php if ( 'custom_name' == $sndr_options['sndr_select_from_field'] ) { echo "checked=\"checked\" "; } ?>/> 
+								<input type="text" style="width:200px;" name="sndr_from_custom_name" value="<?php echo stripslashes( $sndr_options['sndr_from_custom_name'] ); ?>"/>
+								<span  class="sndr_info">(<?php _e( "This text will be used in the 'FROM' field", 'sender' ); ?>)</span>
+							</td>
+						</tr>
+						<tr valign="top">
+							<th scope="row" style="width:200px;"><?php _e( "User Email", 'sender' ); ?></th>
+							<td colspan="2" style="position: relative;">
+								<input type="text" name="sndr_from_email" value="<?php echo $sndr_options['sndr_from_email']; ?>"/>
+								<span class="sndr_info">(<?php _e( "This email address will be used in the 'From' field.", 'sender' ); ?>)</span>
+							</td>
+						</tr>			
+						<tr style="height: 45px;">
+							<th>
+								<label>
+									<input type="checkbox" value="1" id="change_options" name="sndr_additions_options" <?php if ( $sndr_options['sndr_display_options'] ) echo 'checked="checked"'; ?> /> 
+									<?php _e( 'Additional options', 'sender' ); ?>
+								</label>
+							</th>
+						</tr>
+						<tr class="ad_opt">
+							<th><?php _e( 'What to use?', 'sender' ); ?></th>
+							<td>
+								<label>
+									<input id="sndr_wp_mail_radio" type='radio' name='sndr_mail_method' value='wp_mail' <?php if ( $sndr_options['sndr_method'] == 'wp_mail' ) echo 'checked="checked"'; ?>/> 
+									<?php _e( 'Wp-mail', 'sender' ); ?> <span class="sndr_info">(<?php _e( 'You can use the wp_mail function for mailing', 'sender' ); ?>)</span>
+								</label><br/>
+								<label>
+									<input id="sndr_php_mail_radio" type='radio' name='sndr_mail_method' value='mail' <?php if ( $sndr_options['sndr_method'] == 'mail' ) echo 'checked="checked"'; ?>/> 
+									<?php _e( 'Mail', 'sender' ); ?> <span class="sndr_info">(<?php _e( 'To send mail you can use the php mail function', 'sender' ); ?>)</span>
+								</label><br/>
+								<label>
+									<input id="sndr_smtp_mail_radio" type='radio' name='sndr_mail_method' value='smtp' <?php if ( $sndr_options['sndr_method'] == 'smtp' ) echo 'checked="checked"'; ?>/> 
+									<?php _e( 'SMTP', 'sender' ); ?> <span class="sndr_info">(<?php _e( 'You can use SMTP for sending mails', 'sender' ); ?>)</span>
+								</label>
+							</td>
+						</tr>
+						<tr class="ad_opt sndr_smtp_options">
+							<th><?php _e( 'SMTP Settings', 'sender' ); ?></td>
+							<td></td>
+						</tr>
+						<tr class="ad_opt sndr_smtp_options">
+							<th><?php _e( 'SMTP server', 'sender' ); ?></th>
+							<td><input type='text' name='sndr_mail_smtp_host' value='<?php echo $sndr_options['sndr_smtp_settings']['host']; ?>' /></td>
+						</tr>
+						<tr class="ad_opt sndr_smtp_options">
+							<th><?php _e( 'SMTP port', 'sender' ); ?></th>
+							<td><input type='text' name='sndr_mail_smtp_port' value='<?php echo $sndr_options['sndr_smtp_settings']['port']; ?>' /></td>
+						</tr>
+						<tr class="ad_opt sndr_smtp_options">
+							<th><?php _e( 'SMTP account', 'sender' ); ?></th>
+							<td><input type='text' name='sndr_mail_smtp_accaunt' value='<?php echo $sndr_options['sndr_smtp_settings']['accaunt']; ?>' /></td>
+						</tr>
+						<tr class="ad_opt sndr_smtp_options">
+							<th><?php _e( 'SMTP password', 'sender' ); ?></th>
+							<td><input type='password' name='sndr_mail_smtp_password' value='<?php echo $sndr_options['sndr_smtp_settings']['password']; ?>' /></td>
+						</tr>
+						<tr class="ad_opt sndr_smtp_options">
+							<th><?php _e( 'Use SMTP SSL', 'sender' ); ?></th>
+							<td><input type='checkbox' name='sndr_ssl' <?php if ( isset( $sndr_options['sndr_smtp_settings']['ssl'] ) ) echo 'checked="checked"'; ?>/></td>
+						</tr>
+					</table>
+					<?php if ( false == sndr_check_subscriber_install() ) {
+						echo '<p>' . __( 'If you want to allows your site visitors to subscribe for newsletters, coming from your website, use', 'subscriber' ) . ' <a href="http://wordpress.org/plugins/subscriber/">Subscriber plugin</a> ' . __( 'that is an exclusive add-on for the Sender Plugin by BestWebSoft.', 'subscriber' ) . '</p>';
+					} ?>
+					<p class="submit">
+						<input type="submit" id="settings-form-submit" class="button-primary" value="<?php _e( 'Save Changes', 'sender' ) ?>" />
+						<input type="hidden" name="sndr_form_submit" value="submit" />
+						<?php wp_nonce_field( plugin_basename( __FILE__ ), 'sndr_nonce_name' ); ?>
+					</p>				
+				</form>
 				<div class="bws-plugin-reviews">
 					<div class="bws-plugin-reviews-rate">
 						<?php _e( 'If you enjoy our plugin, please give it 5 stars on WordPress', 'sender' ); ?>: 
@@ -612,7 +788,52 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 						<a href="http://support.bestwebsoft.com">http://support.bestwebsoft.com</a>
 					</div>
 				</div>
-			</form>
+			<?php } elseif ( 'go_pro' == $_GET['action'] ) { ?>
+				<?php if ( isset( $pro_plugin_is_activated ) && true === $pro_plugin_is_activated ) { ?>
+					<script type="text/javascript">
+						window.setTimeout( function() {
+						    window.location.href = 'admin.php?page=sndrpr_settings';
+						}, 5000 );
+					</script>				
+					<p><?php _e( "Congratulations! The PRO version of the plugin is successfully download and activated.", 'sender' ); ?></p>
+					<p>
+						<?php _e( "Please, go to", 'sender' ); ?> <a href="admin.php?page=sndrpr_settings"><?php _e( 'the setting page', 'sender' ); ?></a> 
+						(<?php _e( "You will be redirected automatically in 5 seconds.", 'sender' ); ?>)
+					</p>
+				<?php } else { ?>
+					<form method="post" action="admin.php?page=sndr_settings&amp;action=go_pro">
+						<p>
+							<?php _e( 'You can download and activate', 'sender' ); ?> 
+							<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro">PRO</a> 
+							<?php _e( 'version of this plugin by entering Your license key.', 'sender' ); ?><br />
+							<span style="color: #888888;font-size: 10px;">
+								<?php _e( 'You can find your license key on your personal page Client area, by clicking on the link', 'sender' ); ?> 
+								<a href="http://bestwebsoft.com/wp-login.php">http://bestwebsoft.com/wp-login.php</a> 
+								<?php _e( '(your username is the email you specify when purchasing the product).', 'sender' ); ?>
+							</span>
+						</p>
+						<?php if ( isset( $bstwbsftwppdtplgns_options['go_pro']['sender-pro/sender-pro.php']['count'] ) &&
+							'5' < $bstwbsftwppdtplgns_options['go_pro']['sender-pro/sender-pro.php']['count'] &&
+							$bstwbsftwppdtplgns_options['go_pro']['sender-pro/sender-pro.php']['time'] < ( time() + ( 24 * 60 * 60 ) ) ) { ?>
+							<p>
+								<input disabled="disabled" type="text" name="bws_license_key" value="<?php echo $bws_license_key; ?>" />
+								<input disabled="disabled" type="submit" class="button-primary" value="<?php _e( 'Activate', 'sender' ); ?>" />
+							</p>
+							<p>
+								<?php _e( "Unfortunately, you have exceeded the number of available tries per day. Please, upload the plugin manually.", 'sender' ); ?>
+							</p>
+						<?php } else { ?>
+							<p>
+								<input type="text" name="bws_license_key" value="<?php echo $bws_license_key; ?>" />
+								<input type="hidden" name="bws_license_plugin" value="sender-pro/sender-pro.php" />
+								<input type="hidden" name="bws_license_submit" value="submit" />
+								<input type="submit" class="button-primary" value="<?php _e( 'Activate', 'sender' ); ?>" />
+								<?php wp_nonce_field( plugin_basename(__FILE__), 'bws_license_nonce_name' ); ?>
+							</p>
+						<?php } ?>
+					</form>				
+				<?php }
+			} ?>
 		</div><!--  #sndr-mail .sndr-mail -->
 	<?php }
 }
@@ -685,13 +906,10 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 				}
 				$all_count = $r['all'];
 			}
-		}
-
-		/* deduce the mail form */
-		?>
-		<div class="sndr-mail" id="sndr-mail">
+		} /* deduce the mail form */ ?>
+		<div class="sndr-mail wrap" id="sndr-mail">
 			<div id="icon-options-general" class="icon32 icon32-bws"></div>
-			<h3 class="sndr-mail-set"><?php echo $title; ?></h3>
+			<h2><?php echo $title; ?></h2>
 			<?php $action_message = apply_filters( 'sndr_show_action_message', '' );
 			if ( $action_message['error'] ) {
 				$sndr_error = $action_message['error'];
@@ -703,7 +921,7 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 			<form method="post">
 				<table id="sndr-mail-send-table" class="form-table">
 					<tr>
-						<th><label ><?php _e( 'Send to', 'sender' ); ?></label></td>
+						<th><?php _e( 'Send to', 'sender' ); ?></td>
 						<td>
 							<label class="sndr-user-roles">
 								<input class='sndr-check-all' type="checkbox" name="sndr_send_all" value="1" <?php if ( isset( $_POST['sndr_send_all'] ) && '1' == $_POST['sndr_send_all'] ) { echo 'checked="checked"'; } ?>/> 
@@ -737,17 +955,17 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 									<?php if ( is_multisite() ) { _e( 'WARNING: as you are using multisite, the total number of sent mails may not coincide with the counter. It will be fixed in the stable version of plugin.', 'sender' ); } ?>
 							</span>
 						</td>	
+					</tr>
 					<tr>
-					<tr>
-						<td><label><?php _e( 'Subject', 'sender' ); ?></label></td>
+						<th><?php _e( 'Subject', 'sender' ); ?></th>
 						<td>
-							<label><input id="sndr-mail-subject" type="text" name="sndr_subject" value="<?php if ( isset( $_POST['sndr_subject'] ) && ( ! empty( $_POST['sndr_subject'] ) ) ) { echo $_POST['sndr_subject']; } ?>"/></label>
+							<input id="sndr-mail-subject" type="text" name="sndr_subject" value="<?php if ( isset( $_POST['sndr_subject'] ) && ( ! empty( $_POST['sndr_subject'] ) ) ) { echo $_POST['sndr_subject']; } ?>"/>
 						</td>
 					</tr>
 					<tr>
-						<td><label><?php _e( 'Content', 'sender' ); ?></label></td>
+						<th><?php _e( 'Content', 'sender' ); ?></th>
 						<td>
-							<textarea id="sndr-mail-body" name="sndr_content"><?php if ( isset( $_POST['sndr_content'] ) && ( ! empty( $_POST['sndr_content'] ) ) ) { echo $_POST['sndr_content']; } ?></textarea><br/>
+							<textarea id="sndr-mail-body" name="sndr_content"><?php if ( isset( $_POST['sndr_content'] ) && ( ! empty( $_POST['sndr_content'] ) ) ) { echo $_POST['sndr_content']; } ?></textarea>
 						</td>
 					</tr>
 				</table>
@@ -1770,6 +1988,665 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 	}
 }
 
+/* pro pages */
+if ( ! function_exists( 'sndr_create_mailout' ) ) {
+	function sndr_create_mailout() {
+		global $sndr_plugin_info, $wp_version; ?>
+		<div class="bws_pro_version_bloc">
+			<div class="bws_pro_version_table_bloc">
+				<div class="bws_table_bg"></div>
+				<div class="wrap sndrpr-mail" id="sndrpr-mail" style="margin: 0 10px">
+					<div id="icon-options-general" class="icon32 icon32-bws"></div>
+					<h2><span><?php _e( 'Add new letter', 'sender' ); ?></span><a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
+					<table id="sndrpr-mail-send-table" class="sndrpr-page-table">
+						<tr>
+							<td>
+								<label class="sndrpr-form-label"><?php _e( 'Subject:', 'sender' ); ?> 
+								<input class="sndrpr-tltle" type="text" name="sndrpr_subject" value=""/></label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="sndrpr-letter-custom">
+									<label class="sndrpr-form-label"><?php _e( 'Select letter template:', 'sender' ); ?></label>
+									<ul class="sndrpr-select-template">
+										<li class="sndrpr-default-templates"><?php _e( 'Default Templates:', 'sender' ); ?></li>
+										<li class="sndrpr-template-info">
+											<label for="sndrpr-radio-1">
+												<img src="http://wp.saa.loc/wp-content/plugins/sender-pro/images/newsletter-icon-1.jpg" title="One Column"/>
+												<p><input id="sndrpr-radio-1" class="sndrpr-default-radio" type="radio" value="1"  name="sndrpr_template_id" style="display: none;"/>One Column</p>
+											</label>
+										</li><!-- .sndrpr-template-info -->
+										<li class="sndrpr-template-info">
+											<label for="sndrpr-radio-2">
+												<img src="http://wp.saa.loc/wp-content/plugins/sender-pro/images/newsletter-icon-2.jpg" title="Two Column: Text Below the Image"/>
+												<p><input id="sndrpr-radio-2" class="sndrpr-default-radio" type="radio" value="2"  name="sndrpr_template_id" style="display: none;"/>Two Column: Text Below the Image</p>
+											</label>
+										</li><!-- .sndrpr-template-info -->
+										<li class="sndrpr-template-info">
+											<label for="sndrpr-radio-3">
+												<img src="http://wp.saa.loc/wp-content/plugins/sender-pro/images/newsletter-icon-3.jpg" title="Two Column: Text Content Beside the Image"/>
+												<p><input id="sndrpr-radio-3" class="sndrpr-default-radio" type="radio" value="3"  name="sndrpr_template_id" style="display: none;"/>Two Column: Text Content Beside the Image</p>
+											</label>
+										</li><!-- .sndrpr-template-info -->
+									</ul><!-- .sndrpr-select-template -->
+								</div><!-- .sndrpr-letter-custom -->
+								<div class="sndrpr-letter-custom">
+									<div class="sndrpr-help-box"></div><label class="sndrpr-form-label"><?php _e( 'Select additional fonts:', 'sender' ); ?></label>
+									<ul class="sndrpr-fonts-list">
+										<li><label><input name="sndrpr_font_id[]" value="1" type="checkbox"/><span style="font-family: 'Open Sans';">Open Sans</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="2" type="checkbox"/> <span style="font-family: 'Crimson Text';">Crimson Text</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="3" type="checkbox"/> <span style="font-family: 'Josefin Slab';">Josefin Slab</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="4" type="checkbox"/> <span style="font-family: 'Arvo';">Arvo</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="5" type="checkbox"/> <span style="font-family: 'Lato';">Lato</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="6" type="checkbox"/> <span style="font-family: 'Vollkorn';">Vollkorn</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="7" type="checkbox"/> <span style="font-family: 'Abril Fatface';">Abril Fatface</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="8" type="checkbox"/> <span style="font-family: 'Ubuntu';">Ubuntu</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="9" type="checkbox"/> <span style="font-family: 'PT Sans';">PT Sans</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="10" type="checkbox"/> <span style="font-family: 'Old Standard TT';">Old Standard TT</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="11" type="checkbox"/> <span style="font-family: 'Yanone Kaffeesatz';">Yanone Kaffeesatz</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="12" type="checkbox"/> <span style="font-family: 'Roboto';">Roboto</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="13" type="checkbox"/> <span style="font-family: 'Montserrat';">Montserrat</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="14" type="checkbox"/> <span style="font-family: 'Lusitana';">Lusitana</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="15" type="checkbox"/> <span style="font-family: 'Oswald';">Oswald</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="16" type="checkbox"/> <span style="font-family: 'Lora';">Lora</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="17" type="checkbox"/> <span style="font-family: 'Raleway';">Raleway</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="18" type="checkbox"/> <span style="font-family: 'Bitter';">Bitter</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="19" type="checkbox"/> <span style="font-family: 'Cabin';">Cabin</span></label></li>
+										<li><label><input name="sndrpr_font_id[]" value="20" type="checkbox"/> <span style="font-family: 'Cuprum';">Cuprum</span></label></li>
+									</ul><!-- .sndrpr-fonts-list -->
+								</div><!-- .sndrpr-letter-custom -->
+								<div class="clear"></div>
+								<input type="submit" id="sndrpr-load-template-button"  name="sndrpr_additional_data" value="Load Additional Data"/>
+								<input type="submit" id="sndrpr-reset-additional-data" name="sndrpr_reset_additional_data" value="Reset Additional Data"/>
+							</td>
+						</tr>
+						<tr><td class="sndrpr-help-box"><div style="margin-top: 4px;"><strong><?php _e( 'Use shortcodes!', 'sender' ); ?></strong></div></td></tr>
+						<tr>
+							<td>
+								<label class="sndrpr-form-label"><?php _e( 'Letter Content:', 'sender' ); ?></label>
+								<div class="wp-core-ui wp-editor-wrap tmce-active"><link rel='stylesheet' id='editor-buttons-css'  href='http://wp.saa.loc/wp-includes/css/editor.min.css?ver=3.9.1' type='text/css' media='all' />
+									<div>
+										<div class="wp-media-buttons"><a href="#" class="button insert-media add_media" title="Add Media"><span class="wp-media-buttons-icon"></span> <?php _e( 'Add Media' ); ?></a></div>
+										<div class="wp-editor-tabs">
+											<a class="wp-switch-editor switch-html" onclick="switchEditors.switchto(this);"><?php _e( 'Text' ); ?></a>
+											<a class="wp-switch-editor switch-tmce" onclick="switchEditors.switchto(this);"><?php _e( 'Visual' ); ?></a>
+										</div>
+									</div>
+									<div class="wp-editor-container">
+										<textarea class="wp-editor-area" rows="30" autocomplete="off" cols="40" name="sndrpr_content" ></textarea>
+									</div>
+								</div>		
+							</td>
+						</tr>					
+					</table>
+					<p class="submit">
+						<input type="button" class="button-small button" value="<?php _e( 'Create Mailout', 'sender' ); ?>"/>
+						<input type="button" class="button-small button" value="<?php _e( 'Send Test Message', 'sender' ); ?>"/>
+					</p>
+					<p class="submit">
+						<input type="submit" name="sndrpr_create_mailout" value="<?php _e( 'Create Mailout', 'sender' ); ?>" class="button-primary"/>
+					</p>
+				</div><!-- #sndrpr-mail .sndrpr-mail -->	
+			</div>
+			<div class="bws_pro_version_tooltip">
+				<div class="bws_info">
+					<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
+					<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>			
+				</div>
+				<div class="bws_pro_links">
+					<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
+					</a>
+				</div>	
+				<div class="clear"></div>					
+			</div>
+		</div>
+	<?php }
+}
+if ( ! function_exists( 'sndr_letters_list' ) ) {
+	function sndr_letters_list() {
+		global $sndr_plugin_info, $wp_version; ?>
+		<div class="bws_pro_version_bloc">
+			<div class="bws_pro_version_table_bloc">
+				<div class="bws_table_bg"></div>
+					<div class="wrap sndr_letters_list" style="margin: 0 10px">
+						<div id="icon-options-general" class="icon32 icon32-bws"></div>
+						<h2><?php _e( 'Letters Lists', 'sender' ); ?> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
+						<ul class='subsubsub'>
+							<li class='all'><a class="current" href="#"><?php _e( 'All', 'sender' ); ?><span> ( 3 )</span></a> |</li>
+							<li class='trash'><a href="#"><?php _e( 'Trash', 'sender' ); ?><span> ( 0 )</span></a></li>
+						</ul>
+						<p class="search-box">
+							<label class="screen-reader-text"><?php _e( 'search:', 'sender' ); ?></label>
+							<input type="search" name="s" value="" />
+							<input type="submit" name="" class="button" value="<?php _e( 'search', 'sender' ); ?>"  /></p>
+							<div class="tablenav top">
+								<div class="alignleft actions bulkactions">
+									<select name='action'>
+										<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>
+										<option value='trash_letters'><?php _e( 'Trash', 'sender' ); ?></option>
+									</select>
+									<input type="submit" name="" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>"  />
+								</div>
+								<div class='tablenav-pages one-page'><span class="displaying-num">3 <?php _e( 'items', 'sender' ); ?></span></div>
+								<br class="clear" />
+							</div>
+							<table class="wp-list-table widefat fixed letters">
+							<thead>
+								<tr>
+									<th scope='col'class='manage-column column-cb check-column'>
+										<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
+										<input type="checkbox" />
+									</th>
+									<th scope='col' class='manage-column column-subject sortable desc'>
+										<a href="#"><span><?php _e( 'Subject', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+									<th scope='col' class='manage-column column-date sortable desc'>
+										<a href="#"><span><?php _e( 'Date of creation', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th scope='col' class='manage-column column-cb check-column'>
+										<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
+										<input type="checkbox" />
+									</th>
+									<th scope='col' class='manage-column column-subject sortable desc'>
+										<a href="#"><span><?php _e( 'Subject', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+									<th scope='col' class='manage-column column-date sortable desc'>
+										<a href="#"><span><?php _e( 'Date of creation', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+								</tr>
+							</tfoot>
+							<tbody data-wp-lists='list:letter'>
+								<tr class="alternate">
+									<th scope="row" class="check-column">
+										<input type="checkbox" name="letter_id[]" value="3" />
+									</th>
+									<td class='subject column-subject'>
+										<strong><a href="#">There is a new post</a></strong>
+										<div class="row-actions">
+											<span class='edit_letter'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_letter'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='date column-date'>2014-05-27 14:26:47</td>
+								</tr>
+								<tr>
+									<th scope="row" class="check-column">
+										<input type="checkbox" name="letter_id[]" value="3" />
+									</th>
+									<td class='subject column-subject'>
+										<strong><a href="#">Get 30% Discount</a></strong>
+										<div class="row-actions">
+											<span class='edit_letter'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_letter'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='date column-date'>2014-05-27 14:26:47</td>
+								</tr>
+								<tr>
+									<th scope="row" class="check-column">
+										<input type="checkbox" name="letter_id[]" value="3" />
+									</th>
+									<td class='subject column-subject'>
+										<strong><a href="#">Test letter</a></strong>
+										<div class="row-actions">
+											<span class='edit_letter'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_letter'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='date column-date'>2014-05-27 14:26:47</td>
+								</tr>
+						</table>
+						<div class="tablenav bottom">
+							<div class="alignleft actions bulkactions">
+								<select name='action2'>
+									<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>
+									<option value='trash_letters'><?php _e( 'Trash', 'sender' ); ?></option>
+								</select>
+								<input type="submit" name="" id="doaction2" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>"  />
+							</div>
+							<div class='tablenav-pages one-page'><span class="displaying-num">3 <?php _e( 'items', 'sender' ); ?></span></div>
+							<br class="clear" />
+						</div>
+					</div><!-- .wrap -->
+				</div>
+			<div class="bws_pro_version_tooltip">
+				<div class="bws_info">
+					<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
+					<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>			
+				</div>
+				<div class="bws_pro_links">
+					<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
+					</a>
+				</div>	
+				<div class="clear"></div>					
+			</div>
+		</div>
+	<?php }
+}
+if ( ! function_exists( 'sndr_distribution_list' ) ) {
+	function sndr_distribution_list() {
+		global $sndr_plugin_info, $wp_version; ?>
+		<div class="bws_pro_version_bloc">
+			<div class="bws_pro_version_table_bloc">
+				<div class="bws_table_bg"></div>
+					<div class="wrap sndr_distribution_list" style="margin: 0 10px">
+						<div id="icon-options-general" class="icon32 icon32-bws"></div>
+						<h2><?php _e( 'Mailings Lists', 'sender' ); ?> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
+						<ul class='subsubsub'>
+							<li class='all'><a class="current" href="#"><?php _e( 'All', 'sender' ); ?><span> ( 3 )</span></a> |</li>
+							<li class='trash'><a href="#"><?php _e( 'Trash', 'sender' ); ?><span> ( 0 )</span></a></li>
+						</ul>
+						<p class="search-box">
+							<label class="screen-reader-text"><?php _e( 'search:', 'sender' ); ?></label>
+							<input type="search" name="s" value="" />
+							<input type="submit" name="" class="button" value="<?php _e( 'search', 'sender' ); ?>"  />
+						</p>
+						<div class="tablenav top">
+							<div class="alignleft actions bulkactions">
+								<select name='action'>
+									<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>
+									<option value='trash_distributions'><?php _e( 'Trash', 'sender' ); ?></option>
+								</select>
+								<input type="submit" name="" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>"  />
+							</div>
+							<div class='tablenav-pages one-page'><span class="displaying-num">3 <?php _e( 'items', 'sender' ); ?></span></div>
+							<br class="clear" />
+						</div>
+						<table class="wp-list-table widefat fixed mailings">
+							<thead>
+								<tr>
+									<th scope='col' class='manage-column column-cb check-column'>
+										<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
+										<input type="checkbox" />
+									</th>
+									<th scope='col' class='manage-column column-name sortable desc'>
+										<a href="№"><span><?php _e( 'Title', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+									<th scope='col' class='manage-column column-date sortable desc'>
+										<a href="№"><span><?php _e( 'Date of creation', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th scope='col' class='manage-column column-cb check-column'>
+										<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
+										<input type="checkbox" />
+									</th>
+									<th scope='col' class='manage-column column-name sortable desc'>
+										<a href="№"><span><?php _e( 'Title', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+									<th scope='col' class='manage-column column-date sortable desc'>
+										<a href="№"><span><?php _e( 'Date of creation', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+								</tr>
+							</tfoot>
+							<tbody id="the-list" data-wp-lists='list:mailing'>
+								<tr class="alternate">
+									<th scope="row" class="check-column"><input type="checkbox" name="distribution_id[]" value=" 3" /></th>
+									<td class='name column-name'>
+										<strong><a href="#">Clients</a></strong> 
+										<div class="row-actions">
+											<span class='edit_distribution'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_distribution'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='date column-date'>2014-05-27 13:32:50</td>
+								</tr>
+								<tr>
+									<th scope="row" class="check-column"><input type="checkbox" name="distribution_id[]" value=" 2" /></th>
+									<td class='name column-name'>
+										<strong><a href="#">Subscribers</a></strong> 
+										<div class="row-actions">
+											<span class='edit_distribution'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_distribution'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='date column-date'>2014-05-27 13:32:18</td>
+								</tr>
+								<tr class="alternate">
+									<th scope="row" class="check-column"><input type="checkbox" name="distribution_id[]" value=" 1" /></th>
+									<td class='name column-name'>
+										<strong><a href="#">Administrators</a></strong> 
+										<div class="row-actions">
+											<span class='edit_distribution'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_distribution'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='date column-date'>2014-05-27 12:47:21</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="tablenav bottom">
+							<div class="alignleft actions bulkactions">
+								<select name='action2'>
+									<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>
+									<option value='trash_distributions'><?php _e( 'Trash', 'sender' ); ?></option>
+								</select>
+								<input type="submit" name="" id="doaction2" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>"  />
+							</div>
+							<div class='tablenav-pages one-page'><span class="displaying-num">3 <?php _e( 'items', 'sender' ); ?></span></div>
+							<br class="clear" />
+						</div>
+					</div><!-- .wrap  -->
+				</div>
+			<div class="bws_pro_version_tooltip">
+				<div class="bws_info">
+					<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
+					<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>			
+				</div>
+				<div class="bws_pro_links">
+					<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
+					</a>
+				</div>	
+				<div class="clear"></div>					
+			</div>
+		</div>
+	<?php }
+}
+if ( ! function_exists( 'sndr_letter_templates' ) ) {
+	function sndr_letter_templates() {
+		global $sndr_plugin_info, $wp_version; ?>
+		<div class="bws_pro_version_bloc">
+			<div class="bws_pro_version_table_bloc">
+				<div class="bws_table_bg"></div>
+					<div class="wrap sndrpr-letter-template-page" style="margin: 0 10px">
+						<div id="icon-options-general" class="icon32 icon32-bws"></div>
+						<h2><?php _e( 'Letter Templates', 'sender' ); ?> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
+						<ul class='subsubsub'>
+							<li class='all'><a class="current" href="#"><?php _e( 'All', 'sender' ); ?><span> ( 4 )</span></a> |</li>
+							<li class='default'><a href="#"><?php _e( 'Default templates', 'sender' ); ?><span> ( 3 )</span></a> |</li>
+							<li class='user'><a href="#"><?php _e( 'User`s templates', 'sender' ); ?><span> ( 1 )</span></a> |</li>
+							<li class='trash'><a href="#"><?php _e( 'Trash', 'sender' ); ?><span> ( 0 )</span></a></li>
+						</ul>
+						<p class="search-box">
+							<label class="screen-reader-text"><?php _e( 'search:', 'sender' ); ?></label>
+							<input type="search" name="s" value="" />
+							<input type="submit" name="" class="button" value="<?php _e( 'search', 'sender' ); ?>"  />
+						</p>
+						<div class="tablenav top">
+							<div class="alignleft actions bulkactions">
+								<select name='action'>
+									<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>
+									<option value='trash_templates'><?php _e( 'Trash', 'sender' ); ?></option>
+								</select>
+								<input type="submit" name="" id="doaction" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>" />
+							</div>
+							<div class='tablenav-pages one-page'><span class="displaying-num">4 <?php _e( 'items', 'sender' ); ?></span></div>
+							<br class="clear" />
+						</div>
+						<table class="wp-list-table widefat fixed templates">
+							<thead>
+								<tr>
+									<th scope='col' class='manage-column column-cb check-column'>
+										<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
+										<input type="checkbox" />
+									</th>
+									<th scope='col' id='title' class='manage-column column-title sortable desc'>
+										<a href="#"><span><?php _e( 'Title', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+									<th scope='col' id='status' class='manage-column column-status sortable desc'>
+										<a href="#"><span><?php _e( 'Status', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th scope='col' class='manage-column column-cb check-column'>
+										<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
+										<input type="checkbox" />
+									</th>
+									<th scope='col' id='title' class='manage-column column-title sortable desc'>
+										<a href="#"><span><?php _e( 'Title', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+									<th scope='col' id='status' class='manage-column column-status sortable desc'>
+										<a href="#"><span><?php _e( 'Status', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+								</tr>
+							</tfoot>
+							<tbody id="the-list" data-wp-lists='list:template'>
+								<tr class="alternate">
+									<th scope="row" class="check-column">
+										<input id="cb_1" type="checkbox" name="template_id[]" value=" 1" />
+									</th>
+									<td class='title column-title'>
+										<strong><a href="#">One Column</a></strong> 
+										<div class="row-actions">
+											<span class='edit_template'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_template'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='status column-status'><i><?php _e( 'default', 'sender' ); ?></i></td>
+								</tr>
+								<tr>
+									<th scope="row" class="check-column">
+										<input type="checkbox" name="template_id[]" value=" 2" />
+									</th>
+									<td class='title column-title'>
+										<strong><a href="#">Two Column: Text Below the Image</a></strong> 
+										<div class="row-actions">
+											<span class='edit_template'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_template'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='status column-status'><i><?php _e( 'default', 'sender' ); ?></i></td>
+								</tr>
+								<tr class="alternate">
+									<th scope="row" class="check-column">
+										<input type="checkbox" name="template_id[]" value=" 3" />
+									</th>
+									<td class='title column-title'>
+										<strong><a href="#">Two Column: Text Content Beside the Image</a></strong> 
+										<div class="row-actions">
+											<span class='edit_template'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_template'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='status column-status'><i><?php _e( 'default', 'sender' ); ?></i></td>
+								</tr>
+								<tr>
+									<th scope="row" class="check-column"><input type="checkbox" name="template_id[]" value=" 4" /></th>
+									<td class='title column-title'>
+										<strong><a href="#">My Custom Template</a></strong> 
+										<div class="row-actions">
+											<span class='edit_template'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_template'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='status column-status'><i><?php _e( 'user`s', 'sender' ); ?></i></td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="tablenav top">
+							<div class="alignleft actions bulkactions">
+								<select name='action'>
+									<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>
+									<option value='trash_templates'><?php _e( 'Trash', 'sender' ); ?></option>
+								</select>
+								<input type="submit" name="" id="doaction" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>"  />
+							</div>
+							<div class='tablenav-pages one-page'><span class="displaying-num">4 <?php _e( 'items', 'sender' ); ?></span></div>
+							<br class="clear" />
+						</div>
+					</div><!-- .wrap .sndrpr-letter-template-page -->
+				</div>
+			<div class="bws_pro_version_tooltip">
+				<div class="bws_info">
+					<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
+					<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>			
+				</div>
+				<div class="bws_pro_links">
+					<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
+					</a>
+				</div>	
+				<div class="clear"></div>					
+			</div>
+		</div>
+	<?php }
+}
+if ( ! function_exists( 'sndr_priorities' ) ) {
+	function sndr_priorities() {
+		global $sndr_plugin_info, $wp_version; ?>
+		<div class="bws_pro_version_bloc">
+			<div class="bws_pro_version_table_bloc">
+				<div class="bws_table_bg"></div>
+					<div class="wrap sndrpr-priorities-list-page" style="margin: 0 10px">
+						<div id="icon-options-general" class="icon32 icon32-bws"></div>
+						<h2><?php _e( 'Priorities', 'sender' ); ?> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
+						<ul class='subsubsub'>
+							<li class='all'><a class="current" href="#"><?php _e( 'All', 'sender' ); ?><span> ( 6 )</span></a> |</li>
+							<li class='trash'><a href="#"><?php _e( 'Trash', 'sender' ); ?><span> ( 0 )</span></a></li>
+						</ul>
+						<p class="search-box">
+							<label class="screen-reader-text"><?php _e( 'search:', 'sender' ); ?></label>
+							<input type="search" name="s" value="" />
+							<input type="submit" name="" class="button" value="<?php _e( 'search', 'sender' ); ?>"  />
+						</p>
+						<div class="tablenav top">
+							<div class="alignleft actions bulkactions">
+								<select name='action'>
+									<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>
+									<option value='trash_priorities'><?php _e( 'Trash', 'sender' ); ?></option>
+								</select>
+								<input type="submit" name="" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>"  />
+							</div>
+							<div class='tablenav-pages one-page'><span class="displaying-num">6 <?php _e( 'items', 'sender' ); ?></span></div>
+							<br class="clear" />
+						</div>
+						<table class="wp-list-table widefat fixed priorities">
+							<thead>
+								<tr>
+									<th scope='col' class='manage-column column-cb check-column'>
+										<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
+										<input type="checkbox" />
+									</th>
+									<th scope='col' class='manage-column column-title sortable desc'>
+										<a href="#"><span><?php _e( 'Title', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+									<th scope='col' class='manage-column column-number sortable desc'>
+										<a href="#"><span><?php _e( 'Number', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th scope='col' class='manage-column column-cb check-column'>
+										<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
+										<input type="checkbox" />
+									</th>
+									<th scope='col' class='manage-column column-title sortable desc'>
+										<a href="#"><span><?php _e( 'Title', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+									<th scope='col' class='manage-column column-number sortable desc'>
+										<a href="#"><span><?php _e( 'Number', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+									</th>
+								</tr>
+							</tfoot>
+							<tbody id="the-list" data-wp-lists='list:priority'>
+								<tr class="alternate">
+									<th scope="row" class="check-column"><input type="checkbox" name="priority_id[]" value="6" /></th>
+									<td class='title column-title'>
+										<strong><a href="#">Other message</a></strong> 
+										<div class="row-actions">
+											<span class='edit_priority'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_priority'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='number column-number'>60</td>
+								</tr>
+								<tr>
+									<th scope="row" class="check-column"><input type="checkbox" name="priority_id[]" value="5" /></th>
+									<td class='title column-title'>
+										<strong><a href="#">Service message</a></strong> 
+										<div class="row-actions">
+											<span class='edit_priority'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_priority'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='number column-number'>50</td>
+								</tr>
+								<tr class="alternate">
+									<th scope="row" class="check-column"><input type="checkbox" name="priority_id[]" value="4" /></th>
+									<td class='title column-title'>
+										<strong><a href="#">Message of congratulations</a></strong> <div class="row-actions">
+											<span class='edit_priority'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_priority'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='number column-number'>40</td>
+								</tr>
+								<tr>
+									<th scope="row" class="check-column"><input type="checkbox" name="priority_id[]" value=" 3" /></th>
+									<td class='title column-title'>
+										<strong><a href="#">Advertising message</a></strong> <div class="row-actions">
+											<span class='edit_priority'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_priority'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='number column-number'>30</td>
+								</tr>
+								<tr class="alternate">
+									<th scope="row" class="check-column"><input type="checkbox" name="priority_id[]" value=" 2" /></th>
+									<td class='title column-title'>
+										<strong><a href="#">Special offer</a></strong> 
+										<div class="row-actions">
+											<span class='edit_priority'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_priority'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='number column-number'>20</td>
+								</tr>
+								<tr>
+									<th scope="row" class="check-column"><input type="checkbox" name="priority_id[]" value=" 1" /></th>
+									<td class='title column-title'>
+										<strong><a href="#">Urgent message</a></strong> <div class="row-actions">
+											<span class='edit_priority'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+											<span class='trash_priority'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+										</div>
+									</td>
+									<td class='number column-number'>10</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="tablenav bottom">
+							<div class="alignleft actions bulkactions">
+								<select name='action2'>
+									<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>
+									<option value='trash_priorities'><?php _e( 'Trash', 'sender' ); ?></option>
+								</select>
+								<input type="submit" name="" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>"  />
+							</div>
+							<div class='tablenav-pages one-page'><span class="displaying-num">6 <?php _e( 'items', 'sender' ); ?></span></div>
+							<br class="clear" />
+						</div>
+					</div><!-- .wrap .sndrpr-priorities-list-page -->
+				</div>
+			<div class="bws_pro_version_tooltip">
+				<div class="bws_info">
+					<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
+					<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>			
+				</div>
+				<div class="bws_pro_links">
+					<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
+					</a>
+				</div>	
+				<div class="clear"></div>					
+			</div>
+		</div>
+	<?php }
+}
+
+
 /**
  * Check if plugin Subscriber by BestWebSoft is installed
  * @return bool  true if Subscriber is installed
@@ -1839,6 +2716,86 @@ if ( ! function_exists( 'sndr_get_admin_email' ) ) {
 	}
 }
 
+if ( ! function_exists ( 'sndr_plugin_banner' ) ) {
+	function sndr_plugin_banner() {
+		global $hook_suffix;	
+		if ( 'plugins.php' == $hook_suffix ) { 
+			global $bstwbsftwppdtplgns_cookie_add, $sndr_plugin_info;	  
+			$banner_array = array(
+				array( 'sndr_hide_banner_on_plugin_page', 'sender/sender.php', '0.5' ),
+				array( 'srrl_hide_banner_on_plugin_page', 'user-role/user-role.php', '1.4' ),
+				array( 'pdtr_hide_banner_on_plugin_page', 'updater/updater.php', '1.12' ),
+				array( 'cntctfrmtdb_hide_banner_on_plugin_page', 'contact-form-to-db/contact_form_to_db.php', '1.2' ),
+				array( 'cntctfrmmlt_hide_banner_on_plugin_page', 'contact-form-multi/contact-form-multi.php', '1.0.7' ),		
+				array( 'gglmps_hide_banner_on_plugin_page', 'bws-google-maps/bws-google-maps.php', '1.2' ),		
+				array( 'fcbkbttn_hide_banner_on_plugin_page', 'facebook-button-plugin/facebook-button-plugin.php', '2.29' ),
+				array( 'twttr_hide_banner_on_plugin_page', 'twitter-plugin/twitter.php', '2.34' ),
+				array( 'pdfprnt_hide_banner_on_plugin_page', 'pdf-print/pdf-print.php', '1.7.1' ),
+				array( 'gglplsn_hide_banner_on_plugin_page', 'google-one/google-plus-one.php', '1.1.4' ),
+				array( 'gglstmp_hide_banner_on_plugin_page', 'google-sitemap-plugin/google-sitemap-plugin.php', '2.8.4' ),
+				array( 'cntctfrmpr_for_ctfrmtdb_hide_banner_on_plugin_page', 'contact-form-pro/contact_form_pro.php', '1.14' ),
+				array( 'cntctfrm_for_ctfrmtdb_hide_banner_on_plugin_page', 'contact-form-plugin/contact_form.php', '3.62' ),
+				array( 'cntctfrm_hide_banner_on_plugin_page', 'contact-form-plugin/contact_form.php', '3.47' ),	
+				array( 'cptch_hide_banner_on_plugin_page', 'captcha/captcha.php', '3.8.4' ),
+				array( 'gllr_hide_banner_on_plugin_page', 'gallery-plugin/gallery-plugin.php', '3.9.1' )				
+			);
+			if ( ! $sndr_plugin_info )
+				$sndr_plugin_info = get_plugin_data( __FILE__ );	
+
+			if ( ! function_exists( 'is_plugin_active_for_network' ) )
+				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+
+			$active_plugins	=	get_option( 'active_plugins' );
+			$all_plugins	=	get_plugins();
+			$this_banner	=	'sndr_hide_banner_on_plugin_page';
+			foreach ( $banner_array as $key => $value ) {
+				if ( $this_banner == $value[0] ) {
+					global $wp_version;
+					if ( ! isset( $bstwbsftwppdtplgns_cookie_add ) ) {
+						echo '<script type="text/javascript" src="' . plugins_url( 'js/c_o_o_k_i_e.js', __FILE__ ) . '"></script>';
+						$bstwbsftwppdtplgns_cookie_add = true;
+					} ?>
+					<script type="text/javascript">		
+							(function($) {
+								$(document).ready( function() {		
+									var hide_message = $.cookie( "sndr_hide_banner_on_plugin_page" );
+									if ( hide_message == "true" ) {
+										$( ".sndr_message" ).css( "display", "none" );
+									} else {
+										$( ".sndr_message" ).css( "display", "block" );
+									}
+									$( ".sndr_close_icon" ).click( function() {
+										$( ".sndr_message" ).css( "display", "none" );
+										$.cookie( "sndr_hide_banner_on_plugin_page", "true", { expires: 32 } );
+									});	
+								});
+							})(jQuery);				
+						</script>
+					<div class="updated" style="padding: 0; margin: 0; border: none; background: none;">					                      
+						<div class="sndr_message bws_banner_on_plugin_page" style="display: none;">
+							<img class="close_icon sndr_close_icon" title="" src="<?php echo plugins_url( 'images/close_banner.png', __FILE__ ); ?>" alt=""/>
+							<div class="button_div">
+								<a class="button" target="_blank" href="http://bestwebsoft.com/plugin/sender-pro/?k=c273031fe5f64b4ea95f2815ae9313b5&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>"><?php _e( 'Learn More', 'sender' ); ?></a>				
+							</div>
+							<div class="text"><?php
+								_e( 'It’s time to upgrade your <strong>Sender plugin</strong> to <strong>PRO</strong> version!', 'sender' ); ?><br />
+								<span><?php _e( 'Extend standard plugin functionality with new great options', 'sender' ); ?>.</span>
+							</div> 		
+							<div class="icon">			
+								<img title="" src="<?php echo plugins_url( 'images/banner.png', __FILE__ ); ?>" alt=""/>	
+							</div>
+						</div>  
+					</div>
+					<?php break;
+				}
+				if ( isset( $all_plugins[ $value[1] ] ) && $all_plugins[ $value[1] ]["Version"] >= $value[2] && ( 0 < count( preg_grep( '/' . str_replace( '/', '\/', $value[1] ) . '/', $active_plugins ) ) || is_plugin_active_for_network( $value[1] ) ) && ! isset( $_COOKIE[ $value[0] ] ) ) {
+					break;
+				}
+			}    
+		}
+	}
+}
+
 /**
  * Add all hooks
  */
@@ -1864,6 +2821,8 @@ add_filter( 'set-screen-option', 'sndr_table_set_option', 10, 3 );
 add_filter( 'sndr_show_action_message', 'sndr_report_actions' );
 add_action( 'wp_ajax_sndr_show_email', 'sndr_get_admin_email' );
 add_filter( 'sndr_subscriber_installed', 'sndr_check_subscriber_install' );
+
+add_action( 'admin_notices', 'sndr_plugin_banner' );
 
 register_deactivation_hook( plugin_basename( __FILE__ ), 'sndr_send_deactivate' );
 register_uninstall_hook( plugin_basename( __FILE__ ), 'sndr_send_uninstall' );
