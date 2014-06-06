@@ -4,7 +4,7 @@ Plugin Name: Sender
 Plugin URI: http://bestwebsoft.com/plugin/
 Description: This plugin send mail to registered users.
 Author: BestWebSoft
-Version: 0.5
+Version: 0.6
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -480,7 +480,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 					} else {
 						$sndr_options['sndr_smtp_settings']['port'] = $sndr_options_default['sndr_smtp_settings']['port'];
 					}
-					$sndr_options['sndr_smtp_settings']['ssl'] =  ( !isset( $_POST['sndr_ssl'] ) ) ? true : false ;
+					$sndr_options['sndr_smtp_settings']['ssl'] =  ( isset( $_POST['sndr_ssl'] ) ) ? true : false ;
 				}
 			}
 			if ( empty( $error ) ) {
@@ -766,7 +766,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 						</tr>
 						<tr class="ad_opt sndr_smtp_options">
 							<th><?php _e( 'Use SMTP SSL', 'sender' ); ?></th>
-							<td><input type='checkbox' name='sndr_ssl' <?php if ( isset( $sndr_options['sndr_smtp_settings']['ssl'] ) ) echo 'checked="checked"'; ?>/></td>
+							<td><input type='checkbox' name='sndr_ssl' <?php if ( $sndr_options['sndr_smtp_settings']['ssl'] ) echo 'checked="checked"'; ?>/></td>
 						</tr>
 					</table>
 					<?php if ( false == sndr_check_subscriber_install() ) {
@@ -1979,7 +1979,7 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 			if ( ! empty( $error ) ) {
 				foreach( $errors as $error ) {
 					$er = $error['try'] + 1;
-					$wpdb->query( "UPDATE `" . $wpdb->prefix . "sndr_users` try=" . $er . " WHERE `mail_users_id`=" . $error['mail_users_id'] . ";" );
+					$wpdb->query( "UPDATE `" . $wpdb->prefix . "sndr_users` SET `try`=" . $er . " WHERE `mail_users_id`=" . $error['mail_users_id'] . ";" );
 				}
 			}
 		} else {
@@ -2013,19 +2013,19 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 										<li class="sndrpr-default-templates"><?php _e( 'Default Templates:', 'sender' ); ?></li>
 										<li class="sndrpr-template-info">
 											<label for="sndrpr-radio-1">
-												<img src="http://wp.saa.loc/wp-content/plugins/sender-pro/images/newsletter-icon-1.jpg" title="One Column"/>
+												<img src="<?php echo plugins_url( 'images/newsletter-icon-1.jpg', __FILE__ ); ?>" title="One Column"/>
 												<p><input id="sndrpr-radio-1" class="sndrpr-default-radio" type="radio" value="1"  name="sndrpr_template_id" style="display: none;"/>One Column</p>
 											</label>
 										</li><!-- .sndrpr-template-info -->
 										<li class="sndrpr-template-info">
 											<label for="sndrpr-radio-2">
-												<img src="http://wp.saa.loc/wp-content/plugins/sender-pro/images/newsletter-icon-2.jpg" title="Two Column: Text Below the Image"/>
+												<img src="<?php echo plugins_url( 'images/newsletter-icon-2.jpg', __FILE__ ); ?>" title="Two Column: Text Below the Image"/>
 												<p><input id="sndrpr-radio-2" class="sndrpr-default-radio" type="radio" value="2"  name="sndrpr_template_id" style="display: none;"/>Two Column: Text Below the Image</p>
 											</label>
 										</li><!-- .sndrpr-template-info -->
 										<li class="sndrpr-template-info">
 											<label for="sndrpr-radio-3">
-												<img src="http://wp.saa.loc/wp-content/plugins/sender-pro/images/newsletter-icon-3.jpg" title="Two Column: Text Content Beside the Image"/>
+												<img src="<?php echo plugins_url( 'images/newsletter-icon-3.jpg', __FILE__ ); ?>" title="Two Column: Text Content Beside the Image"/>
 												<p><input id="sndrpr-radio-3" class="sndrpr-default-radio" type="radio" value="3"  name="sndrpr_template_id" style="display: none;"/>Two Column: Text Content Beside the Image</p>
 											</label>
 										</li><!-- .sndrpr-template-info -->
@@ -2065,7 +2065,7 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 						<tr>
 							<td>
 								<label class="sndrpr-form-label"><?php _e( 'Letter Content:', 'sender' ); ?></label>
-								<div class="wp-core-ui wp-editor-wrap tmce-active"><link rel='stylesheet' id='editor-buttons-css'  href='http://wp.saa.loc/wp-includes/css/editor.min.css?ver=3.9.1' type='text/css' media='all' />
+								<div class="wp-core-ui wp-editor-wrap tmce-active"><link rel='stylesheet' id='editor-buttons-css'  href='#' type='text/css' media='all' />
 									<div>
 										<div class="wp-media-buttons"><a href="#" class="button insert-media add_media" title="Add Media"><span class="wp-media-buttons-icon"></span> <?php _e( 'Add Media' ); ?></a></div>
 										<div class="wp-editor-tabs">
