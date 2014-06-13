@@ -55,6 +55,8 @@ We can fix some things for free for the users who provide translation of our plu
 
 <a href="https://docs.google.com/document/d/1IBdIF7YT9VmThlKDefR6Kv_ts6O-xswfZRuDfaxHXoc/edit" target="_blank">View a Step-by-step Instruction on Sender Installation</a>.
 
+http://www.youtube.com/watch?v=BuBa0lluNbE
+
 == Frequently Asked Questions ==
 
 = How to use the plugin? =
