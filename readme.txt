@@ -4,7 +4,7 @@ Donate link: https://www.2checkout.com/checkout/purchase?sid=1430388&quantity=1&
 Tags: bulk mailing, create mailout, email, e-mail, mail, mailout, php, send mail, send mail to administrator, send mail to users, send mail through smtp server, send mail to all users, send mail to categories of users, send mail with php functions, send mail with interval, send multiple messages, sender, sander, sendar, sendr, sender plugin, users, user categories
 Requires at least: 3.1
 Tested up to: 3.9.1
-Stable tag: 0.6
+Stable tag: 0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,11 +12,13 @@ This plugin sends mail to registered users.
 
 == Description ==
 
-You can send mails to all users or to certain categories of users.
-To send letters, you can use the php functions such as sending emails, wordpress functions, or send an email through the SMTP server.
-You can also do a bulk mailing for a certain period of time.
+This plugin allows you send mails to all users or to certain categories of users via several clicks. 
+To send letters, you can use the php functions such as sending emails, wordpress functions, or send an email through the SMTP 
+server. Also, the plugin provides a bulk mailing for a certain period of time.
 
 http://www.youtube.com/watch?v=kwbkOXrF10M
+
+<a href="http://www.youtube.com/watch?v=BuBa0lluNbE" target="_blank">Video instruction on Installation</a>
 
 <a href="http://wordpress.org/plugins/sender/faq/" target="_blank">FAQ</a>
 
@@ -99,9 +101,14 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
+= V0.7 - 15.07.2014 =
+* Update : We updated all functionality for Email Queue plugin.
+* Bugfix : Bug with sending emails to subscribers twice was fixed.
+* Bugfix : Bug with sending via smtp only html version of mail was fixed.
+
 = V0.6 - 06.06.2014 =
-* Budfix : Fixed the bug of saving settings.
-* Budfix : Fixed the error in database request.
+* Bugfix : Fixed the bug of saving settings.
+* Bugfix : Fixed the error in database request.
 
 = V0.5 - 28.05.2014 =
 * Update : We updated all functionality for wordpress 3.9.1.
@@ -110,7 +117,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 = V0.4 - 01.04.2014 =
 * Update : Screenshots are updated.
 * Update : BWS plugins section is updated.
-* Budfix : Fixed output administrator`s login on settings page.
+* Bugfix : Fixed output administrator`s login on settings page.
 
 = V0.3 - 06.03.2014 =
 * NEW : The possibility to attach a message links in the text to unsubscribe from newsletter ( if Subscriber plugin By BestWebSoft is installed ).
@@ -124,6 +131,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V0.7 - 11.07.2014 =
+We updated all functionality for Email Queue plugin. Bug with sending emails to subscribers twice was fixed. Bug with sending via smtp only html version of mail was fixed.
 
 = V0.6 =
 Fixed the bug of saving settings. Fixed the error in database request.
