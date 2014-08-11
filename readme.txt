@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://www.2checkout.com/checkout/purchase?sid=1430388&quantity=1&product_id=94
 Tags: bulk mailing, create mailout, email, e-mail, mail, mailout, php, send mail, send mail to administrator, send mail to users, send mail through smtp server, send mail to all users, send mail to categories of users, send mail with php functions, send mail with interval, send multiple messages, sender, sander, sendar, sendr, sender plugin, users, user categories
 Requires at least: 3.1
-Tested up to: 3.9.1
-Stable tag: 0.7
+Tested up to: 4.0-beta3
+Stable tag: 0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,9 +12,8 @@ This plugin sends mail to registered users.
 
 == Description ==
 
-This plugin allows you send mails to all users or to certain categories of users via several clicks. 
-To send letters, you can use the php functions such as sending emails, wordpress functions, or send an email through the SMTP 
-server. Also, the plugin provides a bulk mailing for a certain period of time.
+This plugin allows you send mails to all users or to certain categories of users via several clicks.
+To send letters, you can use the php functions such as sending emails, wordpress functions, or send an email through the SMTP server. Also, the plugin provides a bulk mailing for a certain period of time.
 
 http://www.youtube.com/watch?v=kwbkOXrF10M
 
@@ -34,7 +33,7 @@ The author of the Sender also recommends the following plugins:
 * <a href="http://wordpress.org/plugins/updater/">Updater</a> - This plugin updates WordPress core and the plugins to the recent versions. You can also use the auto mode or manual mode for updating and set email notifications.
 There is also a premium version of the plugin <a href="http://bestwebsoft.com/plugin/updater-pro/?k=94d3b6d567ade1cd7a988b80874cdee7">Updater Pro</a> with more useful features available. It can make backup of all your files and database before updating. Also it can forbid some plugins or WordPress Core update.
 
-= Translate =
+= Translation =
 
 * Russian (ru_RU)
 * Ukrainian (uk)
@@ -101,6 +100,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
+= V0.8 - 08.08.2014 =
+* Bugfix : Security Exploit was fixed.
+
 = V0.7 - 15.07.2014 =
 * Update : We updated all functionality for Email Queue plugin.
 * Bugfix : Bug with sending emails to subscribers twice was fixed.
@@ -132,7 +134,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Upgrade Notice ==
 
-= V0.7 - 11.07.2014 =
+= V0.8 =
+Security Exploit was fixed.
+
+= V0.7 =
 We updated all functionality for Email Queue plugin. Bug with sending emails to subscribers twice was fixed. Bug with sending via smtp only html version of mail was fixed.
 
 = V0.6 =

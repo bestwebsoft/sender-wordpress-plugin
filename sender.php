@@ -4,7 +4,7 @@ Plugin Name: Sender
 Plugin URI: http://bestwebsoft.com/plugin/
 Description: This plugin send mail to registered users.
 Author: BestWebSoft
-Version: 0.7
+Version: 0.8
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -160,7 +160,6 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 			'plugin_db_version' 		=> $sndr_db_version,
 			'sndr_run_time'          	=> 1,
 			'sndr_send_count'        	=> 2,
-			//'sndr_confirm'         	=> false,
 			'sndr_select_from_field' 	=> 'admin_name', /* <input type="radio"/> chosen user name or custom  name */
 			'sndr_from_admin_name'   	=> $admin_login, /* <select> admin list */
 			'sndr_from_custom_name'  	=> get_bloginfo( 'name' ), /* custom name in field 'From' */
@@ -403,7 +402,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 			// update settings to send messages
 			// check value from "Interval for sending mail" option
 			if ( isset( $_POST['sndr_mail_run_time'] ) ) {
-				if ( empty( $_POST['sndr_mail_run_time'] ) || 1 > intval( $_POST['sndr_mail_run_time'] ) || ( ! preg_match( '/^\d+$/', $_POST['sndr_mail_run_time'] ) ) ) {
+				if ( empty( $_POST['sndr_mail_run_time'] ) || 1 > intval( $_POST['sndr_mail_run_time'] ) || ! preg_match( '/^\d+$/', $_POST['sndr_mail_run_time'] ) ) {
 					$sndr_options['sndr_run_time'] = '1';
 				} else {
 					if ( 360 < $_POST['sndr_mail_run_time'] ) {
@@ -417,7 +416,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 			}
 			// check value from "Number of messages sent at one time" option
 			if ( isset( $_POST['sndr_mail_send_count'] ) ) {
-				if ( empty( $_POST['sndr_mail_send_count'] ) || 1 > intval( $_POST['sndr_mail_send_count'] ) || ( ! preg_match( '/^\d+$/', $_POST['sndr_mail_send_count'] ) ) ) {
+				if ( empty( $_POST['sndr_mail_send_count'] ) || 1 > intval( $_POST['sndr_mail_send_count'] ) || ! preg_match( '/^\d+$/', $_POST['sndr_mail_send_count'] ) ) {
 					$sndr_options['sndr_send_count'] = '1';
 				} else {
 					if ( 50 < $_POST['sndr_mail_send_count'] ) {
@@ -445,34 +444,29 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 					$error .= __(  "Such a user does not exist. Settings are not saved.", 'sender' );
 				}
 			} else {
-				$sndr_options['sndr_from_email'] = isset( $_POST['sndr_from_email'] ) ? stripslashes( $_POST['sndr_from_email'] ) : $sndr_options_default['sndr_from_email'];
+				if ( isset( $_POST['sndr_from_email'] ) ) {
+					if ( is_email( trim( $_POST['sndr_from_email'] ) ) )
+						$sndr_options['sndr_from_email']  = trim( $_POST['sndr_from_email'] );
+					else
+						$error .= __( "Please enter a valid email address in the 'FROM' field. Settings are not saved.", 'sender' );
+				} else
+					$sndr_options['sndr_from_email']  = $sndr_options_default['sndr_from_email'];
 			}
-			$sndr_options['sndr_from_custom_name']  = isset( $_POST['sndr_from_custom_name'] ) ? $_POST['sndr_from_custom_name'] : $sndr_options_default['sndr_from_custom_name'];
-						
 			if ( empty( $sndr_options['sndr_from_email'] ) ) {
 				$sndr_options['sndr_from_email'] = $sndr_options_default['sndr_from_email'];
-			} elseif ( ! preg_match( "/^((?:[a-z0-9_']+(?:[a-z0-9\-_\.']+)?@[a-z0-9]+(?:[a-z0-9\-\.]+)?\.[a-z]{2,5})[, ]*)+$/i", trim( $sndr_options['sndr_from_email'] ) ) ) {
-				$error .= __( "Please enter a valid email address in the 'FROM' field. Settings are not saved.", 'sender' );
 			}
-			/* this function will be added in stable version of plugin
-			if ( isset( $_POST['sndr_confirm'] ) )
-				$sndr_options['sndr_confirm'] = true;
-			else
-				$sndr_options['sndr_confirm'] = false;
-			*/
 
-			if ( isset( $_POST['sndr_additions_options'] ) )
-				$sndr_options['sndr_display_options'] = true;
-			else
-				$sndr_options['sndr_display_options'] = false;
+			$sndr_options['sndr_from_custom_name']  = isset( $_POST['sndr_from_custom_name'] ) ? stripslashes( esc_html( $_POST['sndr_from_custom_name'] ) ) : $sndr_options_default['sndr_from_custom_name'];
+
+			$sndr_options['sndr_display_options'] = ( isset( $_POST['sndr_additions_options'] ) ) ? true : false;
 
 			if ( $sndr_options['sndr_display_options'] ) {
 
 				$sndr_options['sndr_method'] = $_POST['sndr_mail_method'];
-				if ( 'smtp' == $_POST['sndr_mail_method'] ) {
-					$sndr_options['sndr_smtp_settings']['host']     	= $_POST['sndr_mail_smtp_host'];
-					$sndr_options['sndr_smtp_settings']['accaunt']  	= $_POST['sndr_mail_smtp_accaunt'];
-					$sndr_options['sndr_smtp_settings']['password'] 	= $_POST['sndr_mail_smtp_password'];
+				if ( $_POST['sndr_mail_method'] == 'smtp' ) {
+					$sndr_options['sndr_smtp_settings']['host']     	= stripslashes( esc_html( $_POST['sndr_mail_smtp_host'] ) );
+					$sndr_options['sndr_smtp_settings']['accaunt']  	= stripcslashes( esc_html( $_POST['sndr_mail_smtp_accaunt'] ) );
+					$sndr_options['sndr_smtp_settings']['password'] 	= stripcslashes( esc_html( $_POST['sndr_mail_smtp_password'] ) );
 					// check value from "SMTP port" option
 					if ( isset( $_POST['sndr_mail_smtp_port'] ) ) {
 						if ( empty( $_POST['sndr_mail_smtp_port'] ) || 1 > intval( $_POST['sndr_mail_smtp_port'] ) || ( ! preg_match( '/^\d+$/', $_POST['sndr_mail_smtp_port'] ) ) ) {
@@ -491,7 +485,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 					update_site_option( 'sndr_options', $sndr_options );
 				else
 					update_option( 'sndr_options', $sndr_options );
-				
+
 				$message .= __( "Settings saved.", 'sender' );	
 			}			
 		}
@@ -500,14 +494,14 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 		if ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) {
 			global $wpmu, $bstwbsftwppdtplgns_options;
 
-			$bws_license_key = ( isset( $_POST['bws_license_key'] ) ) ? trim( $_POST['bws_license_key'] ) : "";
+			$bws_license_key = ( isset( $_POST['bws_license_key'] ) ) ? trim( stripslashes( esc_html( $_POST['bws_license_key'] ) ) ) : "";
 
 			if ( isset( $_POST['bws_license_submit'] ) && check_admin_referer( plugin_basename( __FILE__ ), 'bws_license_nonce_name' ) ) {
 				if ( '' != $bws_license_key ) { 
 					if ( 18 != strlen( $bws_license_key ) ) {
 						$error = __( "Wrong license key", 'sender' );
 					} else {
-						$bws_license_plugin = trim( $_POST['bws_license_plugin'] );	
+						$bws_license_plugin = trim( stripslashes( esc_html( $_POST['bws_license_plugin'] ) ) );	
 						if ( isset( $bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['count'] ) && $bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['time'] < ( time() + (24 * 60 * 60) ) ) {
 							$bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['count'] = $bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['count'] + 1;
 						} else {
@@ -711,7 +705,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 								</select>
 								<span class="sndr_info">(<?php _e( "The name of the user be used in the 'From' field.", 'sender' ); ?>)</span><br/>
 								<input type="radio" id="sndr_select_from_custom_field" name="sndr_select_from_field" value="custom_name" <?php if ( 'custom_name' == $sndr_options['sndr_select_from_field'] ) { echo "checked=\"checked\" "; } ?>/> 
-								<input type="text" style="width:200px;" name="sndr_from_custom_name" value="<?php echo stripslashes( $sndr_options['sndr_from_custom_name'] ); ?>"/>
+								<input type="text" style="width:200px;" name="sndr_from_custom_name" value="<?php echo $sndr_options['sndr_from_custom_name']; ?>"/>
 								<span  class="sndr_info">(<?php _e( "This text will be used in the 'FROM' field", 'sender' ); ?>)</span>
 							</td>
 						</tr>
@@ -913,7 +907,7 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 		<div class="sndr-mail wrap" id="sndr-mail">
 			<div id="icon-options-general" class="icon32 icon32-bws"></div>
 			<h2><?php echo $title; ?></h2>
-			<?php $action_message = apply_filters( 'sndr_show_action_message', '' );
+			<?php $action_message = sndr_report_actions();
 			if ( $action_message['error'] ) {
 				$sndr_error = $action_message['error'];
 			} elseif ( $action_message['done'] ) {
@@ -940,7 +934,6 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 								<br />
 								<label>
 									<input class="sndr-role" type="checkbox" name="sndr_user_name[<?php echo $role; ?>]" value="1" <?php echo $checked; ?> />
-
 									<?php echo $role; ?> ( <span class="sndr-count"><?php echo $value; ?></span> )
 								</label>
 							<?php } ?>
@@ -962,18 +955,19 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 					<tr>
 						<th><?php _e( 'Subject', 'sender' ); ?></th>
 						<td>
-							<input id="sndr-mail-subject" type="text" name="sndr_subject" value="<?php if ( isset( $_POST['sndr_subject'] ) && ( ! empty( $_POST['sndr_subject'] ) ) ) { echo $_POST['sndr_subject']; } ?>"/>
+							<input id="sndr-mail-subject" type="text" name="sndr_subject" value="<?php if ( isset( $_POST['sndr_subject'] ) && ( ! empty( $_POST['sndr_subject'] ) ) ) { echo stripslashes( esc_html( $_POST['sndr_subject'] ) ); } ?>"/>
 						</td>
 					</tr>
 					<tr>
 						<th><?php _e( 'Content', 'sender' ); ?></th>
 						<td>
-							<textarea id="sndr-mail-body" name="sndr_content"><?php if ( isset( $_POST['sndr_content'] ) && ( ! empty( $_POST['sndr_content'] ) ) ) { echo $_POST['sndr_content']; } ?></textarea>
+							<textarea id="sndr-mail-body" name="sndr_content"><?php if ( isset( $_POST['sndr_content'] ) && ( ! empty( $_POST['sndr_content'] ) ) ) { echo stripslashes( esc_html( $_POST['sndr_content'] ) ); } ?></textarea>
 						</td>
 					</tr>
 				</table>
 				<p class="submit">
 					<input type="submit" value="<?php _e( 'Send', 'sender' ); ?>" class="button-primary">
+					<?php wp_nonce_field( plugin_basename( __FILE__ ), 'sndr_create_mailout_nonce_name' ); ?>
 				</p>				
 			</form>
 		</div><!-- #sndr-mail .sndr-mail -->	
@@ -1135,11 +1129,13 @@ if ( ! class_exists( 'SNDR_Report_List' ) ) {
 		function column_subject( $item ) {
 			$mail_status = isset( $_REQUEST['mail_status'] ) ? '&mail_status=' . $_REQUEST['mail_status'] : '';
 			$actions = array();
-			$actions['show_report']      = sprintf( '<a class="sndr-show-users-list" href="?page=view_mail_send&action=show_report&report_id=%s&list_paged=0&list_per_page=30' . $mail_status . '">' . __( 'Show Report', 'sender' ) . '</a>', $item['id'] );
+			$actions['show_report'] = '<a class="sndr-show-users-list" href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $item['id'] . '&list_paged=0&list_per_page=30' . $mail_status, 'sndr_show_report' . $item['id'], 'sndr_mail_view_nonce_name' ) . '">' . __( 'Show Report', 'sender' ) . '</a>';
+
 			//$actions['stop_mailout']   = sprintf( '<a href="?page=view_mail_send&action=stop_mailout&report_id[]=%s">' . __( 'Stop Mailout', 'sender' ) . '</a>', $item['id'] );
 			//$actions['trash_report']   = sprintf( '<a href="?page=view_mail_send&action=trash_report&report_id[]=%s">' . __( 'Trash Report', 'sender' ) . '</a>', $item['id'] );
 			//$actions['untrash_report'] = sprintf( '<a href="?page=view_mail_send&action=untrash_report&report_id[]=%s">' . __( 'Restore Report', 'sender' ) . '</a>', $item['id'] );
-			$actions['delete_report']  = sprintf( '<a href="?page=view_mail_send&action=delete_report&report_id[]=%s' . $mail_status . '">' . __( 'Delete Report', 'sender' ) . '</a>', $item['id'] );
+			$actions['delete_report']  = '<a href="' . wp_nonce_url( '?page=view_mail_send&action=delete_report&report_id=' . $item['id'] . $mail_status, 'sndr_delete_report' . $item['id'], 'sndr_mail_view_nonce_name' ) . '">' . __( 'Delete Report', 'sender' ) . '</a>';
+
 			return sprintf( '%1$s %2$s', $item['subject'], $this->row_actions( $actions ) );
 		}
 
@@ -1285,7 +1281,7 @@ if ( ! class_exists( 'SNDR_Report_List' ) ) {
 		 */
 		public function show_report( $mail_id ) {
 			$list_table = null;
-			if( isset( $_REQUEST['action'] ) && 'show_report' == $_REQUEST['action'] && $mail_id == $_REQUEST['report_id'] ) {
+			if ( isset( $_REQUEST['action'] ) && 'show_report' == $_REQUEST['action'] && $mail_id == $_REQUEST['report_id'] && check_admin_referer( 'sndr_show_report' . $mail_id, 'sndr_mail_view_nonce_name' ) ) {
 				global $wpdb;
 				$pagination = '';
 				$report     = $_REQUEST['report_id'];
@@ -1532,7 +1528,7 @@ if ( ! function_exists( 'sndr_mail_view' ) ) {
 		<div class="wrap sndr-report-list-page">
 			<div id="icon-options-general" class="icon32 icon32-bws"></div>
 			<h2><?php _e( 'Sender Reports', 'sender' ); ?></h2>
-			<?php $action_message = apply_filters( 'sndr_show_action_message', '' );
+			<?php $action_message = sndr_report_actions();
 			if ( $action_message['error'] ) {
 				$sndr_error = $action_message['error'];
 			} elseif ( $action_message['done'] ) {
@@ -1547,7 +1543,8 @@ if ( ! function_exists( 'sndr_mail_view' ) ) {
 				<?php $sndr_reports_list->prepare_items();
 				$sndr_reports_list->search_box( __( 'search', 'sender' ), 'sndr' );
 				$bulk_actions = $sndr_reports_list->current_action();
-				$sndr_reports_list->display(); ?>
+				$sndr_reports_list->display(); 
+				wp_nonce_field( plugin_basename( __FILE__ ), 'sndr_mail_view_nonce_name' ); ?>
 			</form>
 		</div><!-- .wrap .sndr-report-list-page -->
 	<?php }
@@ -1561,10 +1558,8 @@ if ( ! function_exists( 'sndr_redirect' ) ) {
 	function sndr_redirect() {
 		if ( isset( $_REQUEST['page'] ) && 'sndr_send_user' == $_REQUEST['page'] 
 			&& isset( $_REQUEST['sndr_content'] ) && ( ! empty( $_REQUEST['sndr_content'] ) )
-			&& ( ( isset( $_POST['sndr_send_all'] ) && ( ! empty( $_POST['sndr_send_all'] ) ) ) 
-				|| ( isset( $_POST['sndr_user_name'] ) && ( ! empty( $_POST['sndr_user_name'] ) ) )
-				)
-			) {
+			&& ( ( isset( $_POST['sndr_send_all'] ) && ( ! empty( $_POST['sndr_send_all'] ) ) ) || ( isset( $_POST['sndr_user_name'] ) && ( ! empty( $_POST['sndr_user_name'] ) ) ) )
+			&& check_admin_referer( plugin_basename( __FILE__ ), 'sndr_create_mailout_nonce_name' ) ) {
 			if ( is_multisite() ) {
 				wp_redirect( network_admin_url( 'admin.php?page=view_mail_send&action=check_errors' ) );
 			} else {
@@ -1608,11 +1603,11 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 				}
 				switch ( $action ) {
 					case 'delete_report':
-					case 'delete_reports':
-						if ( empty( $_REQUEST['report_id'] ) ) {
-							$action_message['error'] = $message_list['empty_reports_list'];
-						} else {
-							foreach( $_REQUEST['report_id'] as $report ) {
+						if ( check_admin_referer( 'sndr_delete_report' . $_GET['report_id'], 'sndr_mail_view_nonce_name' ) ) {
+							if ( empty( $_GET['report_id'] ) ) {
+								$action_message['error'] = $message_list['empty_reports_list'];
+							} else {
+								$report = $_GET['report_id'];
 								// delete all records about mail statistics
 								$wpdb->query( "DELETE FROM `" . $wpdb->prefix . "sndr_users` WHERE `id_mail`=" . $report );
 								if ( $wpdb->last_error ) {
@@ -1627,15 +1622,49 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 								} else {
 									$mail_done ++;
 								}
+								// set message
+								if ( 0 == $error && 0 == $mail_error ) {
+									$action_message['done'] = sprintf( _n( 'Report was deleted.', '%s Reports were deleted.', $done, 'sender' ), number_format_i18n( $done ) );
+								} else {
+									if ( 0 != $error ) {
+										$action_message['error'] = $message_list['report_delete_error'] . '<br/>' . $message_list['try_later'];
+									} elseif ( 0 != $mail_error ) {
+										$action_message['error'] = $message_list['mail_delete_error'] . '<br/>' . $message_list['try_later'];
+									}
+								}
 							}
-							// set message
-							if ( 0 == $error && 0 == $mail_error ) {
-								$action_message['done'] = sprintf( _n( 'Report was deleted.', '%s Reports were deleted.', $done, 'sender' ), number_format_i18n( $done ) );
+						}
+						break;					
+					case 'delete_reports':
+						if ( check_admin_referer( plugin_basename( __FILE__ ), 'sndr_mail_view_nonce_name' ) ) {
+							if ( empty( $_POST['report_id'] ) ) {
+								$action_message['error'] = $message_list['empty_reports_list'];
 							} else {
-								if ( 0 != $error ) {
-									$action_message['error'] = $message_list['report_delete_error'] . '<br/>' . $message_list['try_later'];
-								} elseif ( 0 != $mail_error ) {
-									$action_message['error'] = $message_list['mail_delete_error'] . '<br/>' . $message_list['try_later'];
+								foreach ( $_POST['report_id'] as $report ) {
+									// delete all records about mail statistics
+									$wpdb->query( "DELETE FROM `" . $wpdb->prefix . "sndr_users` WHERE `id_mail`=" . $report );
+									if ( $wpdb->last_error ) {
+										$error ++;
+									} else {
+										$done ++;
+									}
+									// delete mail
+									$wpdb->query( "DELETE FROM `" . $wpdb->prefix . "sndr_mail_send` WHERE `mail_send_id`=" . $report );
+									if ( $wpdb->last_error ) { 
+										$mail_error ++;
+									} else {
+										$mail_done ++;
+									}
+								}
+								// set message
+								if ( 0 == $error && 0 == $mail_error ) {
+									$action_message['done'] = sprintf( _n( 'Report was deleted.', '%s Reports were deleted.', $done, 'sender' ), number_format_i18n( $done ) );
+								} else {
+									if ( 0 != $error ) {
+										$action_message['error'] = $message_list['report_delete_error'] . '<br/>' . $message_list['try_later'];
+									} elseif ( 0 != $mail_error ) {
+										$action_message['error'] = $message_list['mail_delete_error'] . '<br/>' . $message_list['try_later'];
+									}
 								}
 							}
 						}
@@ -1647,16 +1676,16 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 						break;
 				}
 			/* add messages to database and registred cron */
-			} elseif ( isset( $_POST['sndr_subject'] ) && isset( $_POST['sndr_content'] ) ) {
+			} elseif ( isset( $_POST['sndr_subject'] ) && isset( $_POST['sndr_content'] ) && check_admin_referer( plugin_basename( __FILE__ ), 'sndr_create_mailout_nonce_name' ) ) {
 				if ( empty( $_POST['sndr_content'] ) ) { /* if empty content of mail */
 					$action_message['error'] = $message_list['empty_content'];
 				} else {
-					$add_condition = function_exists( 'sbscrbr_users_list' ) ? " AND `black_list`=0 AND `delete`=0": '';
+					$add_condition = function_exists( 'sbscrbr_users_list' ) ? " AND `black_list`=0 AND `delete`=0" : '';
 					if ( isset( $_POST['sndr_send_all'] ) || isset( $_POST['sndr_user_name'] ) ) { // if not empty users list
 						$blogusers_id = array();
 						/* Save mail into database */
 						$mail_data = array(
-							'subject'		=> $_POST['sndr_subject'], 
+							'subject'		=> stripslashes( esc_html( $_POST['sndr_subject'] ) ), 
 							'body'			=> $_POST['sndr_content'],
 							'date_create'	=> time() 
 						);
@@ -1703,7 +1732,7 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 							}
 						}
 						if ( ! empty( $blogusers_id ) ) {
-							do_action( 'sndr_get_mail_data', plugin_basename( __FILE__ ), $blogusers_id, $_POST['sndr_subject'], $_POST['sndr_content'], $last_id );
+							do_action( 'sndr_get_mail_data', plugin_basename( __FILE__ ), $blogusers_id, stripslashes( esc_html( $_POST['sndr_subject'] ) ), $_POST['sndr_content'], $last_id );
 
 							foreach ( $blogusers_id as $bloguser ) {
 								$wpdb->insert( 
@@ -1770,8 +1799,7 @@ if ( ! function_exists( 'sndr_get_update_on_mail_from_email_queue' ) ) {
 if ( ! function_exists( 'sndr_mail_delete_user' ) ) {	
 	function sndr_mail_delete_user( $user_id ) {
 		global $wpdb;
-		$mail = "DELETE FROM `" . $wpdb->prefix . "sndr_mail_users_info` WHERE `id_user` ='" . $user_id . "';";
-		$wpdb->query( $mail );
+		$wpdb->query( "DELETE FROM `" . $wpdb->prefix . "sndr_mail_users_info` WHERE `id_user` ='" . $user_id . "';" );
 	}
 }
 
@@ -1942,14 +1970,7 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 				$mail_message['body']	=	apply_filters( 'sbscrbr_add_unsubscribe_link', $mail_message['body'], $user_info );
 				if ( ! empty( $user_info ) && 1 == $user_info['subscribe'] ) {
 					if ( 'wp_mail' != $sndr_options['sndr_method'] ) {
-						$body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html><head><title></title></head><body>' . stripcslashes( $mail_message['body'] );
-						/* this function will be added in stable version of plugin
-						if ( $sndr_options['sndr_confirm'] ) {
-							$secret_code = md5( 'bws' . $users_mail_send['mail_users_id'] . 'sndr_send' );
-							$body .= '<img src="' . home_url() . plugins_url( "files/get-view.php", __FILE__ ) . '?get_mes='.  $users_mail_send['mail_users_id'] . '&s=' . $secret_code.  '" />';
-						} */
-
-						$body .= "</body></html>";
+						$body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html><head><title></title></head><body>' . stripcslashes( $mail_message['body'] ) . '</body></html>';
 					} else {
 						$body = stripcslashes( $mail_message['body'] );
 					}
@@ -1983,7 +2004,7 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 						$mail->Host = $sndr_options['sndr_smtp_settings']['host'];
 						$mail->Port = $sndr_options['sndr_smtp_settings']['port']; 
 						$mail->Username = $sndr_options['sndr_smtp_settings']['accaunt'];
-						$mail->Password = $sndr_options['sndr_smtp_settings']['password'];
+						$mail->Password = html_entity_decode( $sndr_options['sndr_smtp_settings']['password'] );
 						$mail->SetFrom( $from_email, $from_name );
 						$mail->isHTML( true );
 						$mail->Subject = $subject;
@@ -2771,6 +2792,7 @@ if ( ! function_exists ( 'sndr_plugin_banner' ) ) {
 		if ( 'plugins.php' == $hook_suffix ) { 
 			global $bstwbsftwppdtplgns_cookie_add, $sndr_plugin_info;	  
 			$banner_array = array(
+				array( 'lmtttmpts_hide_banner_on_plugin_page', 'limit-attempts/limit-attempts.php', '1.0.2' ),
 				array( 'sndr_hide_banner_on_plugin_page', 'sender/sender.php', '0.5' ),
 				array( 'srrl_hide_banner_on_plugin_page', 'user-role/user-role.php', '1.4' ),
 				array( 'pdtr_hide_banner_on_plugin_page', 'updater/updater.php', '1.12' ),
@@ -2868,7 +2890,6 @@ add_action( 'profile_update', 'sndr_update', 10, 2 );
 add_filter( 'cron_schedules', 'sndr_more_reccurences' );
 add_action( 'sndr_mail_hook', 'sndr_cron_mail' );
 add_filter( 'set-screen-option', 'sndr_table_set_option', 10, 3 );
-add_filter( 'sndr_show_action_message', 'sndr_report_actions' );
 add_action( 'wp_ajax_sndr_show_email', 'sndr_get_admin_email' );
 add_filter( 'sndr_subscriber_installed', 'sndr_check_subscriber_install' );
 
