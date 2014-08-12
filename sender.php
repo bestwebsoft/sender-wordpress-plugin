@@ -4,7 +4,7 @@ Plugin Name: Sender
 Plugin URI: http://bestwebsoft.com/plugin/
 Description: This plugin send mail to registered users.
 Author: BestWebSoft
-Version: 0.8
+Version: 0.9
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -767,7 +767,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 						</tr>
 					</table>
 					<?php if ( false == sndr_check_subscriber_install() ) {
-						echo '<p>' . __( 'If you want to allows your site visitors to subscribe for newsletters, coming from your website, use', 'subscriber' ) . ' <a href="http://wordpress.org/plugins/subscriber/">Subscriber plugin</a> ' . __( 'that is an exclusive add-on for the Sender Plugin by BestWebSoft.', 'subscriber' ) . '</p>';
+						echo '<p>' . __( 'If you want to allows your site visitors to subscribe for newsletters, coming from your website, use', 'sender' ) . ' <a href="http://wordpress.org/plugins/subscriber/">Subscriber plugin</a> ' . __( 'that is an exclusive add-on for the Sender Plugin by BestWebSoft.', 'sender' ) . '</p>';
 					} ?>
 					<p class="submit">
 						<input type="submit" id="settings-form-submit" class="button-primary" value="<?php _e( 'Save Changes', 'sender' ) ?>" />
@@ -1129,12 +1129,11 @@ if ( ! class_exists( 'SNDR_Report_List' ) ) {
 		function column_subject( $item ) {
 			$mail_status = isset( $_REQUEST['mail_status'] ) ? '&mail_status=' . $_REQUEST['mail_status'] : '';
 			$actions = array();
-			$actions['show_report'] = '<a class="sndr-show-users-list" href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $item['id'] . '&list_paged=0&list_per_page=30' . $mail_status, 'sndr_show_report' . $item['id'], 'sndr_mail_view_nonce_name' ) . '">' . __( 'Show Report', 'sender' ) . '</a>';
-
+			$actions['show_report'] = '<a class="sndr-show-users-list" href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $item['id'] . '&list_paged=0&list_per_page=30' . $mail_status, 'sndr_show_report' . $item['id'] ) . '">' . __( 'Show Report', 'sender' ) . '</a>';
 			//$actions['stop_mailout']   = sprintf( '<a href="?page=view_mail_send&action=stop_mailout&report_id[]=%s">' . __( 'Stop Mailout', 'sender' ) . '</a>', $item['id'] );
 			//$actions['trash_report']   = sprintf( '<a href="?page=view_mail_send&action=trash_report&report_id[]=%s">' . __( 'Trash Report', 'sender' ) . '</a>', $item['id'] );
 			//$actions['untrash_report'] = sprintf( '<a href="?page=view_mail_send&action=untrash_report&report_id[]=%s">' . __( 'Restore Report', 'sender' ) . '</a>', $item['id'] );
-			$actions['delete_report']  = '<a href="' . wp_nonce_url( '?page=view_mail_send&action=delete_report&report_id=' . $item['id'] . $mail_status, 'sndr_delete_report' . $item['id'], 'sndr_mail_view_nonce_name' ) . '">' . __( 'Delete Report', 'sender' ) . '</a>';
+			$actions['delete_report']  = '<a href="' . wp_nonce_url( '?page=view_mail_send&action=delete_report&report_id=' . $item['id'] . $mail_status, 'sndr_delete_report' . $item['id'] ) . '">' . __( 'Delete Report', 'sender' ) . '</a>';
 
 			return sprintf( '%1$s %2$s', $item['subject'], $this->row_actions( $actions ) );
 		}
@@ -1281,7 +1280,7 @@ if ( ! class_exists( 'SNDR_Report_List' ) ) {
 		 */
 		public function show_report( $mail_id ) {
 			$list_table = null;
-			if ( isset( $_REQUEST['action'] ) && 'show_report' == $_REQUEST['action'] && $mail_id == $_REQUEST['report_id'] && check_admin_referer( 'sndr_show_report' . $mail_id, 'sndr_mail_view_nonce_name' ) ) {
+			if ( isset( $_REQUEST['action'] ) && 'show_report' == $_REQUEST['action'] && $mail_id == $_REQUEST['report_id'] && check_admin_referer( 'sndr_show_report' . $mail_id ) ) {
 				global $wpdb;
 				$pagination = '';
 				$report     = $_REQUEST['report_id'];
@@ -1603,7 +1602,7 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 				}
 				switch ( $action ) {
 					case 'delete_report':
-						if ( check_admin_referer( 'sndr_delete_report' . $_GET['report_id'], 'sndr_mail_view_nonce_name' ) ) {
+						if ( check_admin_referer( 'sndr_delete_report' . $_GET['report_id'] ) ) {
 							if ( empty( $_GET['report_id'] ) ) {
 								$action_message['error'] = $message_list['empty_reports_list'];
 							} else {
@@ -1624,7 +1623,7 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 								}
 								// set message
 								if ( 0 == $error && 0 == $mail_error ) {
-									$action_message['done'] = sprintf( _n( 'Report was deleted.', '%s Reports were deleted.', $done, 'sender' ), number_format_i18n( $done ) );
+									$action_message['done'] = sprintf( _nx( __( 'Report was deleted.', 'sender'), '%s&nbsp;' . __( 'Reports were deleted.', 'sender'), $done, 'sender' ), number_format_i18n( $done ) );
 								} else {
 									if ( 0 != $error ) {
 										$action_message['error'] = $message_list['report_delete_error'] . '<br/>' . $message_list['try_later'];
@@ -1658,7 +1657,7 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 								}
 								// set message
 								if ( 0 == $error && 0 == $mail_error ) {
-									$action_message['done'] = sprintf( _n( 'Report was deleted.', '%s Reports were deleted.', $done, 'sender' ), number_format_i18n( $done ) );
+									$action_message['done'] = sprintf( _nx( __( 'Report was deleted.', 'sender'), '%s&nbsp;' . __( 'Reports were deleted.', 'sender'), $done, 'sender' ), number_format_i18n( $done ) );
 								} else {
 									if ( 0 != $error ) {
 										$action_message['error'] = $message_list['report_delete_error'] . '<br/>' . $message_list['try_later'];

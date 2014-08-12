@@ -4,7 +4,7 @@ Donate link: https://www.2checkout.com/checkout/purchase?sid=1430388&quantity=1&
 Tags: bulk mailing, create mailout, email, e-mail, mail, mailout, php, send mail, send mail to administrator, send mail to users, send mail through smtp server, send mail to all users, send mail to categories of users, send mail with php functions, send mail with interval, send multiple messages, sender, sander, sendar, sendr, sender plugin, users, user categories
 Requires at least: 3.1
 Tested up to: 4.0-beta3
-Stable tag: 0.8
+Stable tag: 0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
+= V0.9 - 12.08.2014 =
+* Bugfix : Bug with errors on report list page on WP versions prior to 3.6 was fixed.
+
 = V0.8 - 08.08.2014 =
 * Bugfix : Security Exploit was fixed.
 
@@ -133,6 +136,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V0.9 =
+Bug with errors on report list page on WP versions prior to 3.6 was fixed.
 
 = V0.8 =
 Security Exploit was fixed.
