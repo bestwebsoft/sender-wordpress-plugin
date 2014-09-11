@@ -173,12 +173,12 @@
 	});
 })(jQuery);
 
-function sndrShowEmail ( adminName ) {
+function sndrShowEmail( adminName ) {
 	( function( $ ) {
 		$.ajax({
 			type: "POST",
 			url: ajaxurl,
-			data: { action: 'sndr_show_email', display_name: adminName },
+			data: { action: 'sndr_show_email', display_name: adminName, 'sndr_nonce' : sndrScriptVars.sndr_ajax_nonce },
 			beforeSend: function() {
 				$( 'input[name="sndr_from_email"]' ).parent().append( '<div class="sndr-preloader"></div>' );
 			},
