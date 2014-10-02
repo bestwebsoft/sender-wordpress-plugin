@@ -2,9 +2,9 @@
 Contributors: bestwebsoft
 Donate link: https://www.2checkout.com/checkout/purchase?sid=1430388&quantity=1&product_id=94
 Tags: bulk mailing, create mailout, email, e-mail, mail, mailout, php, send mail, send mail to administrator, send mail to users, send mail through smtp server, send mail to all users, send mail to categories of users, send mail with php functions, send mail with interval, send multiple messages, sender, sander, sendar, sendr, sender plugin, users, user categories
-Requires at least: 3.1
+Requires at least: 3.3
 Tested up to: 4.0
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,6 +83,10 @@ For sending letters in plugin used wp_cron - Wordpress function for periodic exe
 1. Simultaneous sending of a large number of messages can slow down your site. 
 2. Your site can be identified as a source of spamming, which can lead to blocking of your website or hosting-account.
 
+= There is something wrong with the date and status of my mails in the Sender Reports table while switching between free & PRO versions. Is there any way to fix that? =
+
+Try to deactivate and activate the version you want to use (either free or PRO).
+
 = I have some problems with the plugin's work. What Information should I provide to receive proper support? =
 
 Please make sure that the problem hasn't been discussed yet on our forum (<a href="http://support.bestwebsoft.com" target="_blank">http://support.bestwebsoft.com</a>). If no, please provide the following data along with your problem's description:
@@ -99,6 +103,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 4. Plugin`s "Report" page with subscribers list. 
 
 == Changelog ==
+
+= V1.0.1 - 02.10.2014 =
+* Bugfix : Updating user data no more automatically unsubscribes user from the mailing list.
 
 = V1.0.0 - 11.09.2014 =
 * Update : We updated all functionality for wordpress 4.0.
@@ -140,6 +147,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.0.1 =
+Updating user data no more automatically unsubscribes user from the mailing list.
 
 = V1.0.0 =
 We updated all functionality for wordpress 4.0. We added wpnonce for links in the table.
