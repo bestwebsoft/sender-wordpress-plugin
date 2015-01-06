@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://www.2checkout.com/checkout/purchase?sid=1430388&quantity=1&product_id=94
 Tags: bulk mailing, create mailout, email, e-mail, mail, mailout, php, send mail, send mail to administrator, send mail to users, send mail through smtp server, send mail to all users, send mail to categories of users, send mail with php functions, send mail with interval, send multiple messages, sender, sander, sendar, sendr, sender plugin, users, user categories
 Requires at least: 3.3
-Tested up to: 4.0
-Stable tag: 1.0.1
+Tested up to: 4.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,7 +23,7 @@ http://www.youtube.com/watch?v=kwbkOXrF10M
 
 <a href="http://support.bestwebsoft.com" target="_blank">Support</a>
 
-<a href="http://bestwebsoft.com/plugin/sender-pro/?k=f658a48b03f44d5d82ec3cbccba9664b" target="_blank">Upgrade to Pro Version</a>
+<a href="http://bestwebsoft.com/products/sender/?k=f658a48b03f44d5d82ec3cbccba9664b" target="_blank">Upgrade to Pro Version</a>
 
 = Recommended Plugins =
 
@@ -31,7 +31,7 @@ The author of the Sender also recommends the following plugins:
 
 * <a href="http://wordpress.org/plugins/subscriber/">Subscriber</a> - This plugin is an exclusive add-on for the Sender Plugin. This plugin allows your site visitors to subscribe for newsletters, coming from your website.
 * <a href="http://wordpress.org/plugins/updater/">Updater</a> - This plugin updates WordPress core and the plugins to the recent versions. You can also use the auto mode or manual mode for updating and set email notifications.
-There is also a premium version of the plugin <a href="http://bestwebsoft.com/plugin/updater-pro/?k=94d3b6d567ade1cd7a988b80874cdee7">Updater Pro</a> with more useful features available. It can make backup of all your files and database before updating. Also it can forbid some plugins or WordPress Core update.
+There is also a premium version of the plugin <a href="http://bestwebsoft.com/products/updater/?k=94d3b6d567ade1cd7a988b80874cdee7">Updater Pro</a> with more useful features available. It can make backup of all your files and database before updating. Also it can forbid some plugins or WordPress Core update.
 
 = Translation =
 
@@ -104,7 +104,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
-= V1.0.1 - 02.10.2014 =
+= V1.0.2 - 06.01.2015 = 
+* Update : BWS plugins section is updated.
+* Update : We updated all functionality for wordpress 4.1.
+
+= V1.0.1 - 02.10.2014 = 
 * Bugfix : Updating user data no more automatically unsubscribes user from the mailing list.
 
 = V1.0.0 - 11.09.2014 =
@@ -147,6 +151,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.0.2 = 
+BWS plugins section is updated. We updated all functionality for wordpress 4.1.
 
 = V1.0.1 =
 Updating user data no more automatically unsubscribes user from the mailing list.

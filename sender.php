@@ -1,15 +1,15 @@
 <?php
 /*
 Plugin Name: Sender
-Plugin URI: http://bestwebsoft.com/plugin/
+Plugin URI: http://bestwebsoft.com/products/
 Description: This plugin send mail to registered users.
 Author: BestWebSoft
-Version: 1.0.1
+Version: 1.0.2
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
 
-/*  © Copyright 2014  BestWebSoft  ( http://support.bestwebsoft.com )
+/*  © Copyright 2015  BestWebSoft  ( http://support.bestwebsoft.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -32,13 +32,13 @@ License: GPLv2 or later
 
 if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 	function sndr_admin_default_setup() {
-		global $wp_version, $bstwbsftwppdtplgns_options, $wpmu, $bstwbsftwppdtplgns_added_menu;
+		global $wp_version, $bstwbsftwppdtplgns_options, $bstwbsftwppdtplgns_added_menu;
 		$bws_menu_info = get_plugin_data( plugin_dir_path( __FILE__ ) . "bws_menu/bws_menu.php" );
 		$bws_menu_version = $bws_menu_info["Version"];
 		$base = plugin_basename( __FILE__ );
 
 		if ( ! isset( $bstwbsftwppdtplgns_options ) ) {
-			if ( 1 == $wpmu ) {
+			if ( is_multisite() ) {
 				if ( ! get_site_option( 'bstwbsftwppdtplgns_options' ) )
 					add_site_option( 'bstwbsftwppdtplgns_options', array(), '', 'yes' );
 				$bstwbsftwppdtplgns_options = get_site_option( 'bstwbsftwppdtplgns_options' );
@@ -52,11 +52,17 @@ if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 		if ( isset( $bstwbsftwppdtplgns_options['bws_menu_version'] ) ) {
 			$bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] = $bws_menu_version;
 			unset( $bstwbsftwppdtplgns_options['bws_menu_version'] );
-			update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
+			if ( is_multisite() )
+				update_site_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
+			else
+				update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
 			require_once( dirname( __FILE__ ) . '/bws_menu/bws_menu.php' );
 		} else if ( ! isset( $bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] ) || $bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] < $bws_menu_version ) {
 			$bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] = $bws_menu_version;
-			update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
+			if ( is_multisite() )
+				update_site_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
+			else
+				update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
 			require_once( dirname( __FILE__ ) . '/bws_menu/bws_menu.php' );
 		} else if ( ! isset( $bstwbsftwppdtplgns_added_menu ) ) {
 			$plugin_with_newer_menu = $base;
@@ -70,8 +76,8 @@ if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 			if ( file_exists( ABSPATH . $wp_content_dir . '/plugins/' . $plugin_with_newer_menu[0] . '/bws_menu/bws_menu.php' ) )
 				require_once( ABSPATH . $wp_content_dir . '/plugins/' . $plugin_with_newer_menu[0] . '/bws_menu/bws_menu.php' );
 			else
-				require_once( dirname( __FILE__ ) . '/bws_menu/bws_menu.php' );
-			$bstwbsftwppdtplgns_added_menu = true;
+				require_once( dirname( __FILE__ ) . '/bws_menu/bws_menu.php' );	
+			$bstwbsftwppdtplgns_added_menu = true;			
 		}
 
 		$icon_path    = $wp_version < 3.8 ? plugins_url( "images/plugin_icon_37.png",  __FILE__ ) : plugins_url( "images/plugin_icon_38.png",  __FILE__ );
@@ -157,7 +163,7 @@ if ( ! function_exists ( 'sndr_version_check' ) ) {
  */
 if ( ! function_exists( 'sndr_register_settings' ) ) {
 	function sndr_register_settings() {
-		global $wpmu, $wpdb, $sndr_options, $sndr_options_default, $sndr_plugin_info;
+		global $wpdb, $sndr_options, $sndr_options_default, $sndr_plugin_info;
 		$sndr_db_version = '0.3';
 
 		$admin_email = get_bloginfo( 'admin_email' );
@@ -448,7 +454,7 @@ if ( ! function_exists ( 'sndr_admin_head' ) ) {
  */
 if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 	function sndr_admin_settings_content() {
-		global $wp_version, $wpdb, $wpmu, $sndr_options, $sndr_options_default, $title, $sndr_plugin_info;
+		global $wp_version, $wpdb, $sndr_options, $sndr_options_default, $title, $sndr_plugin_info;
 		$display_add_options = $message = $error = '';
 
 		if ( empty( $sndr_options ) ) {
@@ -556,7 +562,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 
 		/* GO PRO */
 		if ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) {
-			global $wpmu, $bstwbsftwppdtplgns_options;
+			global $bstwbsftwppdtplgns_options;
 
 			$bws_license_key = ( isset( $_POST['bws_license_key'] ) ) ? trim( stripslashes( esc_html( $_POST['bws_license_key'] ) ) ) : "";
 
@@ -658,7 +664,10 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 								$pro_plugin_is_activated = true;
 							}
 						}
-						update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
+						if ( is_multisite() )
+							update_site_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
+						else
+							update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
 			 		}
 			 	} else {
 		 			$error = __( "Please, enter Your license key", 'sender' );
@@ -682,7 +691,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 			<h2><?php _e( "Sender Settings", 'sender' ); ?></h2>
 			<h2 class="nav-tab-wrapper">
 				<a class="nav-tab<?php if ( ! isset( $_GET['action'] ) ) echo ' nav-tab-active'; ?>" href="admin.php?page=sndr_settings"><?php _e( 'Settings', 'sender' ); ?></a>
-				<a class="nav-tab" href="http://bestwebsoft.com/plugin/sender/#faq" target="_blank"><?php _e( 'FAQ', 'sender' ); ?></a>
+				<a class="nav-tab" href="http://bestwebsoft.com/products/sender/faq/" target="_blank"><?php _e( 'FAQ', 'sender' ); ?></a>
 				<a class="nav-tab bws_go_pro_tab<?php if ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=sndr_settings&amp;action=go_pro"><?php _e( 'Go PRO', 'sender' ); ?></a>
 			</h2>
 			<div class="updated fade" <?php if ( empty( $message ) ) echo "style=\"display:none\""; ?>><p><strong><?php echo $message; ?></strong></p></div>
@@ -747,10 +756,10 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 						<div class="bws_pro_version_tooltip">
 							<div class="bws_info">
 								<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
-								<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+								<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
 							</div>
 							<div class="bws_pro_links">
-								<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+								<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
 									<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
 								</a>
 							</div>	
@@ -865,7 +874,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 					<form method="post" action="admin.php?page=sndr_settings&amp;action=go_pro">
 						<p>
 							<?php _e( 'You can download and activate', 'sender' ); ?> 
-							<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro">PRO</a> 
+							<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro">PRO</a> 
 							<?php _e( 'version of this plugin by entering Your license key.', 'sender' ); ?><br />
 							<span style="color: #888888;font-size: 10px;">
 								<?php _e( 'You can find your license key on your personal page Client area, by clicking on the link', 'sender' ); ?> 
@@ -906,6 +915,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 	function sndr_admin_mail_send() {
 		global $user, $wpdb, $title;
+		$sndr_error = $sndr_message = '';
 		$uesr_count_by_roles = 0;
 		$roles               = array();
 		$add_condition       = function_exists( 'sbscrbr_users_list' ) ? " AND `" . $wpdb->prefix . "sndr_mail_users_info`.`black_list`=0 AND `" . $wpdb->prefix . "sndr_mail_users_info`.`delete`=0 " : '';
@@ -2002,7 +2012,6 @@ if ( ! function_exists( 'sndr_update' ) ) {
  */
 if ( ! function_exists( 'sndr_more_reccurences' ) ) {
 	function sndr_more_reccurences( $schedules ) {
-		global $wpmu;
 		$sndr_options = ( is_multisite() ) ? get_site_option( 'sndr_options' ) : get_option( 'sndr_options' );
 		$schedules['my_period'] = array( 'interval' => $sndr_options['sndr_run_time'] * 60, 'display' => __( 'Your interval', 'sender' ) );
 		return $schedules;
@@ -2015,7 +2024,7 @@ if ( ! function_exists( 'sndr_more_reccurences' ) ) {
  */
 if ( ! function_exists( 'sndr_cron_mail' ) ) {
 	function sndr_cron_mail() {
-		global $wp_version, $wpdb, $sndr_options, $wpmu;
+		global $wp_version, $wpdb, $sndr_options;
 		$sndr_options = ( is_multisite() ) ? get_site_option( 'sndr_options' ) : get_option( 'sndr_options' );
 		if ( ! function_exists( 'wp_get_current_user' ) ) {
 			require_once( ABSPATH . "wp-includes/pluggable.php" ); 
@@ -2245,10 +2254,10 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 			<div class="bws_pro_version_tooltip">
 				<div class="bws_info">
 					<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
-					<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+					<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
 				</div>
 				<div class="bws_pro_links">
-					<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+					<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
 						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
 					</a>
 				</div>	
@@ -2371,10 +2380,10 @@ if ( ! function_exists( 'sndr_letters_list' ) ) {
 			<div class="bws_pro_version_tooltip">
 				<div class="bws_info">
 					<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
-					<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+					<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
 				</div>
 				<div class="bws_pro_links">
-					<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+					<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
 						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
 					</a>
 				</div>
@@ -2493,10 +2502,10 @@ if ( ! function_exists( 'sndr_distribution_list' ) ) {
 			<div class="bws_pro_version_tooltip">
 				<div class="bws_info">
 					<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
-					<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+					<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
 				</div>
 				<div class="bws_pro_links">
-					<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+					<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
 						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
 					</a>
 				</div>	
@@ -2634,10 +2643,10 @@ if ( ! function_exists( 'sndr_letter_templates' ) ) {
 			<div class="bws_pro_version_tooltip">
 				<div class="bws_info">
 					<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
-					<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+					<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
 				</div>
 				<div class="bws_pro_links">
-					<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+					<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
 						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
 					</a>
 				</div>
@@ -2786,10 +2795,10 @@ if ( ! function_exists( 'sndr_priorities' ) ) {
 			<div class="bws_pro_version_tooltip">
 				<div class="bws_info">
 					<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
-					<a href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+					<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
 				</div>
 				<div class="bws_pro_links">
-					<a class="bws_button" href="http://bestwebsoft.com/plugin/sender-pro/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>#purchase" target="_blank" title="Sender Pro Plugin">
+					<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
 						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
 					</a>
 				</div>	
@@ -2947,7 +2956,7 @@ if ( ! function_exists ( 'sndr_plugin_banner' ) ) {
 						<div class="sndr_message bws_banner_on_plugin_page" style="display: none;">
 							<img class="close_icon sndr_close_icon" title="" src="<?php echo plugins_url( 'images/close_banner.png', __FILE__ ); ?>" alt=""/>
 							<div class="button_div">
-								<a class="button" target="_blank" href="http://bestwebsoft.com/plugin/sender-pro/?k=c273031fe5f64b4ea95f2815ae9313b5&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>"><?php _e( 'Learn More', 'sender' ); ?></a>
+								<a class="button" target="_blank" href="http://bestwebsoft.com/products/sender/?k=c273031fe5f64b4ea95f2815ae9313b5&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>"><?php _e( 'Learn More', 'sender' ); ?></a>
 							</div>
 							<div class="text"><?php
 								_e( 'It’s time to upgrade your <strong>Sender plugin</strong> to <strong>PRO</strong> version!', 'sender' ); ?><br />
