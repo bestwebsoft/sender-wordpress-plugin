@@ -79,58 +79,11 @@
 		});
 
 		/**
-		 * Select/deselect neccessary elements
-		 */
-		$( 'select[name="sndr_from_admin_name"]' ).focus( function() {
-			$( '#sndr_select_from_field' ).attr( 'checked', 'checked' );
-			$( 'input[name="sndr_from_email"]' ).attr( 'disabled', true );
-			sndrShowEmail( $( this ).val() );
-		}).change( function() {
-			sndrShowEmail( $( this ).val() );
-		});
-
-		$( 'input[name="sndr_from_custom_name"]' ).focus( function() {
-			$('#sndr_select_from_custom_field').attr( 'checked', 'checked' );
-			$( 'input[name="sndr_from_email"]' ).attr( 'disabled', false ).val( '' );
-		});
-
-		if ( $('#sndr_select_from_field').is( ':checked' ) ) {
-			$( 'input[name="sndr_from_email"]' ).attr( 'disabled', true );
-		}
-		$( '#sndr_select_from_field' ).change( function() {
-			if ( $( this ).is( ':checked' ) ) {
-				$( 'input[name="sndr_from_email"]' ).attr( 'disabled', true );
-				sndrShowEmail( $( 'select[name="sndr_from_admin_name"]' ).val() );
-			}
-		});
-
-		$( '#sndr_select_from_custom_field' ).change( function() {
-			if ( $( this ).is( ':checked' ) ) {
-				$( 'input[name="sndr_from_email"]' ).attr( 'disabled', false ).val( '' );
-			}
-		});
-
-		/**
 		 * Show/hide some blocks on plugin settings page
 		 */
 		var phpRadio    = $( '#sndr_wp_mail_radio, #sndr_php_mail_radio' ),
 			smtpRadio   = $( '#sndr_smtp_mail_radio' ),
 			smtpOptions = $( '.sndr_smtp_options' );
-		$( '#change_options' ).click( function() {
-			if ( $( this ).is( ':checked' ) ) {
-				$( '.ad_opt' ).each( function() {
-					if( $( this ).hasClass( 'sndr_smtp_options' ) ) {
-						if ( smtpRadio.is( ':checked' ) ) {
-							$( this ).show();
-						}
-					} else {
-						$( this ).show();
-					}
-				})
-			} else {
-				$( '.ad_opt' ).hide();
-			}
-		});
 		phpRadio.click( function() {
 			smtpOptions.hide();
 		});
@@ -172,24 +125,3 @@
 		}
 	});
 })(jQuery);
-
-function sndrShowEmail( adminName ) {
-	( function( $ ) {
-		$.ajax({
-			type: "POST",
-			url: ajaxurl,
-			data: { action: 'sndr_show_email', display_name: adminName, 'sndr_nonce' : sndrScriptVars.sndr_ajax_nonce },
-			beforeSend: function() {
-				$( 'input[name="sndr_from_email"]' ).parent().append( '<div class="sndr-preloader"></div>' );
-			},
-			success: function ( result ) {
-				$( '.sndr-preloader' ).remove();
-				$( 'input[name="sndr_from_email"]' ).val( result );
-			},
-			error: function( request, status, error ) {
-				alert( error + request.status );
-				errors == 0;
-			}
-		});
-	})(jQuery);
-}
