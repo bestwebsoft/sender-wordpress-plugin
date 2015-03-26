@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: Sender
+Plugin Name: Sender by BestWebSoft
 Plugin URI: http://bestwebsoft.com/products/
 Description: This plugin send mail to registered users.
 Author: BestWebSoft
-Version: 1.0.3
+Version: 1.0.4
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -33,67 +33,22 @@ License: GPLv2 or later
 if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 	function sndr_admin_default_setup() {
 		global $wp_version, $bstwbsftwppdtplgns_options, $bstwbsftwppdtplgns_added_menu;
-		$bws_menu_info = get_plugin_data( plugin_dir_path( __FILE__ ) . "bws_menu/bws_menu.php" );
-		$bws_menu_version = $bws_menu_info["Version"];
-		$base = plugin_basename( __FILE__ );
-
-		if ( ! isset( $bstwbsftwppdtplgns_options ) ) {
-			if ( is_multisite() ) {
-				if ( ! get_site_option( 'bstwbsftwppdtplgns_options' ) )
-					add_site_option( 'bstwbsftwppdtplgns_options', array(), '', 'yes' );
-				$bstwbsftwppdtplgns_options = get_site_option( 'bstwbsftwppdtplgns_options' );
-			} else {
-				if ( ! get_option( 'bstwbsftwppdtplgns_options' ) )
-					add_option( 'bstwbsftwppdtplgns_options', array(), '', 'yes' );
-				$bstwbsftwppdtplgns_options = get_option( 'bstwbsftwppdtplgns_options' );
-			}
+		if ( is_multisite()  && ! is_network_admin() ) {
+			return;
 		}
-
-		if ( isset( $bstwbsftwppdtplgns_options['bws_menu_version'] ) ) {
-			$bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] = $bws_menu_version;
-			unset( $bstwbsftwppdtplgns_options['bws_menu_version'] );
-			if ( is_multisite() )
-				update_site_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
-			else
-				update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
-			require_once( dirname( __FILE__ ) . '/bws_menu/bws_menu.php' );
-		} else if ( ! isset( $bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] ) || $bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] < $bws_menu_version ) {
-			$bstwbsftwppdtplgns_options['bws_menu']['version'][ $base ] = $bws_menu_version;
-			if ( is_multisite() )
-				update_site_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
-			else
-				update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
-			require_once( dirname( __FILE__ ) . '/bws_menu/bws_menu.php' );
-		} else if ( ! isset( $bstwbsftwppdtplgns_added_menu ) ) {
-			$plugin_with_newer_menu = $base;
-			foreach ( $bstwbsftwppdtplgns_options['bws_menu']['version'] as $key => $value ) {
-				if ( $bws_menu_version < $value && is_plugin_active( $base ) ) {
-					$plugin_with_newer_menu = $key;
-				}
-			}
-			$plugin_with_newer_menu = explode( '/', $plugin_with_newer_menu );
-			$wp_content_dir = defined( 'WP_CONTENT_DIR' ) ? basename( WP_CONTENT_DIR ) : 'wp-content';
-			if ( file_exists( ABSPATH . $wp_content_dir . '/plugins/' . $plugin_with_newer_menu[0] . '/bws_menu/bws_menu.php' ) )
-				require_once( ABSPATH . $wp_content_dir . '/plugins/' . $plugin_with_newer_menu[0] . '/bws_menu/bws_menu.php' );
-			else
-				require_once( dirname( __FILE__ ) . '/bws_menu/bws_menu.php' );	
-			$bstwbsftwppdtplgns_added_menu = true;			
-		}
-
 		$icon_path    = $wp_version < 3.8 ? plugins_url( "images/plugin_icon_37.png",  __FILE__ ) : plugins_url( "images/plugin_icon_38.png",  __FILE__ );
-		$capabilities = is_multisite() ? 'manage_network_options' : 'manage_options';
-		add_menu_page( 'BWS Plugins', 'BWS Plugins', $capabilities, 'bws_plugins',  'bws_add_menu_render', plugins_url( "images/px.png", __FILE__ ), 1001 );
-		add_submenu_page( 'bws_plugins', __( 'Sender', 'sender'), __( 'Sender', 'sender' ), $capabilities, 'sndr_settings', 'sndr_admin_settings_content' );
-		add_menu_page( __( 'Sender', 'sender' ), __( 'Sender', 'sender' ), $capabilities, 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, 32 );
-		$hook = add_submenu_page( 'sndr_send_user', __( 'Reports', 'sender' ), __( 'Reports', 'sender' ), $capabilities, 'view_mail_send', 'sndr_mail_view' );
+		bws_add_general_menu( 'sender/sender.php' );
+		add_submenu_page( 'bws_plugins', __( 'Sender', 'sender'), __( 'Sender', 'sender' ), 'manage_options', 'sndr_settings', 'sndr_admin_settings_content' );
+		add_menu_page( __( 'Sender', 'sender' ), __( 'Sender', 'sender' ), 'manage_options', 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, 32 );
+		$hook = add_submenu_page( 'sndr_send_user', __( 'Reports', 'sender' ), __( 'Reports', 'sender' ), 'manage_options', 'view_mail_send', 'sndr_mail_view' );
 		add_action( "load-$hook", 'sndr_screen_options' );
 
 		/* pro pages */
-		add_submenu_page( 'sndr_send_user', __( 'New Mailout', 'sender' ), __( 'New Mailout', 'sender' ), $capabilities, 'sndrpr_create_mailout', 'sndr_create_mailout' );
-		add_submenu_page( 'sndr_send_user', __( 'Letters', 'sender' ), __( 'Letters', 'sender' ), $capabilities, 'sndrpr_letters_list', 'sndr_letters_list' );
-		add_submenu_page( 'sndr_send_user', __( 'Mailings Lists', 'sender' ), __( 'Mailings Lists', 'sender' ), $capabilities, 'sndrpr_distribution_list', 'sndr_distribution_list' );
-		add_submenu_page( 'sndr_send_user', __( 'Letters Templates', 'sender' ), __( 'Letters Templates', 'sender' ), $capabilities, 'sndrpr_letter_templates', 'sndr_letter_templates' );
-		add_submenu_page( 'sndr_send_user', __( 'Priorities', 'sender' ), __( 'Priorities', 'sender' ), $capabilities, 'sndrpr_priorities', 'sndr_priorities' );
+		add_submenu_page( 'sndr_send_user', __( 'New Mailout', 'sender' ), __( 'New Mailout', 'sender' ), 'manage_options', 'sndrpr_create_mailout', 'sndr_create_mailout' );
+		add_submenu_page( 'sndr_send_user', __( 'Letters', 'sender' ), __( 'Letters', 'sender' ), 'manage_options', 'sndrpr_letters_list', 'sndr_letters_list' );
+		add_submenu_page( 'sndr_send_user', __( 'Mailings Lists', 'sender' ), __( 'Mailings Lists', 'sender' ), 'manage_options', 'sndrpr_distribution_list', 'sndr_distribution_list' );
+		add_submenu_page( 'sndr_send_user', __( 'Letters Templates', 'sender' ), __( 'Letters Templates', 'sender' ), 'manage_options', 'sndrpr_letter_templates', 'sndr_letter_templates' );
+		add_submenu_page( 'sndr_send_user', __( 'Priorities', 'sender' ), __( 'Priorities', 'sender' ), 'manage_options', 'sndrpr_priorities', 'sndr_priorities' );
 	}
 }
 
@@ -107,8 +62,16 @@ if ( ! function_exists ( 'sndr_init' ) ) {
 		/* Internationalization, first(!) */
 		load_plugin_textdomain( 'sender', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
+		require_once( dirname( __FILE__ ) . '/bws_menu/bws_functions.php' );
+
+		if ( empty( $sndr_plugin_info ) ) {
+			if ( ! function_exists( 'get_plugin_data' ) )
+				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			$sndr_plugin_info = get_plugin_data( dirname(__FILE__) . '/sender.php' );
+		}
+
 		/* check WordPress version */
-		sndr_version_check();
+		bws_wp_version_check( 'sender/sender.php', $sndr_plugin_info, '3.3' );
 	}
 }
 
@@ -135,27 +98,6 @@ if ( ! function_exists ( 'sndr_admin_init' ) ) {
 	}
 }
 
-/**
- * Function check if plugin is compatible with current WP version
- * @return void
- */
-if ( ! function_exists ( 'sndr_version_check' ) ) {
-	function sndr_version_check() {
-		global $wp_version, $sndr_plugin_info;
-		$require_wp		=	"3.3"; /* Wordpress at least requires version */
-		$plugin			=	plugin_basename( __FILE__ );
-	 	if ( version_compare( $wp_version, $require_wp, "<" ) ) {
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-			if ( is_plugin_active( $plugin ) ) {
-				deactivate_plugins( $plugin );
-				$admin_url = ( function_exists( 'get_admin_url' ) ) ? get_admin_url( null, 'plugins.php' ) : esc_url( '/wp-admin/plugins.php' );
-				if ( ! $sndr_plugin_info )
-					$sndr_plugin_info = get_plugin_data( __FILE__, false );
-				wp_die( "<strong>" . $sndr_plugin_info['Name'] . " </strong> " . __( 'requires', 'sender' ) . " <strong>WordPress " . $require_wp . "</strong> " . __( 'or higher, that is why it has been deactivated! Please upgrade WordPress and try again.', 'sender') . "<br /><br />" . __( 'Back to the WordPress', 'sender') . " <a href='" . $admin_url . "'>" . __( 'Plugins page', 'sender') . "</a>." );
-			}
-		}
-	}
-}
 
 /**
  * Register settings function
@@ -193,10 +135,10 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 		/* install the default plugin options */
 		if ( is_multisite() ) {
 			if ( ! get_site_option( 'sndr_options' ) )
-				add_site_option( 'sndr_options', $sndr_options_default, '', 'yes' );
+				add_site_option( 'sndr_options', $sndr_options_default );
 		} else {
 			if ( ! get_option( 'sndr_options' ) )
-				add_option( 'sndr_options', $sndr_options_default, '', 'yes' );
+				add_option( 'sndr_options', $sndr_options_default );
 		}
 
 		/* get plugin options from the database */
@@ -266,13 +208,15 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
  */
 if ( ! function_exists ( 'sndr_plugin_action_links' ) ) {
 	function sndr_plugin_action_links( $links, $file ) {
-		/* Static so we don't call plugin_basename on every plugin row. */
-		static $this_plugin;
-		if ( ! $this_plugin )
-			$this_plugin = plugin_basename( __FILE__ );
-		if ( $file == $this_plugin ) {
-			$settings_link = '<a href="admin.php?page=sndr_settings">' . __( 'Settings', 'sender' ) . '</a>';
-			array_unshift( $links, $settings_link );
+		if ( ( is_multisite() && is_network_admin() ) || ( ! is_multisite() && is_admin() ) ) {
+			/* Static so we don't call plugin_basename on every plugin row. */
+			static $this_plugin;
+			if ( ! $this_plugin )
+				$this_plugin = plugin_basename( __FILE__ );
+			if ( $file == $this_plugin ) {
+				$settings_link = '<a href="admin.php?page=sndr_settings">' . __( 'Settings', 'sender' ) . '</a>';
+				array_unshift( $links, $settings_link );
+			}
 		}
 		return $links;
 	}
@@ -288,7 +232,9 @@ if ( ! function_exists ( 'sndr_register_plugin_links' ) ) {
 	function sndr_register_plugin_links( $links, $file ) {
 		$base = plugin_basename( __FILE__ );
 		if ( $file == $base ) {
-			$links[] = '<a href="admin.php?page=sndr_settings">' . __( 'Settings', 'sender' ) . '</a>';
+			if ( ( is_multisite() && is_network_admin() ) || ( ! is_multisite() && is_admin() ) ) {
+				$links[] = '<a href="admin.php?page=sndr_settings">' . __( 'Settings', 'sender' ) . '</a>';
+			}
 			$links[] = '<a href="http://wordpress.org/plugins/sender/faq/" target="_blank">' . __( 'FAQ', 'sender' ) . '</a>';
 			$links[] = '<a href="http://support.bestwebsoft.com" target="_blank">' . __( 'Support', 'sender' ) . '</a>';
 		}
@@ -448,7 +394,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 	function sndr_admin_settings_content() {
 		global $wp_version, $wpdb, $sndr_options, $sndr_options_default, $title, $sndr_plugin_info;
 		$display_add_options = $message = $error = $notice = '';
-
+		$plugin_basename =  plugin_basename( __FILE__ );
 		if ( empty( $sndr_options ) ) {
 			$sndr_options = ( is_multisite() ) ? get_site_option( 'sndr_options' ) : get_option( 'sndr_options' );
 		}
@@ -460,7 +406,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 			ARRAY_A
 		);
 
-		if ( isset( $_POST['sndr_form_submit'] ) && check_admin_referer( plugin_basename( __FILE__ ), 'sndr_nonce_name' ) ) {
+		if ( isset( $_POST['sndr_form_submit'] ) && check_admin_referer( $plugin_basename, 'sndr_nonce_name' ) ) {
 			// update settings to send messages
 			// check value from "Interval for sending mail" option
 			if ( isset( $_POST['sndr_mail_run_time'] ) ) {
@@ -531,123 +477,10 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 		}
 
 		/* GO PRO */
-		if ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) {
-			global $bstwbsftwppdtplgns_options;
-			$bws_license_key = ( isset( $_POST['bws_license_key'] ) ) ? trim( stripslashes( esc_html( $_POST['bws_license_key'] ) ) ) : "";
-
-			if ( isset( $_POST['bws_license_submit'] ) && check_admin_referer( plugin_basename( __FILE__ ), 'bws_license_nonce_name' ) ) {
-				if ( '' != $bws_license_key ) { 
-					if ( 18 != strlen( $bws_license_key ) ) {
-						$error = __( "Wrong license key", 'sender' );
-					} else {
-						$bws_license_plugin = trim( stripslashes( esc_html( $_POST['bws_license_plugin'] ) ) );	
-						if ( isset( $bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['count'] ) && $bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['time'] < ( time() + (24 * 60 * 60) ) ) {
-							$bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['count'] = $bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['count'] + 1;
-						} else {
-							$bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['count'] = 1;
-							$bstwbsftwppdtplgns_options['go_pro'][ $bws_license_plugin ]['time'] = time();
-						}	
-
-						/* download Pro */
-						$all_plugins = get_plugins();												
-						if ( ! array_key_exists( $bws_license_plugin, $all_plugins ) ) {
-							$current = get_site_transient( 'update_plugins' );
-							if ( is_array( $all_plugins ) && !empty( $all_plugins ) && isset( $current ) && is_array( $current->response ) ) {
-								$to_send = array();
-								$to_send["plugins"][ $bws_license_plugin ] = array();
-								$to_send["plugins"][ $bws_license_plugin ]["bws_license_key"] = $bws_license_key;
-								$to_send["plugins"][ $bws_license_plugin ]["bws_illegal_client"] = true;
-								$options = array(
-									'timeout' => ( ( defined('DOING_CRON') && DOING_CRON ) ? 30 : 3 ),
-									'body' => array( 'plugins' => serialize( $to_send ) ),
-									'user-agent' => 'WordPress/' . $wp_version . '; ' . get_bloginfo( 'url' ) );
-								$raw_response = wp_remote_post( 'http://bestwebsoft.com/wp-content/plugins/paid-products/plugins/update-check/1.0/', $options );
-
-								if ( is_wp_error( $raw_response ) || 200 != wp_remote_retrieve_response_code( $raw_response ) ) {
-									$error = __( "Something went wrong. Try again later. If the error will appear again, please, contact us <a href=http://support.bestwebsoft.com>BestWebSoft</a>. We are sorry for inconvenience.", 'sender' );
-								} else {
-									$response = maybe_unserialize( wp_remote_retrieve_body( $raw_response ) );
-									
-									if ( is_array( $response ) && !empty( $response ) ) {
-										foreach ( $response as $key => $value ) {
-											if ( "wrong_license_key" == $value->package ) {
-												$error = __( "Wrong license key", 'sender' ); 
-											} elseif ( "wrong_domain" == $value->package ) {
-												$error = __( "This license key is bind to another site", 'sender' );
-											} elseif ( "you_are_banned" == $value->package ) {
-												$error = __( "Unfortunately, you have exceeded the number of available tries per day. Please, upload the plugin manually.", 'sender' );
-											}
-										}
-										if ( '' == $error ) {
-											$bstwbsftwppdtplgns_options[ $bws_license_plugin ] = $bws_license_key;
-
-											$url = 'http://bestwebsoft.com/wp-content/plugins/paid-products/plugins/downloads/?bws_first_download=' . $bws_license_plugin . '&bws_license_key=' . $bws_license_key . '&download_from=5';
-											$uploadDir = wp_upload_dir();
-											$zip_name = explode( '/', $bws_license_plugin );
-											$received_content = file_get_contents( $url );
-											if ( ! $received_content ) {
-												$error = __( "Failed to download the zip archive. Please, upload the plugin manually", 'sender' );
-											} else {
-												if ( is_writable( $uploadDir["path"] ) ) {
-													$file_put_contents = $uploadDir["path"] . "/" . $zip_name[0] . ".zip";
-												    if ( file_put_contents( $file_put_contents, $received_content ) ) {
-												    	@chmod( $file_put_contents, octdec( 755 ) );
-												    	if ( class_exists( 'ZipArchive' ) ) {
-															$zip = new ZipArchive();
-															if ( $zip->open( $file_put_contents ) === TRUE ) {
-																$zip->extractTo( WP_PLUGIN_DIR );
-																$zip->close();
-															} else {
-																$error = __( "Failed to open the zip archive. Please, upload the plugin manually", 'sender' );
-															}
-														} elseif ( class_exists( 'Phar' ) ) {
-															$phar = new PharData( $file_put_contents );
-															$phar->extractTo( WP_PLUGIN_DIR );
-														} else {
-															$error = __( "Your server does not support either ZipArchive or Phar. Please, upload the plugin manually", 'sender' );
-														}
-														@unlink( $file_put_contents );
-													} else {
-														$error = __( "Failed to download the zip archive. Please, upload the plugin manually", 'sender' );
-													}
-												} else {
-													$error = __( "UploadDir is not writable. Please, upload the plugin manually", 'sender' );
-												}
-											}
-
-											/* activate Pro */
-											if ( file_exists( WP_PLUGIN_DIR . '/' . $zip_name[0] ) ) {
-												$active_plugins	=	get_option( 'active_plugins' );
-												array_push( $active_plugins, $bws_license_plugin );
-												update_option( 'active_plugins', $active_plugins );
-												$pro_plugin_is_activated = true;
-											} elseif ( '' == $error ) {
-												$error = __( "Failed to download the zip archive. Please, upload the plugin manually", 'sender' );
-											}
-										}
-									} else {
-										$error = __( "Something went wrong. Try again later or upload the plugin manually. We are sorry for inconvenience.", 'sender' ); 
-					 				}
-					 			}
-				 			}
-						} else {
-							/* activate Pro */
-							if ( ! is_plugin_active( $bws_license_plugin ) ) {
-								$active_plugins	=	get_option( 'active_plugins' );
-								array_push( $active_plugins, $bws_license_plugin );
-								update_option( 'active_plugins', $active_plugins );
-								$pro_plugin_is_activated = true;
-							}
-						}
-						if ( is_multisite() )
-							update_site_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
-						else
-							update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options, '', 'yes' );
-			 		}
-			 	} else {
-		 			$error = __( "Please, enter Your license key", 'sender' );
-		 		}
-		 	}
+		if ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) {		
+			$go_pro_result = bws_go_pro_tab_check( $plugin_basename );
+			if ( ! empty( $go_pro_result['error'] ) )
+				$error = $go_pro_result['error'];
 		} ?>
 		<div class="sndr-mail wrap" id="sndr-mail">
 			<?php if ( 'smtp' != $sndr_options['sndr_method'] ) { ?>
@@ -791,6 +624,49 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 							</td>
 						</tr>
 					</table>
+					<div class="bws_pro_version_bloc">
+						<div class="bws_pro_version_table_bloc">
+							<div class="bws_table_bg"></div>
+							<table class="form-table bws_pro_version" >
+								<tr class="sndrpr_new_post">
+									<th><?php _e( 'Automatic mailout when publishing a new post', 'sender' ); ?></th>
+									<td colspan="2" valign="middle">
+										<input type="checkbox" name="sndrpr_automailout_new_post" value="1" disabled="disabled" /><br />
+										<p>
+											<select name="sndrpr_user_select" disabled="disabled"><option>user group</option></select>
+											<?php _e( 'Choose a mailing list', 'sender' ); ?>
+										</p>
+										<p>
+											<select name="sndrpr_templates_select" disabled="disabled"><option>letter</option></select>
+											<?php _e( 'Choose a letter', 'sender' ); ?>
+										</p>
+										<p>
+											<select name="sndrpr_priority_select" disabled="disabled"><option>letter priority</option></select>
+											<?php _e( 'Select letter priority', 'sender' ); ?><br />
+											<span class="sndr_info"><?php  _e( 'Less number - higher priority', 'sender' ) ?></span>
+										</p>
+									</td>
+								</tr>
+								<tr valign="top" >
+									<th scope="row" colspan="6">
+										* <?php _e( 'If you upgrade to Pro version all your settings will be saved.', 'sender' ); ?>
+									</th>	
+								</tr>
+							</table>
+							<div class="bws_pro_version_tooltip">
+								<div class="bws_info">
+									<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
+									<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+								</div>
+								<div class="bws_pro_links">
+									<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
+										<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
+									</a>
+								</div>	
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
 					<?php if ( false == sndr_check_subscriber_install() ) {
 						echo '<p>' . __( 'If you want to allows your site visitors to subscribe for newsletters, coming from your website, use', 'sender' ) . ' <a href="http://bestwebsoft.com/products/subscriber/?k=b7d5819c3c7c615e5e9dc6f3c8edd7d1&pn=114&v=' . $sndr_plugin_info["Version"] . '&wp_v=' . $wp_version . '">Subscriber plugin</a> ' . __( 'that is an exclusive add-on for the Sender Plugin by BestWebSoft.', 'sender' ) . '</p>';
 					} ?>
@@ -800,61 +676,9 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 						<?php wp_nonce_field( plugin_basename( __FILE__ ), 'sndr_nonce_name' ); ?>
 					</p>
 				</form>
-				<div class="bws-plugin-reviews">
-					<div class="bws-plugin-reviews-rate">
-						<?php _e( 'If you enjoy our plugin, please give it 5 stars on WordPress', 'sender' ); ?>: 
-						<a href="http://wordpress.org/support/view/plugin-reviews/sender" target="_blank" title="Sender reviews"><?php _e( 'Rate the plugin', 'sender' ); ?></a>
-					</div>
-					<div class="bws-plugin-reviews-support">
-						<?php _e( 'If there is something wrong about it, please contact us', 'sender' ); ?>: 
-						<a href="http://support.bestwebsoft.com">http://support.bestwebsoft.com</a>
-					</div>
-				</div>
-			<?php } elseif ( 'go_pro' == $_GET['action'] ) { ?>
-				<?php if ( isset( $pro_plugin_is_activated ) && true === $pro_plugin_is_activated ) { ?>
-					<script type="text/javascript">
-						window.setTimeout( function() {
-						    window.location.href = 'admin.php?page=sndrpr_settings';
-						}, 5000 );
-					</script>
-					<p><?php _e( "Congratulations! The PRO version of the plugin is successfully download and activated.", 'sender' ); ?></p>
-					<p>
-						<?php _e( "Please, go to", 'sender' ); ?> <a href="admin.php?page=sndrpr_settings"><?php _e( 'the setting page', 'sender' ); ?></a> 
-						(<?php _e( "You will be redirected automatically in 5 seconds.", 'sender' ); ?>)
-					</p>
-				<?php } else { ?>
-					<form method="post" action="admin.php?page=sndr_settings&amp;action=go_pro">
-						<p>
-							<?php _e( 'You can download and activate', 'sender' ); ?> 
-							<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro">PRO</a> 
-							<?php _e( 'version of this plugin by entering Your license key.', 'sender' ); ?><br />
-							<span style="color: #888888;font-size: 10px;">
-								<?php _e( 'You can find your license key on your personal page Client area, by clicking on the link', 'sender' ); ?> 
-								<a href="http://bestwebsoft.com/wp-login.php">http://bestwebsoft.com/wp-login.php</a> 
-								<?php _e( '(your username is the email you specify when purchasing the product).', 'sender' ); ?>
-							</span>
-						</p>
-						<?php if ( isset( $bstwbsftwppdtplgns_options['go_pro']['sender-pro/sender-pro.php']['count'] ) &&
-							'5' < $bstwbsftwppdtplgns_options['go_pro']['sender-pro/sender-pro.php']['count'] &&
-							$bstwbsftwppdtplgns_options['go_pro']['sender-pro/sender-pro.php']['time'] < ( time() + ( 24 * 60 * 60 ) ) ) { ?>
-							<p>
-								<input disabled="disabled" type="text" name="bws_license_key" value="<?php echo $bws_license_key; ?>" />
-								<input disabled="disabled" type="submit" class="button-primary" value="<?php _e( 'Activate', 'sender' ); ?>" />
-							</p>
-							<p>
-								<?php _e( "Unfortunately, you have exceeded the number of available tries per day. Please, upload the plugin manually.", 'sender' ); ?>
-							</p>
-						<?php } else { ?>
-							<p>
-								<input type="text" name="bws_license_key" value="<?php echo $bws_license_key; ?>" />
-								<input type="hidden" name="bws_license_plugin" value="sender-pro/sender-pro.php" />
-								<input type="hidden" name="bws_license_submit" value="submit" />
-								<input type="submit" class="button-primary" value="<?php _e( 'Activate', 'sender' ); ?>" />
-								<?php wp_nonce_field( plugin_basename(__FILE__), 'bws_license_nonce_name' ); ?>
-							</p>
-						<?php } ?>
-					</form>
-				<?php }
+				<?php bws_plugin_reviews_block( $sndr_plugin_info['Name'], 'sender' );
+			} elseif ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) {
+				bws_go_pro_tab( $sndr_plugin_info, $plugin_basename, 'sndr_settings', 'sndrpr_settings', 'sender-pro/sender-pro.php', 'sender', '9436d142212184502ae7f7af7183d0eb', '114', isset( $go_pro_result['pro_plugin_is_activated'] ) ); 
 			} ?>
 		</div><!--  #sndr-mail .sndr-mail -->
 	<?php }
@@ -1720,8 +1544,7 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 							'date_create'	=> time() 
 						);
 						require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-						if ( ( is_plugin_active( 'email-queue/email-queue.php' ) && mlq_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) ||
-			 				( is_plugin_active( 'email-queue-pro/email-queue-pro.php' ) && mlqpr_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) ) {
+						if ( ( is_plugin_active( 'email-queue/email-queue.php' ) || is_plugin_active( 'email-queue-pro/email-queue-pro.php' ) ) && function_exists( 'mlq_if_mail_plugin_is_in_queue' ) && mlq_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) {
 							$mail_data['remote_delivery']	= '1';
 						}
 						$wpdb->insert( 
@@ -1735,7 +1558,7 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 							$sql_query    = '';
 							$i            = 0;
 							$last_element = count($_POST['sndr_user_name'] );
-							foreach(  $_POST['sndr_user_name'] as $key=>$value ) {
+							foreach (  $_POST['sndr_user_name'] as $key=>$value ) {
 								$sql_query .= 
 									"SELECT `user_id` FROM `" . $wpdb->prefix . "usermeta`
 										LEFT JOIN `" . $wpdb->prefix . "sndr_mail_users_info` ON " . $wpdb->prefix . "sndr_mail_users_info.id_user=" . $wpdb->prefix . "usermeta.user_id
@@ -2001,8 +1824,7 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 
 		//get messages
 		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		if ( ( is_plugin_active( 'email-queue/email-queue.php' ) && mlq_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) ||
-			 ( is_plugin_active( 'email-queue-pro/email-queue-pro.php' ) && mlqpr_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) ) {
+		if ( ( is_plugin_active( 'email-queue/email-queue.php' ) || is_plugin_active( 'email-queue-pro/email-queue-pro.php' ) ) && function_exists( 'mlq_if_mail_plugin_is_in_queue' ) && mlq_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) {
 			$users_mail_sends = $wpdb->get_results( "
 				SELECT * FROM `" . $wpdb->prefix . "sndr_users` AS users 
 				JOIN `" . $wpdb->prefix . "sndr_mail_send` AS mails ON (
@@ -2234,111 +2056,111 @@ if ( ! function_exists( 'sndr_letters_list' ) ) {
 		<div class="bws_pro_version_bloc">
 			<div class="bws_pro_version_table_bloc">
 				<div class="bws_table_bg"></div>
-					<div class="wrap sndr_letters_list" style="margin: 0 10px">
-						<div id="icon-options-general" class="icon32 icon32-bws"></div>
-						<h2><?php _e( 'Letters Lists', 'sender' ); ?> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
-						<ul class='subsubsub'>
-							<li class='all'><a class="current" href="#"><?php _e( 'All', 'sender' ); ?><span> ( 3 )</span></a> |</li>
-							<li class='trash'><a href="#"><?php _e( 'Trash', 'sender' ); ?><span> ( 0 )</span></a></li>
-						</ul>
-						<p class="search-box">
-							<label class="screen-reader-text"><?php _e( 'search:', 'sender' ); ?></label>
-							<input type="search" name="s" value="" />
-							<input type="submit" name="" class="button" value="<?php _e( 'search', 'sender' ); ?>"  /></p>
-							<div class="tablenav top">
-								<div class="alignleft actions bulkactions">
-									<select name='action'>
-										<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>
-										<option value='trash_letters'><?php _e( 'Trash', 'sender' ); ?></option>
-									</select>
-									<input type="submit" name="" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>"  />
-								</div>
-								<div class='tablenav-pages one-page'><span class="displaying-num">3 <?php _e( 'items', 'sender' ); ?></span></div>
-								<br class="clear" />
-							</div>
-							<table class="wp-list-table widefat fixed letters">
-							<thead>
-								<tr>
-									<th scope='col'class='manage-column column-cb check-column'>
-										<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
-										<input type="checkbox" />
-									</th>
-									<th scope='col' class='manage-column column-subject sortable desc'>
-										<a href="#"><span><?php _e( 'Subject', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
-									</th>
-									<th scope='col' class='manage-column column-date sortable desc'>
-										<a href="#"><span><?php _e( 'Date of creation', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
-									</th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th scope='col' class='manage-column column-cb check-column'>
-										<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
-										<input type="checkbox" />
-									</th>
-									<th scope='col' class='manage-column column-subject sortable desc'>
-										<a href="#"><span><?php _e( 'Subject', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
-									</th>
-									<th scope='col' class='manage-column column-date sortable desc'>
-										<a href="#"><span><?php _e( 'Date of creation', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
-									</th>
-								</tr>
-							</tfoot>
-							<tbody data-wp-lists='list:letter'>
-								<tr class="alternate">
-									<th scope="row" class="check-column">
-										<input type="checkbox" name="letter_id[]" value="3" />
-									</th>
-									<td class='subject column-subject'>
-										<strong><a href="#">There is a new post</a></strong>
-										<div class="row-actions">
-											<span class='edit_letter'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
-											<span class='trash_letter'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
-										</div>
-									</td>
-									<td class='date column-date'>2014-05-27 14:26:47</td>
-								</tr>
-								<tr>
-									<th scope="row" class="check-column">
-										<input type="checkbox" name="letter_id[]" value="3" />
-									</th>
-									<td class='subject column-subject'>
-										<strong><a href="#">Get 30% Discount</a></strong>
-										<div class="row-actions">
-											<span class='edit_letter'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
-											<span class='trash_letter'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
-										</div>
-									</td>
-									<td class='date column-date'>2014-05-27 14:26:47</td>
-								</tr>
-								<tr>
-									<th scope="row" class="check-column">
-										<input type="checkbox" name="letter_id[]" value="3" />
-									</th>
-									<td class='subject column-subject'>
-										<strong><a href="#">Test letter</a></strong>
-										<div class="row-actions">
-											<span class='edit_letter'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
-											<span class='trash_letter'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
-										</div>
-									</td>
-									<td class='date column-date'>2014-05-27 14:26:47</td>
-								</tr>
-						</table>
-						<div class="tablenav bottom">
+				<div class="wrap sndr_letters_list" style="margin: 0 10px">
+					<div id="icon-options-general" class="icon32 icon32-bws"></div>
+					<h2><?php _e( 'Letters Lists', 'sender' ); ?> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
+					<ul class='subsubsub'>
+						<li class='all'><a class="current" href="#"><?php _e( 'All', 'sender' ); ?><span> ( 3 )</span></a> |</li>
+						<li class='trash'><a href="#"><?php _e( 'Trash', 'sender' ); ?><span> ( 0 )</span></a></li>
+					</ul>
+					<p class="search-box">
+						<label class="screen-reader-text"><?php _e( 'search:', 'sender' ); ?></label>
+						<input type="search" name="s" value="" />
+						<input type="submit" name="" class="button" value="<?php _e( 'search', 'sender' ); ?>"  /></p>
+						<div class="tablenav top">
 							<div class="alignleft actions bulkactions">
-								<select name='action2'>
+								<select name='action'>
 									<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>
 									<option value='trash_letters'><?php _e( 'Trash', 'sender' ); ?></option>
 								</select>
-								<input type="submit" name="" id="doaction2" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>"  />
+								<input type="submit" name="" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>"  />
 							</div>
 							<div class='tablenav-pages one-page'><span class="displaying-num">3 <?php _e( 'items', 'sender' ); ?></span></div>
 							<br class="clear" />
 						</div>
-					</div><!-- .wrap -->
-				</div>
+						<table class="wp-list-table widefat fixed letters">
+						<thead>
+							<tr>
+								<th scope='col'class='manage-column column-cb check-column'>
+									<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
+									<input type="checkbox" />
+								</th>
+								<th scope='col' class='manage-column column-subject sortable desc'>
+									<a href="#"><span><?php _e( 'Subject', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+								</th>
+								<th scope='col' class='manage-column column-date sortable desc'>
+									<a href="#"><span><?php _e( 'Date of creation', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+								</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th scope='col' class='manage-column column-cb check-column'>
+									<label class="screen-reader-text"><?php _e( 'Select All', 'sender' ); ?></label>
+									<input type="checkbox" />
+								</th>
+								<th scope='col' class='manage-column column-subject sortable desc'>
+									<a href="#"><span><?php _e( 'Subject', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+								</th>
+								<th scope='col' class='manage-column column-date sortable desc'>
+									<a href="#"><span><?php _e( 'Date of creation', 'sender' ); ?></span><span class="sorting-indicator"></span></a>
+								</th>
+							</tr>
+						</tfoot>
+						<tbody data-wp-lists='list:letter'>
+							<tr class="alternate">
+								<th scope="row" class="check-column">
+									<input type="checkbox" name="letter_id[]" value="3" />
+								</th>
+								<td class='subject column-subject'>
+									<strong><a href="#">There is a new post</a></strong>
+									<div class="row-actions">
+										<span class='edit_letter'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+										<span class='trash_letter'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+									</div>
+								</td>
+								<td class='date column-date'>2014-05-27 14:26:47</td>
+							</tr>
+							<tr>
+								<th scope="row" class="check-column">
+									<input type="checkbox" name="letter_id[]" value="3" />
+								</th>
+								<td class='subject column-subject'>
+									<strong><a href="#">Get 30% Discount</a></strong>
+									<div class="row-actions">
+										<span class='edit_letter'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+										<span class='trash_letter'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+									</div>
+								</td>
+								<td class='date column-date'>2014-05-27 14:26:47</td>
+							</tr>
+							<tr>
+								<th scope="row" class="check-column">
+									<input type="checkbox" name="letter_id[]" value="3" />
+								</th>
+								<td class='subject column-subject'>
+									<strong><a href="#">Test letter</a></strong>
+									<div class="row-actions">
+										<span class='edit_letter'><a href="#"><?php _e( 'Edit', 'sender' ); ?></a> | </span>
+										<span class='trash_letter'><a href="#"><?php _e( 'Trash', 'sender' ); ?></a></span>
+									</div>
+								</td>
+								<td class='date column-date'>2014-05-27 14:26:47</td>
+							</tr>
+					</table>
+					<div class="tablenav bottom">
+						<div class="alignleft actions bulkactions">
+							<select name='action2'>
+								<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>
+								<option value='trash_letters'><?php _e( 'Trash', 'sender' ); ?></option>
+							</select>
+							<input type="submit" name="" id="doaction2" class="button action" value="<?php _e( 'Apply', 'sender' ); ?>"  />
+						</div>
+						<div class='tablenav-pages one-page'><span class="displaying-num">3 <?php _e( 'items', 'sender' ); ?></span></div>
+						<br class="clear" />
+					</div>
+				</div><!-- .wrap -->
+			</div>
 			<div class="bws_pro_version_tooltip">
 				<div class="bws_info">
 					<?php _e( 'Unlock premium options by upgrading to a PRO version.', 'sender' ); ?> 
@@ -2841,77 +2663,9 @@ if ( ! function_exists ( 'sndr_plugin_banner' ) ) {
 	function sndr_plugin_banner() {
 		global $hook_suffix;
 		if ( 'plugins.php' == $hook_suffix ) { 
-			global $bstwbsftwppdtplgns_cookie_add, $sndr_plugin_info;
-			$banner_array = array(
-				array( 'sbscrbr_hide_banner_on_plugin_page', 'subscriber/subscriber.php', '1.1.8' ),
-				array( 'lmtttmpts_hide_banner_on_plugin_page', 'limit-attempts/limit-attempts.php', '1.0.2' ),
-				array( 'sndr_hide_banner_on_plugin_page', 'sender/sender.php', '0.5' ),
-				array( 'srrl_hide_banner_on_plugin_page', 'user-role/user-role.php', '1.4' ),
-				array( 'pdtr_hide_banner_on_plugin_page', 'updater/updater.php', '1.12' ),
-				array( 'cntctfrmtdb_hide_banner_on_plugin_page', 'contact-form-to-db/contact_form_to_db.php', '1.2' ),
-				array( 'cntctfrmmlt_hide_banner_on_plugin_page', 'contact-form-multi/contact-form-multi.php', '1.0.7' ),
-				array( 'gglmps_hide_banner_on_plugin_page', 'bws-google-maps/bws-google-maps.php', '1.2' ),
-				array( 'fcbkbttn_hide_banner_on_plugin_page', 'facebook-button-plugin/facebook-button-plugin.php', '2.29' ),
-				array( 'twttr_hide_banner_on_plugin_page', 'twitter-plugin/twitter.php', '2.34' ),
-				array( 'pdfprnt_hide_banner_on_plugin_page', 'pdf-print/pdf-print.php', '1.7.1' ),
-				array( 'gglplsn_hide_banner_on_plugin_page', 'google-one/google-plus-one.php', '1.1.4' ),
-				array( 'gglstmp_hide_banner_on_plugin_page', 'google-sitemap-plugin/google-sitemap-plugin.php', '2.8.4' ),
-				array( 'cntctfrmpr_for_ctfrmtdb_hide_banner_on_plugin_page', 'contact-form-pro/contact_form_pro.php', '1.14' ),
-				array( 'cntctfrm_for_ctfrmtdb_hide_banner_on_plugin_page', 'contact-form-plugin/contact_form.php', '3.62' ),
-				array( 'cntctfrm_hide_banner_on_plugin_page', 'contact-form-plugin/contact_form.php', '3.47' ),
-				array( 'cptch_hide_banner_on_plugin_page', 'captcha/captcha.php', '3.8.4' ),
-				array( 'gllr_hide_banner_on_plugin_page', 'gallery-plugin/gallery-plugin.php', '3.9.1' )
-			);
-			if ( ! $sndr_plugin_info )
-				$sndr_plugin_info = get_plugin_data( __FILE__ );
-
-			$all_plugins	=	get_plugins();
-			$this_banner	=	'sndr_hide_banner_on_plugin_page';
-			foreach ( $banner_array as $key => $value ) {
-				if ( $this_banner == $value[0] ) {
-					global $wp_version;
-					if ( ! isset( $bstwbsftwppdtplgns_cookie_add ) ) {
-						echo '<script type="text/javascript" src="' . plugins_url( 'js/c_o_o_k_i_e.js', __FILE__ ) . '"></script>';
-						$bstwbsftwppdtplgns_cookie_add = true;
-					} ?>
-					<script type="text/javascript">
-							(function($) {
-								$(document).ready( function() {
-									var hide_message = $.cookie( "sndr_hide_banner_on_plugin_page" );
-									if ( hide_message == "true" ) {
-										$( ".sndr_message" ).css( "display", "none" );
-									} else {
-										$( ".sndr_message" ).css( "display", "block" );
-									}
-									$( ".sndr_close_icon" ).click( function() {
-										$( ".sndr_message" ).css( "display", "none" );
-										$.cookie( "sndr_hide_banner_on_plugin_page", "true", { expires: 32 } );
-									});	
-								});
-							})(jQuery);
-						</script>
-					<div class="updated" style="padding: 0; margin: 0; border: none; background: none;">
-						<div class="sndr_message bws_banner_on_plugin_page" style="display: none;">
-							<img class="close_icon sndr_close_icon" title="" src="<?php echo plugins_url( 'images/close_banner.png', __FILE__ ); ?>" alt=""/>
-							<div class="button_div">
-								<a class="button" target="_blank" href="http://bestwebsoft.com/products/sender/?k=c273031fe5f64b4ea95f2815ae9313b5&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>"><?php _e( 'Learn More', 'sender' ); ?></a>
-							</div>
-							<div class="text"><?php
-								_e( 'It’s time to upgrade your <strong>Sender plugin</strong> to <strong>PRO</strong> version!', 'sender' ); ?><br />
-								<span><?php _e( 'Extend standard plugin functionality with new great options', 'sender' ); ?>.</span>
-							</div>
-							<div class="icon">
-								<img title="" src="<?php echo plugins_url( 'images/banner.png', __FILE__ ); ?>" alt=""/>
-							</div>
-						</div>
-					</div>
-					<?php break;
-				}
-				if ( isset( $all_plugins[ $value[1] ] ) && $all_plugins[ $value[1] ]["Version"] >= $value[2] && is_plugin_active( $value[1] ) && ! isset( $_COOKIE[ $value[0] ] ) ) {
-					break;
-				}
-			}
-		}
+			global $sndr_plugin_info;
+			bws_plugin_banner( $sndr_plugin_info, 'sndr', 'sender', 'c273031fe5f64b4ea95f2815ae9313b5', '114', plugins_url( 'images/banner.png', __FILE__ ) ); 
+		}  
 	}
 }
 
