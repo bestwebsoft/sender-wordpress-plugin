@@ -4,7 +4,7 @@ Plugin Name: Sender by BestWebSoft
 Plugin URI: http://bestwebsoft.com/products/
 Description: This plugin send mail to registered users.
 Author: BestWebSoft
-Version: 1.0.4
+Version: 1.0.5
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -39,7 +39,7 @@ if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 		$icon_path    = $wp_version < 3.8 ? plugins_url( "images/plugin_icon_37.png",  __FILE__ ) : plugins_url( "images/plugin_icon_38.png",  __FILE__ );
 		bws_add_general_menu( 'sender/sender.php' );
 		add_submenu_page( 'bws_plugins', __( 'Sender', 'sender'), __( 'Sender', 'sender' ), 'manage_options', 'sndr_settings', 'sndr_admin_settings_content' );
-		add_menu_page( __( 'Sender', 'sender' ), __( 'Sender', 'sender' ), 'manage_options', 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, 32 );
+		add_menu_page( __( 'Sender', 'sender' ), __( 'Sender', 'sender' ), 'manage_options', 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, '57.1' );
 		$hook = add_submenu_page( 'sndr_send_user', __( 'Reports', 'sender' ), __( 'Reports', 'sender' ), 'manage_options', 'view_mail_send', 'sndr_mail_view' );
 		add_action( "load-$hook", 'sndr_screen_options' );
 
@@ -868,8 +868,7 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 				$hidden                = array();
 				$sortable              = $this->get_sortable_columns();
 				$this->_column_headers = array( $columns, $hidden, $sortable );
-				$this->found_data      = $this->report_list();
-				$this->items           = $this->found_data;
+				$this->items           = $this->report_list();
 				$per_page              = $this->get_items_per_page( 'reports_per_page', 30 );
 				$current_page          = $this->get_pagenum();
 				$total_items           = $this->items_count();
@@ -1545,7 +1544,7 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 						);
 						require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 						if ( ( is_plugin_active( 'email-queue/email-queue.php' ) || is_plugin_active( 'email-queue-pro/email-queue-pro.php' ) ) && function_exists( 'mlq_if_mail_plugin_is_in_queue' ) && mlq_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) {
-							$mail_data['remote_delivery']	= '1';
+							$mail_data['remote_delivery']	= '1';	
 						}
 						$wpdb->insert( 
 							$wpdb->prefix . 'sndr_mail_send', 
@@ -2664,7 +2663,7 @@ if ( ! function_exists ( 'sndr_plugin_banner' ) ) {
 		global $hook_suffix;
 		if ( 'plugins.php' == $hook_suffix ) { 
 			global $sndr_plugin_info;
-			bws_plugin_banner( $sndr_plugin_info, 'sndr', 'sender', 'c273031fe5f64b4ea95f2815ae9313b5', '114', plugins_url( 'images/banner.png', __FILE__ ) ); 
+			bws_plugin_banner( $sndr_plugin_info, 'sndr', 'sender', 'c273031fe5f64b4ea95f2815ae9313b5', '114', 'http://ps.w.org/sender/assets/icon-128x128.png' ); 
 		}  
 	}
 }
