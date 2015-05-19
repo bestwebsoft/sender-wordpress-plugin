@@ -4,7 +4,7 @@ Plugin Name: Sender by BestWebSoft
 Plugin URI: http://bestwebsoft.com/products/
 Description: This plugin send mail to registered users.
 Author: BestWebSoft
-Version: 1.0.5
+Version: 1.0.6
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -2663,7 +2663,7 @@ if ( ! function_exists ( 'sndr_plugin_banner' ) ) {
 		global $hook_suffix;
 		if ( 'plugins.php' == $hook_suffix ) { 
 			global $sndr_plugin_info;
-			bws_plugin_banner( $sndr_plugin_info, 'sndr', 'sender', 'c273031fe5f64b4ea95f2815ae9313b5', '114', 'http://ps.w.org/sender/assets/icon-128x128.png' ); 
+			bws_plugin_banner( $sndr_plugin_info, 'sndr', 'sender', 'c273031fe5f64b4ea95f2815ae9313b5', '114', '//ps.w.org/sender/assets/icon-128x128.png' ); 
 		}  
 	}
 }
