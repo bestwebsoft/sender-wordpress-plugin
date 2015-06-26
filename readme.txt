@@ -4,7 +4,7 @@ Donate link: http://bestwebsoft.com/donate/
 Tags: bulk mailing, create mailout, email, e-mail, mail, mailout, php, send mail, send mail to administrator, send mail to users, send mail through smtp server, send mail to all users, send mail to categories of users, send mail with php functions, send mail with interval, send multiple messages, sender, sander, sendar, sendr, sender plugin, users, user categories
 Requires at least: 3.3
 Tested up to: 4.2.2
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
+= V1.0.7 - 26.06.2015 =
+* NEW : Ability to restore settings to defaults.
+
 = V1.0.6 - 19.05.2015 = 
 * Update : We updated all functionality for wordpress 4.2.2.
 
@@ -165,6 +168,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.0.7 =
+Ability to restore settings to defaults.
 
 = V1.0.6 = 
 We updated all functionality for wordpress 4.2.2.
