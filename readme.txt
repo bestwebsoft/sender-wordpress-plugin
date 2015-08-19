@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
 Tags: bulk mailing, create mailout, email, e-mail, mail, mailout, php, send mail, send mail to administrator, send mail to users, send mail through smtp server, send mail to all users, send mail to categories of users, send mail with php functions, send mail with interval, send multiple messages, sender, sander, sendar, sendr, sender plugin, users, user categories
 Requires at least: 3.3
-Tested up to: 4.2.2
-Stable tag: 1.0.7
+Tested up to: 4.3
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,7 @@ http://www.youtube.com/watch?v=kwbkOXrF10M
 <a href="http://www.youtube.com/watch?v=BuBa0lluNbE" target="_blank">Video instruction on Installation</a>
 
 <a href="http://wordpress.org/plugins/sender/faq/" target="_blank">FAQ</a>
+
 <a href="http://support.bestwebsoft.com" target="_blank">Support</a>
 
 <a href="http://bestwebsoft.com/products/sender/?k=f658a48b03f44d5d82ec3cbccba9664b" target="_blank">Upgrade to Pro Version</a>
@@ -94,7 +95,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 1. the link to the page where the problem occurs
 2. the name of the plugin and its version. If you are using a pro version - your order number.
 3. the version of your WordPress installation
-4. copy and paste into the message your system status report. Please read more here: <a href="https://docs.google.com/document/d/1Wi2X8RdRGXk9kMszQy1xItJrpN0ncXgioH935MaBKtc/edit?pli=1" target="_blank">Instuction on System Status</a>
+4. copy and paste into the message your system status report. Please read more here: <a href="https://docs.google.com/document/d/1Wi2X8RdRGXk9kMszQy1xItJrpN0ncXgioH935MaBKtc/edit?pli=1" target="_blank">Instruction on System Status</a>
 
 == Screenshots ==
 
@@ -104,6 +105,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 4. Plugin`s "Report" page with subscribers list. 
 
 == Changelog ==
+
+= V1.0.8 - 19.08.2015 =
+* Update : We updated all functionality for wordpress 4.3.
 
 = V1.0.7 - 26.06.2015 =
 * NEW : Ability to restore settings to defaults.
@@ -168,6 +172,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.0.8 = 
+We updated all functionality for wordpress 4.3.
 
 = V1.0.7 =
 Ability to restore settings to defaults.
