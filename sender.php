@@ -4,7 +4,9 @@ Plugin Name: Sender by BestWebSoft
 Plugin URI: http://bestwebsoft.com/products/
 Description: This plugin send mail to registered users.
 Author: BestWebSoft
-Version: 1.0.8
+Text Domain: sender
+Domain Path: /languages
+Version: 1.0.9
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -32,16 +34,18 @@ License: GPLv2 or later
 
 if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 	function sndr_admin_default_setup() {
-		global $wp_version, $bstwbsftwppdtplgns_options, $bstwbsftwppdtplgns_added_menu;
+		global $bstwbsftwppdtplgns_options, $bstwbsftwppdtplgns_added_menu, $submenu;
 		if ( is_multisite()  && ! is_network_admin() ) {
 			return;
 		}
-		$icon_path    = $wp_version < 3.8 ? plugins_url( "images/plugin_icon_37.png",  __FILE__ ) : plugins_url( "images/plugin_icon_38.png",  __FILE__ );
+		$icon_path    = plugins_url( "images/plugin_icon_38.png",  __FILE__ );
 		bws_add_general_menu( 'sender/sender.php' );
-		add_submenu_page( 'bws_plugins', __( 'Sender', 'sender'), __( 'Sender', 'sender' ), 'manage_options', 'sndr_settings', 'sndr_admin_settings_content' );
-		add_menu_page( __( 'Sender', 'sender' ), __( 'Sender', 'sender' ), 'manage_options', 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, '57.1' );
+		add_submenu_page( 'bws_plugins', 'Sender', 'Sender', 'manage_options', 'sndr_settings', 'sndr_admin_settings_content' );
+		add_menu_page( 'Sender', 'Sender', 'manage_options', 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, '57.1' );
 		$hook = add_submenu_page( 'sndr_send_user', __( 'Reports', 'sender' ), __( 'Reports', 'sender' ), 'manage_options', 'view_mail_send', 'sndr_mail_view' );
 		add_action( "load-$hook", 'sndr_screen_options' );
+
+		$submenu['sndr_send_user'][] = array( __( 'Settings', 'sender' ), 'manage_options', admin_url( 'admin.php?page=sndr_settings' ) );
 
 		/* pro pages */
 		add_submenu_page( 'sndr_send_user', __( 'New Mailout', 'sender' ), __( 'New Mailout', 'sender' ), 'manage_options', 'sndrpr_create_mailout', 'sndr_create_mailout' );
@@ -53,16 +57,25 @@ if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 }
 
 /**
+ * Internationalization 
+ * @return void
+ */
+if ( ! function_exists( 'sndr_plugins_loaded' ) ) {
+	function sndr_plugins_loaded() {
+		load_plugin_textdomain( 'sender', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+}
+
+/**
  * Plugin functions for init
  * @return void
  */
 if ( ! function_exists ( 'sndr_init' ) ) {
 	function sndr_init() {
 		global $sndr_plugin_info;
-		/* Internationalization, first(!) */
-		load_plugin_textdomain( 'sender', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-
-		require_once( dirname( __FILE__ ) . '/bws_menu/bws_functions.php' );
+		
+		require_once( dirname( __FILE__ ) . '/bws_menu/bws_include.php' );
+		bws_include_init( plugin_basename( __FILE__ ) );
 
 		if ( empty( $sndr_plugin_info ) ) {
 			if ( ! function_exists( 'get_plugin_data' ) )
@@ -71,7 +84,7 @@ if ( ! function_exists ( 'sndr_init' ) ) {
 		}
 
 		/* check WordPress version */
-		bws_wp_version_check( 'sender/sender.php', $sndr_plugin_info, '3.3' );
+		bws_wp_min_version_check( plugin_basename( __FILE__ ), $sndr_plugin_info, '3.8', '3.3' );
 	}
 }
 
@@ -128,9 +141,10 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 				'password'          	=> 'yourpassword',
 				'port'              	=> 25,
 				'ssl'               	=> true
-			)
+			),
+			'display_settings_notice'	=>	1,
+			'first_install'				=>	strtotime( "now" )
 		);
-
 
 		/* install the default plugin options */
 		if ( is_multisite() ) {
@@ -142,7 +156,7 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 		}
 
 		/* get plugin options from the database */
-		$sndr_options = is_multisite() ? get_site_option( 'sndr_options' ) : $sndr_options = get_option( 'sndr_options' );
+		$sndr_options = is_multisite() ? get_site_option( 'sndr_options' ) : get_option( 'sndr_options' );
 
 		/**
 		 * update pugin database and options
@@ -173,14 +187,12 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 
 			$sndr_options['plugin_db_version'] = $sndr_db_version;
 
-			if ( is_multisite() )
-				update_site_option( 'sndr_options', $sndr_options );
-			else
-				update_option( 'sndr_options', $sndr_options );
+			$update_option = true;
 		}
 
 		if ( ! isset( $sndr_options['plugin_option_version'] ) || $sndr_options['plugin_option_version'] != $sndr_plugin_info["Version"] ) {
 
+			$sndr_options_default['display_settings_notice'] = 0;
 			/* array merge incase new version of plugin has added new options */
 			$sndr_options = array_merge( $sndr_options_default, $sndr_options );
 			$sndr_options['plugin_option_version'] = $sndr_plugin_info["Version"];
@@ -191,6 +203,13 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 			if ( empty( $sndr_options['sndr_from_custom_name'] ) )
 				$sndr_options['sndr_from_custom_name'] = get_bloginfo( 'name' );
 
+			/* show pro features */
+			$sndr_options['hide_premium_options'] = array();
+
+			$update_option = true;
+		}
+
+		if ( isset( $update_option ) ) {
 			if ( is_multisite() )
 				update_site_option( 'sndr_options', $sndr_options );
 			else
@@ -365,11 +384,7 @@ if ( ! function_exists( 'sndr_send_activate' ) ) {
  */
 if ( ! function_exists ( 'sndr_admin_head' ) ) {
 	function sndr_admin_head() {
-		global $wp_version;
-		if ( 3.8 > $wp_version )
-			wp_enqueue_style( 'sndr_stylesheet', plugins_url( 'css/styles_wp_before_3.8.css', __FILE__ ) );	
-		else
-			wp_enqueue_style( 'sndr_stylesheet', plugins_url( 'css/style.css', __FILE__ ) );
+		wp_enqueue_style( 'sndr_stylesheet', plugins_url( 'css/style.css', __FILE__ ) );
 		
 		if ( isset( $_REQUEST['page'] ) && ( 'sndr_send_user' == $_REQUEST['page'] || 'view_mail_send' == $_REQUEST['page'] || 'sndr_settings' == $_REQUEST['page'] ) ) {
 			$script_vars = array(
@@ -395,6 +410,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 		global $wp_version, $wpdb, $sndr_options, $sndr_options_default, $title, $sndr_plugin_info;
 		$display_add_options = $message = $error = $notice = '';
 		$plugin_basename =  plugin_basename( __FILE__ );
+		
 		if ( empty( $sndr_options ) ) {
 			$sndr_options = ( is_multisite() ) ? get_site_option( 'sndr_options' ) : get_option( 'sndr_options' );
 		}
@@ -407,6 +423,11 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 		);
 
 		if ( isset( $_POST['sndr_form_submit'] ) && check_admin_referer( $plugin_basename, 'sndr_nonce_name' ) ) {
+			if ( isset( $_POST['bws_hide_premium_options'] ) ) {
+				$hide_result = bws_hide_premium_options( $sndr_options );
+				$sndr_options = $hide_result['options'];
+			}
+
 			// update settings to send messages
 			// check value from "Interval for sending mail" option
 			if ( isset( $_POST['sndr_mail_run_time'] ) ) {
@@ -466,15 +487,16 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 				$sndr_options['sndr_smtp_settings']['ssl'] =  ( isset( $_POST['sndr_ssl'] ) ) ? true : false ;
 			}
 
-			if ( empty( $error ) ) {
-				if ( is_multisite() )
-					update_site_option( 'sndr_options', $sndr_options );
-				else
-					update_option( 'sndr_options', $sndr_options );
+			
+			if ( is_multisite() )
+				update_site_option( 'sndr_options', $sndr_options );
+			else
+				update_option( 'sndr_options', $sndr_options );
 
-				$message .= __( "Settings saved.", 'sender' );
-			}			
+			$message .= __( "Settings saved.", 'sender' );		
 		}
+
+		$bws_hide_premium_options_check = bws_hide_premium_options_check( $sndr_options );
 
 		/*## Add restore function */
 		if ( isset( $_REQUEST['bws_restore_confirm'] ) && check_admin_referer( $plugin_basename, 'bws_settings_nonce_name' ) ) {
@@ -489,9 +511,11 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 
 		/* GO PRO */
 		if ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) {		
-			$go_pro_result = bws_go_pro_tab_check( $plugin_basename );
+			$go_pro_result = bws_go_pro_tab_check( $plugin_basename, 'sndr_options', is_multisite() );
 			if ( ! empty( $go_pro_result['error'] ) )
 				$error = $go_pro_result['error'];
+			elseif ( ! empty( $go_pro_result['message'] ) )
+				$message = $go_pro_result['message'];
 		} ?>
 		<div class="sndr-mail wrap" id="sndr-mail">
 			<?php if ( 'smtp' != $sndr_options['sndr_method'] ) { ?>
@@ -501,7 +525,6 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 					}
 				</style>
 			<?php } ?>			
-			<div id="icon-options-general" class="icon32 icon32-bws"></div>
 			<h2><?php _e( "Sender Settings", 'sender' ); ?></h2>
 			<h2 class="nav-tab-wrapper">
 				<a class="nav-tab<?php if ( ! isset( $_GET['action'] ) ) echo ' nav-tab-active'; ?>" href="admin.php?page=sndr_settings"><?php _e( 'Settings', 'sender' ); ?></a>
@@ -509,16 +532,19 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 				<a class="nav-tab bws_go_pro_tab<?php if ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=sndr_settings&amp;action=go_pro"><?php _e( 'Go PRO', 'sender' ); ?></a>
 			</h2>
 			<div class="updated fade" <?php if ( empty( $message ) ) echo "style=\"display:none\""; ?>><p><strong><?php echo $message; ?></strong></p></div>
+			<div class="error" <?php if ( empty( $error ) ) echo "style=\"display:none\""; ?>><p><strong><?php echo $error; ?></strong></p></div>
 			<?php if ( ! empty( $notice ) ) { ?>
 				<div class="error"><p><strong><?php _e( 'Notice:', 'sender' ); ?></strong> <?php echo $notice; ?></p></div>			
-			<?php } ?>
-			<div class="error" <?php if ( empty( $error ) ) echo "style=\"display:none\""; ?>><p><strong><?php echo $error; ?></strong></p></div>
-			<?php if ( ! isset( $_GET['action'] ) ) { 
+			<?php }
+			if ( ! empty( $hide_result['message'] ) ) { ?>
+				<div class="updated fade"><p><strong><?php echo $hide_result['message']; ?></strong></p></div>
+			<?php }
+			if ( ! isset( $_GET['action'] ) ) { 
 				if ( isset( $_REQUEST['bws_restore_default'] ) && check_admin_referer( $plugin_basename, 'bws_settings_nonce_name' ) ) {
 					bws_form_restore_default_confirm( $plugin_basename );
 				} else { ?>
-					<div id="sndr-settings-notice" class="updated fade" style="display:none"><p><strong><?php _e( "Notice:", 'sender' ); ?></strong> <?php _e( "The plugin's settings have been changed. In order to save them please don't forget to click the 'Save Changes' button.", 'sender' ); ?></p></div>
-					<form id="sndr_settings_form" method="post" action="admin.php?page=sndr_settings">
+					<?php bws_show_settings_notice(); ?>
+					<form class="bws_form" method="post" action="admin.php?page=sndr_settings">
 						<table id="sndr-settings-table" class="form-table">
 							<tr valign="top">
 								<th scope="row"><?php _e( 'Interval for sending mail', 'sender' ); ?></th>
@@ -528,64 +554,62 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 								<th><?php _e( 'Number of messages sent at one time', 'sender' ); ?></th>
 								<td>
 									<input id="sndr_mail_send_count" name='sndr_mail_send_count' type='number' min='1' value='<?php echo $sndr_options['sndr_send_count']; ?>'><br/>
-									<span class="sndr_info">
+									<span class="bws_info">
 										<?php $number = floor( ( 60 / intval( $sndr_options['sndr_run_time'] ) ) * intval( $sndr_options['sndr_send_count'] ) );
 										_e( 'maximum number of sent mails:', 'sender' );?>&nbsp;<span id="sndr-calculate"><?php echo $number; ?></span>&nbsp;<?php _e( 'per hour', 'sender' ); ?>.&nbsp;<br/><span id="sndr_calc_info"><?php _e( 'Please make sure that this number is smaller than max allowed number of sent mails from your hosting account.', 'sender' ); ?></span>
 									</span>
 								</td>
 							</tr>
 						</table>
-						<div class="bws_pro_version_bloc">
-							<div class="bws_pro_version_table_bloc">
-								<div class="bws_table_bg"></div>
-								<table class="form-table bws_pro_version">
-									<tr valign="top">
-										<th><?php _e( 'Attempts number', 'sender' ); ?></th>
-										<td>
-											<input disabled name='sndrpr_max_try_count' type='text' value=''><br/>
-											<span class="sndr_info">( <?php _e( 'Maximum number of attempts to send a message to a single user', 'sender' ); ?> )</span>
-										</td>
-									</tr>
-									<tr valign="top">
-										<th><?php _e( "Email in HTML format sending", 'sender' ); ?></th>
-										<td><input disabled type="checkbox" name="sndrpr_html_email" value="1" /></td>
-									</tr>
-									<tr class="sndrpr-add-set" valign="top">
-										<th><?php _e( 'Send email with confirmation', 'sender' ); ?></th>
-										<td>
-											<input disabled type='checkbox' name='sndrpr_confirm' value="1" />
-											<br/>
-											<span class="sndr_info">( <?php _e( "This function works not on all mail servers.", 'sender' ); ?> )</span>
-										</td>
-									</tr>
-									<tr valign="top">
-										<th><?php _e( 'Display fonts list on "Edit letter" or "Edit Template" Pages', 'sender' ); ?></th>
-										<td>
-											<input disabled type='checkbox' name='sndrpr_display_fonts_list' value="1" />
-											<br/>
-											<span class="sndr_info">( <?php _e( "Due to security reasons, the additional fonts may not be reflected on some postal services.", 'sender' ); ?> )</span>
-										</td>
-									</tr>	
-									<tr valign="top">
-										<th scope="row" colspan="2">
-											* <?php _e( 'If you upgrade to Pro version all your settings will be saved.', 'sender' ); ?>
-										</th>
-									</tr>
-								</table>
-							</div>
-							<div class="bws_pro_version_tooltip">
-								<div class="bws_info">
-									<?php _e( 'Unlock premium options by upgrading to PRO version.', 'sender' ); ?> 
-									<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+						<?php if ( ! $bws_hide_premium_options_check ) { ?>
+							<div class="bws_pro_version_bloc">
+								<div class="bws_pro_version_table_bloc">
+									<button type="submit" name="bws_hide_premium_options" class="notice-dismiss bws_hide_premium_options" title="<?php _e( 'Close', 'sender' ); ?>"></button>
+									<div class="bws_table_bg"></div>
+									<table class="form-table bws_pro_version">
+										<tr valign="top">
+											<th><?php _e( 'Attempts number', 'sender' ); ?></th>
+											<td>
+												<input disabled name='sndrpr_max_try_count' type='text' value=''><br/>
+												<span class="bws_info">( <?php _e( 'Maximum number of attempts to send a message to a single user', 'sender' ); ?> )</span>
+											</td>
+										</tr>
+										<tr valign="top">
+											<th><?php _e( "Email in HTML format sending", 'sender' ); ?></th>
+											<td><input disabled type="checkbox" name="sndrpr_html_email" value="1" /></td>
+										</tr>
+										<tr class="sndrpr-add-set" valign="top">
+											<th><?php _e( 'Send email with confirmation', 'sender' ); ?></th>
+											<td>
+												<input disabled type='checkbox' name='sndrpr_confirm' value="1" />
+												<br/>
+												<span class="bws_info">( <?php _e( "This function works not on all mail servers.", 'sender' ); ?> )</span>
+											</td>
+										</tr>
+										<tr valign="top">
+											<th><?php _e( 'Display fonts list on "Edit letter" or "Edit Template" Pages', 'sender' ); ?></th>
+											<td>
+												<input disabled type='checkbox' name='sndrpr_display_fonts_list' value="1" />
+												<br/>
+												<span class="bws_info">( <?php _e( "Due to security reasons, the additional fonts may not be reflected on some postal services.", 'sender' ); ?> )</span>
+											</td>
+										</tr>	
+										<tr valign="top">
+											<th scope="row" colspan="2">
+												* <?php _e( 'If you upgrade to Pro version all your settings will be saved.', 'sender' ); ?>
+											</th>
+										</tr>
+									</table>
 								</div>
-								<div class="bws_pro_links">
-									<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
-										<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
-									</a>
-								</div>	
-								<div class="clear"></div>
+								<div class="bws_pro_version_tooltip">
+									<div class="bws_info">
+										<?php _e( 'Unlock premium options by upgrading to Pro version', 'sender' ); ?> 
+									</div>
+									<a class="bws_button" href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+									<div class="clear"></div>
+								</div>
 							</div>
-						</div>
+						<?php } ?>
 						<table class="form-table">
 							<tr valign="top">
 								<th scope="row" style="width:200px;"><?php _e( "'FROM' field", 'sender' ); ?></th>
@@ -600,7 +624,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 									<div>
 										<input type="text" maxlength='250' name="sndr_from_email" value="<?php echo $sndr_options['sndr_from_email']; ?>"/>
 									</div>
-									<span class="sndr_info">(<?php _e( "If this option is changed, email messages may be moved to the spam folder or email delivery failures may occur.", 'sender' ); ?>)</span>
+									<span class="bws_info">(<?php _e( "If this option is changed, email messages may be moved to the spam folder or email delivery failures may occur.", 'sender' ); ?>)</span>
 								</td>
 							</tr>
 							<tr>
@@ -608,15 +632,15 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 								<td colspan="2">
 									<label>
 										<input id="sndr_wp_mail_radio" type='radio' name='sndr_mail_method' value='wp_mail' <?php if ( $sndr_options['sndr_method'] == 'wp_mail' ) echo 'checked="checked"'; ?>/> 
-										<?php _e( 'Wp-mail', 'sender' ); ?> <span class="sndr_info">(<?php _e( 'You can use the wp_mail function for mailing', 'sender' ); ?>)</span>
+										<?php _e( 'Wp-mail', 'sender' ); ?> <span class="bws_info">(<?php _e( 'You can use the wp_mail function for mailing', 'sender' ); ?>)</span>
 									</label><br/>
 									<label>
 										<input id="sndr_php_mail_radio" type='radio' name='sndr_mail_method' value='mail' <?php if ( $sndr_options['sndr_method'] == 'mail' ) echo 'checked="checked"'; ?>/> 
-										<?php _e( 'Mail', 'sender' ); ?> <span class="sndr_info">(<?php _e( 'To send mail you can use the php mail function', 'sender' ); ?>)</span>
+										<?php _e( 'Mail', 'sender' ); ?> <span class="bws_info">(<?php _e( 'To send mail you can use the php mail function', 'sender' ); ?>)</span>
 									</label><br/>
 									<label>
 										<input id="sndr_smtp_mail_radio" type='radio' name='sndr_mail_method' value='smtp' <?php if ( $sndr_options['sndr_method'] == 'smtp' ) echo 'checked="checked"'; ?>/> 
-										<?php _e( 'SMTP', 'sender' ); ?> <span class="sndr_info">(<?php _e( 'You can use SMTP for sending mails', 'sender' ); ?>)</span>
+										<?php _e( 'SMTP', 'sender' ); ?> <span class="bws_info">(<?php _e( 'You can use SMTP for sending mails', 'sender' ); ?>)</span>
 									</label>
 								</td>
 							</tr>
@@ -638,54 +662,52 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 								</td>
 							</tr>
 						</table>
-						<div class="bws_pro_version_bloc">
-							<div class="bws_pro_version_table_bloc">
-								<div class="bws_table_bg"></div>
-								<table class="form-table bws_pro_version" >
-									<tr class="sndrpr_new_post">
-										<th><?php _e( 'Automatic mailout when publishing a new post', 'sender' ); ?></th>
-										<td colspan="2" valign="middle">
-											<input type="checkbox" name="sndrpr_automailout_new_post" value="1" disabled="disabled" /><br />
-											<p>
-												<select name="sndrpr_user_select" disabled="disabled"><option>user group</option></select>
-												<?php _e( 'Choose a mailing list', 'sender' ); ?>
-											</p>
-											<p>
-												<select name="sndrpr_templates_select" disabled="disabled"><option>letter</option></select>
-												<?php _e( 'Choose a letter', 'sender' ); ?>
-											</p>
-											<p>
-												<select name="sndrpr_priority_select" disabled="disabled"><option>letter priority</option></select>
-												<?php _e( 'Select letter priority', 'sender' ); ?><br />
-												<span class="sndr_info"><?php  _e( 'Less number - higher priority', 'sender' ) ?></span>
-											</p>
-										</td>
-									</tr>
-									<tr valign="top" >
-										<th scope="row" colspan="6">
-											* <?php _e( 'If you upgrade to Pro version all your settings will be saved.', 'sender' ); ?>
-										</th>	
-									</tr>
-								</table>
-								<div class="bws_pro_version_tooltip">
-									<div class="bws_info">
-										<?php _e( 'Unlock premium options by upgrading to PRO version.', 'sender' ); ?> 
-										<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+						<?php if ( ! $bws_hide_premium_options_check ) { ?>
+							<div class="bws_pro_version_bloc">
+								<div class="bws_pro_version_table_bloc">
+									<button type="submit" name="bws_hide_premium_options" class="notice-dismiss bws_hide_premium_options" title="<?php _e( 'Close', 'sender' ); ?>"></button>
+									<div class="bws_table_bg"></div>
+									<table class="form-table bws_pro_version" >
+										<tr class="sndrpr_new_post">
+											<th><?php _e( 'Automatic mailout when publishing a new post', 'sender' ); ?></th>
+											<td colspan="2" valign="middle">
+												<input type="checkbox" name="sndrpr_automailout_new_post" value="1" disabled="disabled" /><br />
+												<p>
+													<select name="sndrpr_user_select" disabled="disabled"><option>user group</option></select>
+													<?php _e( 'Choose a mailing list', 'sender' ); ?>
+												</p>
+												<p>
+													<select name="sndrpr_templates_select" disabled="disabled"><option>letter</option></select>
+													<?php _e( 'Choose a letter', 'sender' ); ?>
+												</p>
+												<p>
+													<select name="sndrpr_priority_select" disabled="disabled"><option>letter priority</option></select>
+													<?php _e( 'Select letter priority', 'sender' ); ?><br />
+													<span class="bws_info"><?php  _e( 'Less number - higher priority', 'sender' ) ?></span>
+												</p>
+											</td>
+										</tr>
+										<tr valign="top" >
+											<th scope="row" colspan="6">
+												* <?php _e( 'If you upgrade to Pro version all your settings will be saved.', 'sender' ); ?>
+											</th>	
+										</tr>
+									</table>
+									<div class="bws_pro_version_tooltip">
+										<div class="bws_info">
+											<?php _e( 'Unlock premium options by upgrading to Pro version', 'sender' ); ?> 
+										</div>
+										<a class="bws_button" href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+										<div class="clear"></div>
 									</div>
-									<div class="bws_pro_links">
-										<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
-											<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
-										</a>
-									</div>	
-									<div class="clear"></div>
 								</div>
 							</div>
-						</div>
-						<?php if ( false == sndr_check_subscriber_install() ) {
+						<?php }
+						if ( false == sndr_check_subscriber_install() ) {
 							echo '<p>' . __( 'If you want to allows your site visitors to subscribe for newsletters, coming from your website, use', 'sender' ) . ' <a href="http://bestwebsoft.com/products/subscriber/?k=b7d5819c3c7c615e5e9dc6f3c8edd7d1&pn=114&v=' . $sndr_plugin_info["Version"] . '&wp_v=' . $wp_version . '">Subscriber plugin</a> ' . __( 'that is an exclusive add-on for the Sender Plugin by BestWebSoft.', 'sender' ) . '</p>';
 						} ?>
 						<p class="submit">
-							<input type="submit" id="settings-form-submit" class="button-primary" value="<?php _e( 'Save Changes', 'sender' ) ?>" />
+							<input id="bws-submit-button" type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'sender' ) ?>" />
 							<input type="hidden" name="sndr_form_submit" value="submit" />
 							<?php wp_nonce_field( plugin_basename( __FILE__ ), 'sndr_nonce_name' ); ?>
 						</p>
@@ -693,7 +715,7 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 					<?php bws_form_restore_default_settings( $plugin_basename );					
 				}				
 			} elseif ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) {
-				bws_go_pro_tab( $sndr_plugin_info, $plugin_basename, 'sndr_settings', 'sndrpr_settings', 'sender-pro/sender-pro.php', 'sender', '9436d142212184502ae7f7af7183d0eb', '114', isset( $go_pro_result['pro_plugin_is_activated'] ) ); 
+				bws_go_pro_tab_show( $bws_hide_premium_options_check, $sndr_plugin_info, $plugin_basename, 'sndr_settings', 'sndrpr_settings', 'sender-pro/sender-pro.php', 'sender', '9436d142212184502ae7f7af7183d0eb', '114', isset( $go_pro_result['pro_plugin_is_activated'] ) ); 
 			}
 			bws_plugin_reviews_block( $sndr_plugin_info['Name'], 'sender' ); ?>
 		</div><!--  #sndr-mail .sndr-mail -->
@@ -779,7 +801,6 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 			}
 		} /* deduce the mail form */ ?>
 		<div class="sndr-mail wrap" id="sndr-mail">
-			<div id="icon-options-general" class="icon32 icon32-bws"></div>
 			<h2><?php echo $title; ?></h2>
 			<?php $action_message = sndr_report_actions();
 			if ( $action_message['error'] ) {
@@ -812,7 +833,7 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 								</label>
 							<?php } ?>
 							<br/>
-							<span class="sndr_info"><?php _e( 'Number of mails which would be sent', 'sender' ); ?>: 
+							<span class="bws_info"><?php _e( 'Number of mails which would be sent', 'sender' ); ?>: 
 								<span id="sndr-calculate">
 									<?php if ( isset( $_POST['sndr_send_all'] ) && '1' == $_POST['sndr_send_all'] ) { 
 										echo $all_count; 
@@ -878,21 +899,28 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 			* @return void
 			*/
 			function prepare_items() {
-				global $wpdb;
-				$search                = ( isset( $_REQUEST['s'] ) ) ? $_REQUEST['s'] : '';
-				$columns               = $this->get_columns();
-				$hidden                = array();
-				$sortable              = $this->get_sortable_columns();
-				$this->_column_headers = array( $columns, $hidden, $sortable );
+				global $wpdb, $sndr_url;
+
+				$paged 				= isset( $_GET['paged'] ) ? '&paged=' . $_GET['paged'] : '';
+				$mail_status 		= isset( $_REQUEST['mail_status'] ) ? '&mail_status=' . $_REQUEST['mail_status'] : '';
+				$orderby 			= isset( $_REQUEST['orderby'] ) ? '&orderby=' . $_REQUEST['orderby'] : '';
+				$order 				= isset( $_REQUEST['order'] ) ? '&order=' . $_REQUEST['order'] : '';
+
+				$sndr_url = '?page=view_mail_send' . $paged . $mail_status . $orderby . $order;
+
+			//	$columns               = $this->get_columns();
+			//	$hidden                = array();
+			//	$sortable              = $this->get_sortable_columns();
+			//	$this->_column_headers = array( $columns, $hidden, $sortable );
 				$this->items           = $this->report_list();
 				$per_page              = $this->get_items_per_page( 'reports_per_page', 30 );
-				$current_page          = $this->get_pagenum();
+			//	$current_page          = $this->get_pagenum();
 				$total_items           = $this->items_count();
 				$this->set_pagination_args( array(
 						'total_items' => $total_items,
 						'per_page'    => $per_page,
 					)
-				);
+				);				
 			}
 
 			/**
@@ -901,16 +929,7 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 			*/
 			function no_items() { ?>
 				<p style="color:red;"><?php _e( 'No messages sent', 'sender' ); ?></p>
-			<?php }
-
-			/**
-			 * Function to add column of checboxes 
-			 * @param int    $item->comment_ID The custom column's unique ID number.
-			 * @return string                  with html-structure of <input type=['checkbox']>
-			 */
-			function column_cb( $item ) {
-				return sprintf( '<input id="cb_%1s" type="checkbox" name="report_id[]" value="%2s" />', $item['id'], $item['id'] );
-			}
+			<?php }			
 
 			/**
 			 * Get a list of columns.
@@ -940,31 +959,35 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 			}
 
 			/**
-			* Function to add filters below and above reports ist
-			* @param array $which An array of report types. Accepts 'Done', ''In progress.
-			* @return void 
+			* Function to add filters below and above mailout list
+			* @return array $status_links  
 			*/
-			function extra_tablenav( $which ) {
+			function get_views() {
 				global $wpdb;
-				$all_count     = $done_count = $in_progress_count = 0;
+				$status_links  = array();
+				$all_count     = $done_count = $progress_count = 0;
 				$filters_count = $wpdb->get_results (
 					"SELECT COUNT(`mail_send_id`) AS `all`,
 						( SELECT COUNT(`mail_send_id`) FROM " . $wpdb->prefix . "sndr_mail_send WHERE `mail_status`=1 ) AS `done`,
 						( SELECT COUNT(`mail_send_id`) FROM " . $wpdb->prefix . "sndr_mail_send WHERE `mail_status`=0 ) AS `in_progress`
 					FROM " . $wpdb->prefix . "sndr_mail_send"
 				); 
-				foreach( $filters_count as $count ) {
-					$all_count         = empty( $count->all ) ? 0 : $count->all;
-					$done_count        = empty( $count->done ) ? 0 : $count->done;
-					$in_progress_count = empty( $count->in_progress ) ? 0 : $count->in_progress;
-				} ?>
-				<ul class="subsubsub">
-					<li><a class="sndr-filter<?php if ( ! isset( $_REQUEST['mail_status'] ) ) { echo " current"; } ?>" href="?page=view_mail_send"><?php _e( 'All', 'sender' ); ?><span class="sndr-count"> ( <?php echo $all_count; ?> )</span></a> | </li>
-					<li><a class="sndr-filter<?php if( isset( $_REQUEST['mail_status'] ) && "in_progress" == $_REQUEST['mail_status'] ) { echo " current"; } ?>" href="?page=view_mail_send&mail_status=in_progress"><?php _e( 'In progress', 'sender' ); ?><span class="sndr-count"> ( <?php echo $in_progress_count; ?> )</span></a> | </li>
-					<li><a class="sndr-filter<?php if( isset( $_REQUEST['mail_status'] ) && "done" == $_REQUEST['mail_status'] ) { echo " current"; } ?>" href="?page=view_mail_send&mail_status=done"><?php _e( 'Done', 'sender' ); ?><span class="sndr-count"> ( <?php echo $done_count; ?> )</span></a></li>
-					<!-- li><a class="sndr-filter" href="#"><?php _e( 'Trash', 'sender' ); ?><span class="sndr-count">(  )</span></li -->
-				</ul><!-- .subsubsub --> 
-			<?php  }
+				foreach ( $filters_count as $count ) {
+					$all_count			= empty( $count->all ) ? 0 : $count->all;
+					$done_count			= empty( $count->done ) ? 0 : $count->done;
+					$progress_count 	= empty( $count->in_progress ) ? 0 : $count->in_progress;
+				}
+				
+				/* get class for action links */
+				$all_class      = ( ! isset( $_REQUEST['mail_status'] ) ) ? ' current': '';
+				$progress_class = ( isset( $_REQUEST['mail_status'] ) && "progress_mailout" == $_REQUEST['mail_status'] ) ? ' current': '';
+				$done_class     = ( isset( $_REQUEST['mail_status'] ) && "done_mailout" == $_REQUEST['mail_status'] ) ? ' current': '';
+				/* get array with action links */
+				$status_links['all']   = '<a class="sndr-filter' . $all_class . '" href="?page=view_mail_send">' . __( 'All', 'sender-pro' ) . '<span class="sndr-count"> ( ' . $all_count . ' )</span></a>';
+				$status_links['in_progress'] = '<a class="sndr-filter' . $progress_class . '" href="?page=view_mail_send&mail_status=in_progress">' . __( 'In Progress', 'sender' ) . '<span class="sndr-count"> ( ' . $progress_count . ' )</span></a>';
+				$status_links['done'] = '<a class="sndr-filter' . $done_class . '" href="?page=view_mail_send&mail_status=done">' . __( 'Done', 'sender' ) . '<span class="sndr-count"> ( ' . $done_count . ' )</span></a>';
+				return $status_links;
+			}
 
 			/**
 			 * Function to add action links to drop down menu before and after reports list
@@ -983,7 +1006,7 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 			 * @return void
 			 */
 			function column_default( $item, $column_name ) {
-				switch( $column_name ) {
+				switch ( $column_name ) {
 					case 'status':
 					case 'date':
 					case 'subject':
@@ -994,17 +1017,48 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 			}
 
 			/**
+			 * Function to add column of checboxes 
+			 * @param int    $item->comment_ID The custom column's unique ID number.
+			 * @return string                  with html-structure of <input type=['checkbox']>
+			 */
+			function column_cb( $item ) {
+				return sprintf( '<input id="cb_%1s" type="checkbox" name="report_id[]" value="%2s" />', $item['id'], $item['id'] );
+			}
+
+			/**
 			 * Function to add action links to subject column depenting on status page
 			 * @param int      $item->comment_ID The custom column's unique ID number.
 			 * @return string                     with action links
 			 */
 			function column_subject( $item ) {
-				$mail_status = isset( $_REQUEST['mail_status'] ) ? '&mail_status=' . $_REQUEST['mail_status'] : '';
+				global $sndr_url;
 				$actions = array();
-				$actions['show_report'] = '<a class="sndr-show-users-list" href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $item['id'] . '&list_paged=0&list_per_page=30' . $mail_status, 'sndr_show_report' . $item['id'] ) . '">' . __( 'Show Report', 'sender' ) . '</a>';
-				$actions['delete_report']  = '<a href="' . wp_nonce_url( '?page=view_mail_send&action=delete_report&report_id=' . $item['id'] . $mail_status, 'sndr_delete_report' . $item['id'] ) . '">' . __( 'Delete Report', 'sender' ) . '</a>';
 
+				$list_per_page = isset( $_REQUEST['list_per_page'] ) ? $_REQUEST['list_per_page'] : 30;
+
+				$actions['show_report'] = '<a class="sndr-show-users-list" href="' . wp_nonce_url( $sndr_url . '&list_per_page=' . $list_per_page . '&action=show_report&report_id=' . $item['id'], 'sndr_show_report' . $item['id'] ) . '">' . __( 'Show Report', 'sender' ) . '</a>';
+				$actions['delete_report']  = '<a href="' . wp_nonce_url( $sndr_url . '&action=delete_report&report_id=' . $item['id'], 'sndr_delete_report' . $item['id'] ) . '">' . __( 'Delete Report', 'sender' ) . '</a>';
 				return sprintf( '%1$s %2$s', $item['subject'], $this->row_actions( $actions ) );
+			}
+
+			/**
+			 * Display status of mailout
+			 * @param    array    $item             current mailout data
+			 * @return   string   $column_content   with action links
+			 */
+			function column_status( $item ) {
+				switch ( $item['status'] ) {
+					case '0': /* mailout in progress */
+						$column_content = '<span class="sndr-inprogress-label">' . __( 'In Progress', 'sender' ) . '</span>';
+						break;
+					case '1': /* mailout was done */
+						$column_content = '<span class="sndr-done-label">' . __( 'All Done', 'sender' ) . '</span>';
+						break;
+					default:
+						$column_content = '';
+						break;
+				}
+				return $column_content;
 			}
 
 			/**
@@ -1013,7 +1067,7 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 			 * @return void
 			 */
 			function single_row( $report ) {
-				if( preg_match( '/done-status/', $report['status'] ) ) {
+				if ( preg_match( '/done-status/', $report['status'] ) ) {
 					$row_class = 'sndr-done-row';
 				} elseif( preg_match( '/inprogress-status/', $report['status'] ) ) {
 					$row_class = 'sndr-inprogress-row';
@@ -1032,14 +1086,14 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 			function report_list() {
 				global $wpdb;
 				$i                  = 0;
-				$done_status        = '<p class="sndr-done-status" title="' . __( 'All Done', 'sender' ) . '">' . __( 'done', 'sender' ) . '</p>';
-				$in_progress_status = '<p class="sndr-inprogress-status" title="' . __( 'In Progress', 'sender' ) . '">' . __( 'In progress', 'sender' ) . '</p>';
 				$reports_list       = array();  
 				$per_page = intval( get_user_option( 'reports_per_page' ) );
 				if ( empty( $per_page ) || $per_page < 1 ) {
 					$per_page = 30;
 				}
-				$start_row = ( isset( $_REQUEST['paged'] ) && '1' != $_REQUEST['paged'] ) ? $per_page * ( absint( $_REQUEST['paged'] - 1 ) ) : 0;
+
+				$start_row = ( isset( $_REQUEST['paged'] ) && '1' != $_REQUEST['paged'] ) ? $per_page * ( absint( $_REQUEST['paged'] ) - 1 ) : 0;
+				
 				if ( isset( $_REQUEST['orderby'] ) ) {
 					switch ( $_REQUEST['orderby'] ) {
 						case 'date':
@@ -1059,7 +1113,7 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 					$order_by = 'mail_send_id';
 				}
 				$order     = isset( $_REQUEST['order'] ) ? $_REQUEST['order'] : 'DESC';
-				$sql_query = "SELECT * FROM `" . $wpdb->prefix . "sndr_mail_send` ";
+				$sql_query = "SELECT * FROM `" . $wpdb->prefix . "sndr_mail_send`";
 				if ( isset( $_REQUEST['s'] ) ) {
 					$sql_query .= "WHERE `subject`LIKE '%" . $_REQUEST['s'] . "%'";
 				} else {
@@ -1079,12 +1133,12 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 				$sql_query   .= " ORDER BY " . $order_by . " " . $order . " LIMIT " . $per_page . " OFFSET " . $start_row . ";";
 				$reports_data = $wpdb->get_results( $sql_query, ARRAY_A );
 				foreach ( $reports_data as $report ) {
-						$subject = empty( $report['subject'] ) ? '( ' . __( 'No Subject', 'sender' ) . ' )' : $report['subject'];
-						$reports_list[$i]            = array();
-						$reports_list[$i]['id']      = $report['mail_send_id'];
-						$reports_list[$i]['status']  = '1' == $report['mail_status'] ? $done_status : $in_progress_status;
-						$reports_list[$i]['subject'] = $subject . '<input type="hidden" name="report_' . $report['mail_send_id'] . '" value="' . $report['mail_send_id'] . '">' . $this->show_report( $report['mail_send_id'] );
-						$reports_list[$i]['date']    = date( 'd M Y H:i', $report['date_create'] );
+					$subject = empty( $report['subject'] ) ? '( ' . __( 'No Subject', 'sender' ) . ' )' : $report['subject'];
+					$reports_list[$i]            = array();
+					$reports_list[$i]['id']      = $report['mail_send_id'];
+					$reports_list[$i]['status']  = $report['mail_status'];
+					$reports_list[$i]['subject'] = $subject . '<input type="hidden" name="report_' . $report['mail_send_id'] . '" value="' . $report['mail_send_id'] . '">' . $this->show_report( $report['mail_send_id'] );
+					$reports_list[$i]['date']    = date( 'd M Y H:i', $report['date_create'] );
 					$i ++;
 				}
 				return $reports_list;
@@ -1114,35 +1168,6 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 			}
 
 			/**
-			 * Function to display status of report
-			 * @param string $mail_id id of report 
-			 * @return string         'done'- ,'inprogress' or 'unknown'- statuses
-			 */
-			public function show_status( $mail_id ) {
-				global $wpdb;
-				$total_count = $send_count = $status = null;
-				$count_mail = $wpdb->get_results(
-					"SELECT COUNT(`id_mail`) AS `total`, 
-						( SELECT COUNT(`id_mail`) FROM `" . $wpdb->prefix . "sndr_users` WHERE `id_mail`=" .$mail_id . " AND `status`=1 ) AS `send`
-					FROM `" . $wpdb->prefix . "sndr_users` WHERE `id_mail`=" .$mail_id
-				);
-				if ( ! empty( $count_mail ) ) {
-					foreach ( $count_mail as $count ) {
-						$total_count = $count->total;
-						$send_count  = $count->send;
-					}
-					if ( $total_count == $send_count ) {
-						$status = '<span class="sndr-done-status" title="' . __( 'All Done', 'sender' ) . '">' . __( 'done', 'sender' ) . '</span>';
-					} else {
-						$status = '<span class="sndr-inprogress-status" title="' . __( 'In Progress', 'sender' ) . '">' . $send_count .' / ' . $total_count . '</span>';
-					}
-				} else {
-					$status = '<span class="sndr-unknown-status" title="' . __( 'Unknown Status', 'sender' ) . '">' . '?' . '</span>';
-				}
-				return $status;
-			}
-
-			/**
 			 * Function to show list of subscribers
 			 * @param string $mail_id id of report 
 			 * @return string         list of subscribers in table format
@@ -1150,79 +1175,53 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 			public function show_report( $mail_id ) {
 				$list_table = null;
 				if ( isset( $_REQUEST['action'] ) && 'show_report' == $_REQUEST['action'] && $mail_id == $_REQUEST['report_id'] && check_admin_referer( 'sndr_show_report' . $mail_id ) ) {
-					global $wpdb;
-					$pagination = '';
-					$report     = $_REQUEST['report_id'];
-					if ( isset( $_POST['set_list_per_page_top'] ) || isset( $_POST['set_list_per_page_bottom'] ) ) { //query from subscribers pagination blocks
-						// check if user want change number of subscriber which will br dysplayed on page
-						if ( $_POST['set_list_per_page_top'] != $_POST['list_per_page'] ) {
-							$per_page = ( empty( $_POST['set_list_per_page_top'] ) || ( ! preg_match( '/^\d+$/', $_POST['set_list_per_page_top'] ) ) ) ? $_REQUEST['list_per_page'] : $_POST['set_list_per_page_top'];
-							$paged    = 0;
-						} elseif( $_POST['set_list_per_page_bottom'] != $_POST['list_per_page'] ) {
-							$per_page = ( empty( $_POST['set_list_per_page_bottom'] ) || ( ! preg_match( '/^\d+$/', $_POST['set_list_per_page_bottom'] ) ) ) ? $_REQUEST['list_per_page'] : $_POST['set_list_per_page_bottom'];
-							$paged    = 0;
-						//cheeck if user want to change number of page in text field
-						} elseif( $_POST['list_paged_top'] != $_POST['current_page'] ) {
-							$per_page   = $_REQUEST['list_per_page'];
-							// if entered value is empty or not only digital
-							$list_paged = ( empty( $_POST['list_paged_top'] ) || ( ! preg_match( '/^\d+$/', $_POST['list_paged_top'] ) ) ) ? '1' : $_REQUEST['list_paged_top'];
-							//if entered value bigger than last page number
-							$list_paged = intval( $_REQUEST['max_page_number'] ) < intval( $list_paged ) ? $_REQUEST['max_page_number'] : $list_paged;
-							$paged      = intval( $list_paged ) - 1;
-						} elseif( $_POST['list_paged_bottom'] != $_POST['current_page'] ) {
-							$per_page   = $_REQUEST['list_per_page'];
-							// if entered value is empty or not only digital
-							$list_paged = ( empty( $_POST['list_paged_bottom'] ) || ( ! preg_match( '/^\d+$/', $_POST['list_paged_bottom'] ) ) ) ? '1' : $_REQUEST['list_paged_bottom'];
-							//if entered value bigger than last page number
-							$list_paged = intval( $_REQUEST['max_page_number'] ) < intval( $list_paged ) ? $_REQUEST['max_page_number'] : $list_paged;
-							$paged      = intval( $list_paged ) - 1;
-						} else {
-							$per_page   = $_REQUEST['list_per_page'];
-							$paged      = $_POST['current_page'];
-						}
-					} else { //query from action link on "Subject" row
-						$per_page = $_REQUEST['list_per_page'];
-						$paged    = intval( $_GET['list_paged'] );
-					}
-					$list_order_by = isset( $_REQUEST['list_order_by'] ) ? $_REQUEST['list_order_by'] : 'user_display_name';
-					if( isset( $_REQUEST['list_order'] ) ) {
-						$list_order = 'ASC' == $_REQUEST['list_order'] ? 'DESC' : 'ASC';
+					global $wpdb, $sndr_url;
+
+					$report    		= intval( $_REQUEST['report_id'] );
+					$list_paged 	= isset( $_GET['list_paged'] ) ? intval( $_GET['list_paged'] ) : 1;
+					$list_order_by 	= isset( $_REQUEST['list_order_by'] ) ? $_REQUEST['list_order_by'] : 'user_display_name';
+					$list_per_page 	= isset( $_REQUEST['list_per_page'] ) ? $_REQUEST['list_per_page'] : 30;
+					
+					if ( isset( $_REQUEST['list_order'] ) ) {
+						$list_order = ( 'ASC' == $_REQUEST['list_order'] ) ? 'DESC' : 'ASC';
 						$link_list_order = $_REQUEST['list_order'];
 					} else {
 						$list_order = $link_list_order = 'ASC';
 					}
-					$mail_status = isset( $_REQUEST['mail_status'] ) ? '&mail_status=' . $_REQUEST['mail_status'] : '';
-					$start_row   = $per_page * $paged;
+
+					$start_row   = ( 1 < $list_paged ) ? $list_per_page * ( $list_paged - 1 ) : 0;
 					/* check if table has PRO-column and adjust our query to exclude receivers from PRO mailous */
 					$colum_exists = $wpdb->query( "SHOW COLUMNS FROM `" . $wpdb->prefix . "sndr_users` LIKE 'id_mailout';" );
 					$additional_condition = ( 0 == $colum_exists ) ? "" : " AND ( `id_mailout`=`id_mail` OR `id_mailout`=0 )";
+					
 					$users_list  = $wpdb->get_results( 
 						"SELECT DISTINCT `" . $wpdb->prefix . "sndr_users`.`id_user`,`status`, `view`, `try`, `user_display_name`, `user_email` 
 						FROM `" . $wpdb->prefix . "sndr_users` 
 						LEFT JOIN `" . $wpdb->prefix . "sndr_mail_users_info`  ON `" . $wpdb->prefix . "sndr_users`.`id_user`=`" . $wpdb->prefix . "sndr_mail_users_info`.`id_user`
-						WHERE `id_mail`=" . $report . $additional_condition . " ORDER BY " . $list_order_by . " " . $list_order . " LIMIT " . $per_page . " OFFSET " . $start_row . ";"
+						WHERE `id_mail`=" . $report . $additional_condition . " ORDER BY " . $list_order_by . " " . $list_order . " LIMIT " . $list_per_page . " OFFSET " . $start_row . ";"
 					);
+					
 					if ( ! empty( $users_list ) ) { 
 						$list_table =
 							'<table class="report">
 								<thead>
 									<tr scope="row">
-										<td colspan="4">' . $this->subscribers_pagination( $report, $per_page, $paged, $list_order_by, $link_list_order, false, 'top' ) . '</td>
+										<td colspan="4">' . $this->subscribers_pagination( $report, $list_per_page, $list_paged, $list_order_by, $link_list_order, 'top' ) . '</td>
 									</tr>
 									<tr>
-										<td class="sndr-username"><a href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $report . '&list_paged=' . $paged . '&list_per_page=' . $per_page . '&list_order_by=user_display_name&list_order=' . $list_order . $mail_status, 'sndr_show_report' . $report ) . '">' . __( 'Username', 'sender' ) . '</a></td>
-										<td><a href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $report . '&list_paged=' . $paged . '&list_per_page=' . $per_page . '&list_order_by=status&list_order=' . $list_order . $mail_status, 'sndr_show_report' . $report ) . '">' . __( 'Status', 'sender' ) . '</a></td>
+										<td class="sndr-username"><a href="' . wp_nonce_url( $sndr_url . '&list_per_page=' . $list_per_page . '&action=show_report&report_id=' . $report . '&list_paged=' . $list_paged . '&list_order_by=user_display_name&list_order=' . $list_order, 'sndr_show_report' . $report ) . '">' . __( 'Username', 'sender' ) . '</a></td>
+										<td><a href="' . wp_nonce_url( $sndr_url . '&list_per_page=' . $list_per_page . '&action=show_report&report_id=' . $report . '&list_paged=' . $list_paged . '&list_order_by=status&list_order=' . $list_order, 'sndr_show_report' . $report ) . '">' . __( 'Status', 'sender' ) . '</a></td>
 										<td>' . __( 'Try', 'sender' ) . '</td>
 									</tr>
 								</thead>
 								<tfoot>
 									<tr>
-										<td class="sndr-username"><a href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $report . '&list_paged=' . $paged . '&list_per_page=' . $per_page . '&list_order_by=user_display_name&list_order=' . $list_order . $mail_status, 'sndr_show_report' . $report ) . '">' . __( 'Username', 'sender' ) . '</a></td>
-										<td><a href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $report . '&list_paged=' . $paged . '&list_per_page=' . $per_page . '&list_order_by=status&list_order=' . $list_order . $mail_status, 'sndr_show_report' . $report ) . '">' . __( 'Status', 'sender' ) . '</a></td>
+										<td class="sndr-username"><a href="' . wp_nonce_url( $sndr_url . '&list_per_page=' . $list_per_page . '&action=show_report&report_id=' . $report . '&list_paged=' . $list_paged . '&list_order_by=user_display_name&list_order=' . $list_order, 'sndr_show_report' . $report ) . '">' . __( 'Username', 'sender' ) . '</a></td>
+										<td><a href="' . wp_nonce_url( $sndr_url . '&list_per_page=' . $list_per_page . '&action=show_report&report_id=' . $report . '&list_paged=' . $list_paged . '&list_order_by=status&list_order=' . $list_order, 'sndr_show_report' . $report ) . '">' . __( 'Status', 'sender' ) . '</a></td>
 										<td>' . __( 'Try', 'sender' ) . '</td>
 									</tr>
 									<tr scope="row">
-										<td colspan="4">' . $this->subscribers_pagination( $report, $per_page, $paged, $list_order_by, $link_list_order, true, 'bottom' ) . '</td>
+										<td colspan="4">' . $this->subscribers_pagination( $report, $list_per_page, $list_paged, $list_order_by, $link_list_order, 'bottom' ) . '</td>
 									</tr>
 								</tfoot>
 								<tbody>';
@@ -1234,14 +1233,14 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 							$list_table .= '<tr>
 												<td class="sndr-username">' . $user_name . '</td>
 												<td>';
-							if( '1' == $list->status ) {
+							if ( '1' == $list->status ) {
 								$list_table .= '<p style="color: green;">' . __( 'received', 'sender' ) . '</p>';
 							} else { 
 								$list_table .= '<p style="color: #555;">' . __( 'in the queue', 'sender' ) . '</p>'; 
 							}
 							$list_table .=		'</td>
 												<td style="display: none;">';
-							if( '1' == $list->view ) {
+							if ( '1' == $list->view ) {
 								$list_table .= '<p style="color: green;">' . __( 'read', 'sender' ) . '</p>';
 							} else { 
 								$list_table .= '<p style="color: #555;">' . __( 'not read', 'sender' ) . '</p>'; 
@@ -1252,7 +1251,8 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 						}
 						$list_table .= 
 								'</tbody>
-							</table>';
+							</table>
+						<input type="hidden" name="sndr_url" value="' . wp_nonce_url( $sndr_url . '&action=show_report&report_id=' . $report . '&list_order_by=status&list_order=' . $list_order, 'sndr_show_report' . $report ) . '" />';
 					} else {
 						$list_table = '<p style="color:red;">' . __( "The list of subscribers can't be found.", 'sender' ) . '</p>';
 					}
@@ -1263,54 +1263,40 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 			/** 
 			 * Function to get subscribers list pagination
 			 * @param string  $mail_id        id of report
-			 * @param string  $per_page       number of subscribers on each page
-			 * @param string  $paged          desired page number
+			 * @param string  $list_per_page       number of subscribers on each page
+			 * @param string  $list_paged          desired page number
 			 * @param string  $list_order_by  on what grounds will be sorting
 			 * @param string  $list_order     "ASC" or "DESC
-			 * @param bool    $show_hidden    show/not hidden fields 
 			 * @param string  $place          postfix to fields name
 			 * @return string                 pagination elements
 			 */
-			function subscribers_pagination( $mail_id, $per_page, $paged, $list_order_by, $list_order, $show_hidden, $place ) {
-				global $wpdb;
+			function subscribers_pagination( $mail_id, $list_per_page, $list_paged, $list_order_by, $list_order, $place ) {
+				global $wpdb, $sndr_url;
 				$users_count = $wpdb->get_var(
 					"SELECT COUNT( `id_user` ) FROM `" . $wpdb->prefix . "sndr_users` WHERE `id_mail`=" . $mail_id . ";"
 				);
-				$mail_status = isset( $_REQUEST['mail_status'] ) ? '&mail_status=' . $_REQUEST['mail_status'] : '';
-				// open block with pagination elements
+
+				/* open block with pagination elements */
 				$pagination_block = 
 					'<div class="sndr-pagination">
 						<p class="total-users">' . __( 'Total Subscribers:', 'sender' ) . ' ' . $users_count . '</p>
 						<div class="list-per-page">
-							<input type="number" min="1" max="1000" style="width: 60px;" name="set_list_per_page_' . $place . '" value="' . $per_page . '" title="' . __( 'Number of Subscribers on Page', 'sender' ) . '"/>
-							<span class="total_pages">' . __( 'on page', 'sender' ) . '</span>
+							<input type="number" min="1" max="1000" class="sndr_set_list_per_page small-text hide-if-no-js" name="set_list_per_page_' . $place . '" value="' . $list_per_page . '" title="' . __( 'Number of Subscribers on Page', 'sender' ) . '" />
+							<span class="total_pages"><span class="hide-if-js">' . $list_per_page . '</span>' . __( 'on page', 'sender' ) . '</span>
 						</div>';
 
-				// if more than 1 page
-				if ( intval( $users_count ) > $per_page ) {
-					// get number of all pages
-					$total_pages         = ceil( $users_count / $per_page ) - 1;
-					$total_pages_display = $total_pages + 1;
-					$current_page        = $paged + 1;
-					// get size of <input type="text"/>
-					if ( '9' < $total_pages && '99' >= $total_pages ) {
-						$input_size = 2;
-					} elseif ( '100' < $total_pages && '999' >= $total_pages ) {
-						$input_size = 3;
-					} elseif ( '1000' < $total_pages && '9999' >= $total_pages ) {
-						$input_size = 4;
-					} elseif ( '10000' < $total_pages && '99999' >= $total_pages ) {
-						$input_size = 5;
-					} else {
-						$input_size = 1;
-					}
+				/* if more than 1 page */
+				if ( intval( $users_count ) > $list_per_page ) {
+					/* get number of all pages */
+					$total_pages         = ceil( $users_count / $list_per_page );
+					
 					$pagination_block .= 
 						'<div class="list-paged">';
-					if ( 0 < $paged ) { // if this is NOT first page of subscribers list
-						$previous_page_link = ( 1 < $paged ) ? $paged - 1 : 0;
+					if ( 1 < $list_paged ) { // if this is NOT first page of subscribers list
+						$previous_page_link = $list_paged - 1;
 						$pagination_block .= 
-							'<a class="first-page" href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $mail_id . '&list_paged=0&list_per_page=' . $per_page . $mail_status . '&list_order_by=' . $list_order_by . '&list_order=' . $list_order, 'sndr_show_report' . $mail_id ) . '" title="' . __( 'Go to the First Page', 'sender' ) . '">&laquo;</a>
-							<a class="previous-page" href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $mail_id . '&list_paged=' . $previous_page_link . '&list_per_page=' . $per_page . $mail_status . '&list_order_by=' . $list_order_by . '&list_order=' . $list_order, 'sndr_show_report' . $mail_id ) . '" title="' . __( 'Go to the Previous Page', 'sender' ) . '">&lsaquo;</a>';
+							'<a class="first-page" href="' . wp_nonce_url( $sndr_url . '&action=show_report&report_id=' . $mail_id . '&list_per_page=' . $list_per_page . '&list_paged=1&list_order_by=' . $list_order_by . '&list_order=' . $list_order, 'sndr_show_report' . $mail_id ) . '" title="' . __( 'Go to the First Page', 'sender' ) . '">&laquo;</a>
+							<a class="previous-page" href="' . wp_nonce_url( $sndr_url . '&action=show_report&report_id=' . $mail_id . '&list_per_page=' . $list_per_page . '&list_paged=' . $previous_page_link . '&list_order_by=' . $list_order_by . '&list_order=' . $list_order, 'sndr_show_report' . $mail_id ) . '" title="' . __( 'Go to the Previous Page', 'sender' ) . '">&lsaquo;</a>';
 					} else { // if this is first page of subscribers list
 						$pagination_block .= 
 							'<span class="first-page-disabled">&laquo;</span>
@@ -1318,37 +1304,22 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 					}
 					// field to choose number of subscribers on page and current page
 					$pagination_block .= 
-						'<input type="text" class="page-number" name="list_paged_' . $place . '" value="' . $current_page . '" size="' . $input_size . '" title="' . __( 'Current Page', 'sender' ) . '"/>
-						<span class="total_pages">' . __( 'of', 'sender' ) . ' ' . $total_pages_display . ' ' . __( 'pages', 'sender' ) . '</span>';
-					
-					if ( $show_hidden ) {
-						$pagination_block .= 
-							'<input type="hidden" name="action" value="show_report"/>
-							<input type="hidden" name="report_id" value="' . $mail_id . '"/>
-							<input type="hidden" name="list_per_page" value="' . $per_page . '"/>
-							<input type="hidden" name="current_page" value="' . $current_page . '"/>
-							<input type="hidden" name="list_order_by" value="' . $list_order_by . '"/>
-							<input type="hidden" name="list_order" value="' . $list_order . '"/>
-							<input type="hidden" name="max_page_number" value="' . $total_pages_display . '"/>';
-					}
-									
-					if ( ! empty( $mail_status ) ) {
-						$pagination_block .= '<input type="hidden" name="mail_status" value="' . $_REQUEST['mail_status'] . '"/>';
-					}
+						'<input type="number" class="sndr_list_paged hide-if-no-js small-text" min="1" max="' . $total_pages . '" name="list_paged_' . $place . '" value="' . $list_paged . '" title="' . __( 'Current Page', 'sender' ) . '"/>
+						<span class="total_pages"><span class="hide-if-js">' . $list_paged . '</span>' . __( 'of', 'sender' ) . ' ' . $total_pages . ' ' . __( 'pages', 'sender' ) . '</span>';
 
-					if ( $paged < $total_pages ) { //if this is NOT last page
-						$next_page_link = ( ( $paged - 1 ) < $total_pages ) ? $paged + 1 : $total_pages;
+					if ( $list_paged < $total_pages ) { /* if this is NOT last page */
+						$next_page_link = $list_paged + 1;
 						$pagination_block .= 
-							'<a class="next-page" href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $mail_id . '&list_paged=' . $next_page_link . '&list_per_page=' . $per_page . $mail_status . '&list_order_by=' . $list_order_by . '&list_order=' . $list_order, 'sndr_show_report' . $mail_id ) . '" title="' . __( 'Go to the Next Page', 'sender' ) . '">&rsaquo;</a>
-							<a class="last-page" href="' . wp_nonce_url( '?page=view_mail_send&action=show_report&report_id=' . $mail_id . '&list_paged=' . $total_pages . '&list_per_page=' . $per_page . $mail_status . '&list_order_by=' . $list_order_by . '&list_order=' . $list_order, 'sndr_show_report' . $mail_id ) . '" title="' . __( 'Go to the Last Page', 'sender' ) . '">&raquo;</a>';
-					} else { //if this is last page
+							'<a class="next-page" href="' . wp_nonce_url( $sndr_url . '&action=show_report&report_id=' . $mail_id . '&list_per_page=' . $list_per_page . '&list_paged=' . $next_page_link . '&list_order_by=' . $list_order_by . '&list_order=' . $list_order, 'sndr_show_report' . $mail_id ) . '" title="' . __( 'Go to the Next Page', 'sender' ) . '">&rsaquo;</a>
+							<a class="last-page" href="' . wp_nonce_url( $sndr_url . '&action=show_report&report_id=' . $mail_id . '&list_per_page=' . $list_per_page . '&list_paged=' . $total_pages . '&list_order_by=' . $list_order_by . '&list_order=' . $list_order, 'sndr_show_report' . $mail_id ) . '" title="' . __( 'Go to the Last Page', 'sender' ) . '">&raquo;</a>';
+					} else { /* if this is last page */
 						$pagination_block .= 
 							'<span class="next-page-disabled">&rsaquo;</span>
 							<span class="last-page-disabled">&raquo;</span>';
 					}
 					$pagination_block .= '</div><!-- .list-paged -->';
 				}
-				//close block with pagination elememnts
+				/* close block with pagination elememnts */
 				$pagination_block .= '</div><!-- .sndr-pagination -->';
 				return $pagination_block;
 			}
@@ -1365,13 +1336,12 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 if ( ! function_exists( 'sndr_screen_options' ) ) {
 	function sndr_screen_options() {
 		global $sndr_reports_list;
-		$option = 'per_page';
 		$args = array(
 			'label'   => __( 'Reports per page', 'sender' ),
 			'default' => 30,
 			'option'  => 'reports_per_page'
 		);
-		add_screen_option( $option, $args );
+		add_screen_option( 'per_page', $args );		
 		$sndr_reports_list = new SNDR_Report_List();
 	}
 	
@@ -1395,7 +1365,6 @@ if ( ! function_exists( 'sndr_mail_view' ) ) {
 	function sndr_mail_view() { 
 		global $sndr_message, $sndr_error, $sndr_reports_list; ?>
 		<div class="wrap sndr-report-list-page">
-			<div id="icon-options-general" class="icon32 icon32-bws"></div>
 			<h2><?php _e( 'Sender Reports', 'sender' ); ?></h2>
 			<?php $action_message = sndr_report_actions();
 			if ( $action_message['error'] ) {
@@ -1407,7 +1376,8 @@ if ( ! function_exists( 'sndr_mail_view' ) ) {
 			<div class="updated" <?php if ( empty( $sndr_message ) ) echo 'style="display: none;"'?>><p><?php echo $sndr_message ?></p></div>
 			<?php if ( isset( $_REQUEST['s'] ) && $_REQUEST['s'] ) {
 				printf( '<span class="subtitle">' . sprintf( __( 'Search results for &#8220;%s&#8221;', 'sender' ), wp_html_excerpt( esc_html( stripslashes( $_REQUEST['s'] ) ), 50 ) ) . '</span>' );
-			} ?>
+			} 
+			$sndr_reports_list->views(); ?>
 			<form method="post">
 				<?php $sndr_reports_list->prepare_items();
 				$sndr_reports_list->search_box( __( 'search', 'sender' ), 'sndr' );
@@ -1815,7 +1785,7 @@ if ( ! function_exists( 'sndr_more_reccurences' ) ) {
  */
 if ( ! function_exists( 'sndr_cron_mail' ) ) {
 	function sndr_cron_mail() {
-		global $wp_version, $wpdb, $sndr_options;
+		global $wpdb, $sndr_options;
 		$sndr_options = ( is_multisite() ) ? get_site_option( 'sndr_options' ) : get_option( 'sndr_options' );
 		if ( ! function_exists( 'wp_get_current_user' ) ) {
 			require_once( ABSPATH . "wp-includes/pluggable.php" ); 
@@ -1957,7 +1927,6 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 			<div class="bws_pro_version_table_bloc">
 				<div class="bws_table_bg"></div>
 				<div class="wrap sndrpr-mail" id="sndrpr-mail" style="margin: 0 10px">
-					<div id="icon-options-general" class="icon32 icon32-bws"></div>
 					<h2><span><?php _e( 'Add new letter', 'sender' ); ?></span><a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
 					<table id="sndrpr-mail-send-table" class="sndrpr-page-table">
 						<tr>
@@ -1993,7 +1962,20 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 									</ul><!-- .sndrpr-select-template -->
 								</div><!-- .sndrpr-letter-custom -->
 								<div class="sndrpr-letter-custom">
-									<div class="sndrpr-help-box"></div><label class="sndrpr-form-label"><?php _e( 'Select additional fonts:', 'sender' ); ?></label>
+									<label class="sndrpr-form-label">
+										<div class="bws_help_box<?php if ( $wp_version >= '3.9' ) echo ' dashicons dashicons-editor-help'; ?>">
+											<div class="bws_hidden_help_text" style="min-width: 300px;">
+												<p><?php _e( 'in order to use the necessary fonts you need:', 'sender' ); ?></p>
+												<ol><li><?php _e( 'select the desired font (or multiple fonts), and click on the "Load Additional Data" button', 'sender' ); ?></li>
+													<li><?php _e( 'click on the "Text" tab in content editor', 'sender' ); ?></li>
+												<li><?php _e( 'find a necessary html-element and edit when using the attribute "style" and CSS-property "font-family" as in example', 'sender' ); ?></li>
+												</ol>
+												<p><?php _e( 'Example:', 'sender' ); ?></p>
+												<code>&ltspan style="font-family: 'Open Sans';">Lorem ipsum set amet&lt/span></code>
+											</div>
+										</div>
+										<?php _e( 'Select additional fonts:', 'sender' ); ?>
+									</label>
 									<ul class="sndrpr-fonts-list">
 										<li><label><input disabled name="sndrpr_font_id[]" value="1" type="checkbox"/><span style="font-family: 'Open Sans';">Open Sans</span></label></li>
 										<li><label><input disabled name="sndrpr_font_id[]" value="2" type="checkbox"/> <span style="font-family: 'Crimson Text';">Crimson Text</span></label></li>
@@ -2022,7 +2004,51 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 								<input disabled type="submit" id="sndrpr-reset-additional-data" name="sndrpr_reset_additional_data" value="Reset Additional Data"/>
 							</td>
 						</tr>
-						<tr><td class="sndrpr-help-box"><div style="margin-top: 4px;"><strong><?php _e( 'Use shortcodes!', 'sender' ); ?></strong></div></td></tr>
+						<tr><td class="sndrpr-form-label">
+							<div class="bws_help_box<?php if ( $wp_version >= '3.9' ) echo ' dashicons dashicons-editor-help'; ?>">
+								<div class="bws_hidden_help_text" style="min-width: 300px;">
+									<p><?php _e( 'You can use the following shortcodes in the letter:', 'sender' ); ?></p>
+									<table>
+										<tr>
+											<td><strong>{site_url}</strong></td>
+											<td><?php _e( 'site URL', 'sender' ); ?></td>
+										<tr>
+										<tr>
+											<td><strong>{site_name}</strong></td>
+											<td><?php _e( 'site name', 'sender' ); ?></td>
+										<tr>
+										<tr>
+											<td><strong>{user_email}</strong></td>
+											<td><?php _e( 'user e-mail', 'sender' ); ?></td>
+										<tr>
+										<tr>
+											<td><strong>{user_name}</strong></td>
+											<td><?php _e( 'user name', 'sender' ); ?></td>
+										<tr>
+										<tr>
+											<td><strong>{new_post_title}</strong></td>
+											<td><?php _e( 'new post title - only for automatic mailout when publishing a new post', 'sender' ); ?></td>
+										<tr>
+										<tr>
+											<td><strong>{new_post_link}</strong></td>
+											<td><?php _e( 'link to new post - only for automatic mailout when publishing a new post', 'sender' ); ?></td>
+										<tr>
+										<tr>
+											<td><strong>{profile_page}</strong></td>
+											<td><?php _e( 'link to profile page of current user', 'sender' ); ?></td>
+										<tr>
+										<tr>
+											<td><strong>{unsubscribe_link="<i>text</i>"}</strong></td>
+											<td><?php _e( 'link to unsubscribe user from mailout', 'sender' ); ?></td>
+										<tr>
+										<tr>
+											<td><strong>{view_in_browser_link="<i>text</i>"}</strong></td>
+											<td><?php _e( 'link to view letter in new browser tab', 'sender' ); ?></td>
+										<tr>
+									</table>
+								</div>
+							</div> <strong><?php _e( 'Use shortcodes!', 'sender' ); ?></strong>
+						</td></tr>
 						<tr>
 							<td>
 								<label class="sndrpr-form-label"><?php _e( 'Letter Content:', 'sender' ); ?></label>
@@ -2052,14 +2078,9 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 			</div>
 			<div class="bws_pro_version_tooltip">
 				<div class="bws_info">
-					<?php _e( 'Unlock premium options by upgrading to PRO version.', 'sender' ); ?> 
-					<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+					<?php _e( 'Unlock premium options by upgrading to Pro version', 'sender' ); ?> 
 				</div>
-				<div class="bws_pro_links">
-					<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
-						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
-					</a>
-				</div>	
+				<a class="bws_button" href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -2072,7 +2093,6 @@ if ( ! function_exists( 'sndr_letters_list' ) ) {
 			<div class="bws_pro_version_table_bloc">
 				<div class="bws_table_bg"></div>
 				<div class="wrap sndr_letters_list" style="margin: 0 10px">
-					<div id="icon-options-general" class="icon32 icon32-bws"></div>
 					<h2><?php _e( 'Letters Lists', 'sender' ); ?> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
 					<ul class='subsubsub'>
 						<li class='all'><a class="current" href="#"><?php _e( 'All', 'sender' ); ?><span> ( 3 )</span></a> |</li>
@@ -2178,14 +2198,9 @@ if ( ! function_exists( 'sndr_letters_list' ) ) {
 			</div>
 			<div class="bws_pro_version_tooltip">
 				<div class="bws_info">
-					<?php _e( 'Unlock premium options by upgrading to PRO version.', 'sender' ); ?> 
-					<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+					<?php _e( 'Unlock premium options by upgrading to Pro version', 'sender' ); ?> 
 				</div>
-				<div class="bws_pro_links">
-					<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
-						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
-					</a>
-				</div>
+				<a class="bws_button" href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -2198,7 +2213,6 @@ if ( ! function_exists( 'sndr_distribution_list' ) ) {
 			<div class="bws_pro_version_table_bloc">
 				<div class="bws_table_bg"></div>
 				<div class="wrap sndr_distribution_list" style="margin: 0 10px">
-					<div id="icon-options-general" class="icon32 icon32-bws"></div>
 					<h2><?php _e( 'Mailings Lists', 'sender' ); ?> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
 					<ul class='subsubsub'>
 						<li class='all'><a class="current" href="#"><?php _e( 'All', 'sender' ); ?><span> ( 3 )</span></a> |</li>
@@ -2300,14 +2314,9 @@ if ( ! function_exists( 'sndr_distribution_list' ) ) {
 			</div>
 			<div class="bws_pro_version_tooltip">
 				<div class="bws_info">
-					<?php _e( 'Unlock premium options by upgrading to PRO version.', 'sender' ); ?> 
-					<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+					<?php _e( 'Unlock premium options by upgrading to Pro version', 'sender' ); ?> 
 				</div>
-				<div class="bws_pro_links">
-					<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
-						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
-					</a>
-				</div>	
+				<a class="bws_button" href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -2320,7 +2329,6 @@ if ( ! function_exists( 'sndr_letter_templates' ) ) {
 			<div class="bws_pro_version_table_bloc">
 				<div class="bws_table_bg"></div>
 				<div class="wrap sndrpr-letter-template-page" style="margin: 0 10px">
-					<div id="icon-options-general" class="icon32 icon32-bws"></div>
 					<h2><?php _e( 'Letter Templates', 'sender' ); ?> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
 					<ul class='subsubsub'>
 						<li class='all'><a class="current" href="#"><?php _e( 'All', 'sender' ); ?><span> ( 4 )</span></a> |</li>
@@ -2441,14 +2449,9 @@ if ( ! function_exists( 'sndr_letter_templates' ) ) {
 			</div>
 			<div class="bws_pro_version_tooltip">
 				<div class="bws_info">
-					<?php _e( 'Unlock premium options by upgrading to PRO version.', 'sender' ); ?> 
-					<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+					<?php _e( 'Unlock premium options by upgrading to Pro version', 'sender' ); ?> 
 				</div>
-				<div class="bws_pro_links">
-					<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
-						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
-					</a>
-				</div>
+				<a class="bws_button" href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -2461,7 +2464,6 @@ if ( ! function_exists( 'sndr_priorities' ) ) {
 			<div class="bws_pro_version_table_bloc">
 				<div class="bws_table_bg"></div>
 				<div class="wrap sndrpr-priorities-list-page" style="margin: 0 10px">
-					<div id="icon-options-general" class="icon32 icon32-bws"></div>
 					<h2><?php _e( 'Priorities', 'sender' ); ?> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h2>
 					<ul class='subsubsub'>
 						<li class='all'><a class="current" href="#"><?php _e( 'All', 'sender' ); ?><span> ( 6 )</span></a> |</li>
@@ -2593,14 +2595,9 @@ if ( ! function_exists( 'sndr_priorities' ) ) {
 			</div>
 			<div class="bws_pro_version_tooltip">
 				<div class="bws_info">
-					<?php _e( 'Unlock premium options by upgrading to PRO version.', 'sender' ); ?> 
-					<a href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>
+					<?php _e( 'Unlock premium options by upgrading to Pro version', 'sender' ); ?> 
 				</div>
-				<div class="bws_pro_links">
-					<a class="bws_button" href="http://bestwebsoft.com/products/sender/buy/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin">
-						<?php _e( 'Go', 'sender' ); ?> <strong>PRO</strong>
-					</a>
-				</div>	
+				<a class="bws_button" href="http://bestwebsoft.com/products/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=<?php echo $sndr_plugin_info["Version"]; ?>&wp_v=<?php echo $wp_version; ?>" target="_blank" title="Sender Pro Plugin"><?php _e( 'Learn More', 'sender' ); ?></a>	
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -2701,9 +2698,27 @@ if ( ! function_exists( 'sndr_send_uninstall' ) ) {
 if ( ! function_exists ( 'sndr_plugin_banner' ) ) {
 	function sndr_plugin_banner() {
 		global $hook_suffix;
-		if( ( ( is_multisite() && is_network_admin() ) || ! is_multisite() ) && 'plugins.php' == $hook_suffix ) {
-			global $sndr_plugin_info;
-			bws_plugin_banner( $sndr_plugin_info, 'sndr', 'sender', 'c273031fe5f64b4ea95f2815ae9313b5', '114', '//ps.w.org/sender/assets/icon-128x128.png' ); 
+		if ( 'plugins.php' == $hook_suffix ) {
+			if ( ( is_multisite() && is_network_admin() ) || ! is_multisite() ) {
+				global $sndr_plugin_info, $sndr_options;
+				if ( empty( $sndr_options ) )
+					$sndr_options = is_multisite() ? get_site_option( 'sndr_options' ) : get_option( 'sndr_options' );
+
+				if ( isset( $sndr_options['first_install'] ) && strtotime( '-1 week' ) > $sndr_options['first_install'] )
+					bws_plugin_banner( $sndr_plugin_info, 'sndr', 'sender', 'c273031fe5f64b4ea95f2815ae9313b5', '114', '//ps.w.org/sender/assets/icon-128x128.png' ); 
+			
+				bws_plugin_banner_to_settings( $sndr_plugin_info, 'sndr_options', 'sender', 'admin.php?page=sndr_settings', 'admin.php?page=sndr_send_user', 'Mailout' );
+			}
+
+			if ( is_multisite() && ! is_network_admin() && is_admin() ) { ?>
+				<div class="update-nag"><strong><?php _e( 'Notice:', 'sender' ); ?></strong> 
+					<?php if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
+						_e( 'Due to the peculiarities of the multisite work, Sender plugin has only', 'sender' ); ?> <a target="_blank" href="<?php echo network_admin_url( 'admin.php?page=sndr_settings' ); ?>"><?php _e( 'Network settings page', 'sender' ); ?></a>
+					<?php } else {
+						_e( 'Due to the peculiarities of the multisite work, Sender plugin has the network settings page only and it should be Network Activated. Please', 'sender' ); ?> <a target="_blank" href="<?php echo network_admin_url( 'plugins.php' ); ?>"><?php _e( 'Activate Sender for Network', 'sender' ); ?></a>
+					<?php } ?>
+				</div>	
+			<?php }
 		}
 	}
 }
@@ -2718,6 +2733,8 @@ if ( function_exists( 'is_multisite' ) ) {
 	else
 		add_action( 'admin_menu', 'sndr_admin_default_setup' );
 }
+add_action( 'plugins_loaded', 'sndr_plugins_loaded' );
+
 add_filter( 'plugin_action_links', 'sndr_plugin_action_links', 10, 2 );
 add_filter( 'plugin_row_meta', 'sndr_register_plugin_links', 10, 2 );
 
@@ -2740,4 +2757,3 @@ add_action( 'mlqpr_change_status_on_sender_mail', 'sndr_get_update_on_mail_from_
 
 register_deactivation_hook( plugin_basename( __FILE__ ), 'sndr_send_deactivate' );
 register_uninstall_hook( plugin_basename( __FILE__ ), 'sndr_send_uninstall' );
-?>

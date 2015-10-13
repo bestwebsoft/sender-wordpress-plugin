@@ -35,16 +35,6 @@
 			counter.text( usersNumber );
 		});
 
-		/* 
-		 *add notice about changing in the settings page 
-		 */
-		$( '#sndr-mail input' ).bind( "change click select", function() {
-			if ( $( this ).attr( 'type' ) != 'submit' ) {
-				$( '.updated.fade' ).css( 'display', 'none' );
-				$( '#sndr-settings-notice' ).css( 'display', 'block' );
-			};
-		});
-
 		/**
 		 * calculte maximum number of sent mails and show confirm-window if user enter too large value
 		 */
@@ -90,17 +80,6 @@
 		smtpRadio.click( function() {
 			smtpOptions.show();
 		});
-
-		/**
-		 * event on click on submit button on settings page
-		 */
-		$( '#settings-form-submit' ).click( function() {
-			if( $( 'input[name="sndr_from_email"]' ).is( ':disabled' ) ) {
-				$( 'input[name="sndr_from_email"]' ).attr( 'disabled', false );
-			}
-			$( this ).trigger( 'click' );
-			return false;
-		});
 		
 		/**
 		 * show not necessary columns on report page
@@ -118,10 +97,51 @@
 		/**
 		 * scroll to report table
 		 */
-		if( $( '.report' ).length ) {
+		if ( $( '.report' ).length ) {
 			$( 'html, body' ).animate({
 				scrollTop: $( '.report' ).offset().top - 30 + 'px'
 			}, 0 );
+
+			/* set lists per page or set page */
+			$( '.report .sndr_set_list_per_page, .report .sndr_list_paged' ).focusout( function() { 
+				var value = $( this ).val();
+				if ( $( this ).next( '.total_pages' ).find( '.hide-if-js' ).val() != value ) {
+					var url = $( 'input[name="sndr_url"]' ).val();
+
+					if ( $( this ).hasClass( 'sndr_set_list_per_page' ) ) {
+						if ( $( '.report .sndr_list_paged' ).length > 0 ) {
+							paged = $( '.report .sndr_list_paged' ).val();
+						} else {
+							paged = 1;
+						}
+						url = url + '&list_paged=' + paged + '&list_per_page=' + value;
+					} else {
+						url = url + '&list_paged=' + value + '&list_per_page=' + $( '.report .sndr_set_list_per_page' ).val();
+					}
+					location.href = url;
+				}
+			});
+			$( '.report .sndr_set_list_per_page, .report .sndr_list_paged' ).on( 'keypress', function( event ) { 
+				if ( event.which == 13 ) {
+					event.preventDefault();
+					var value = $( this ).val();
+					if ( $( this ).next( '.total_pages' ).find( '.hide-if-js' ).val() != value ) {
+						var url = $( 'input[name="sndr_url"]' ).val();
+
+						if ( $( this ).hasClass( 'sndr_set_list_per_page' ) ) {
+							if ( $( '.report .sndr_list_paged' ).length > 0 ) {
+								paged = $( '.report .sndr_list_paged' ).val();
+							} else {
+								paged = 1;
+							}
+							url = url + '&list_paged=' + paged + '&list_per_page=' + value;
+						} else {
+							url = url + '&list_paged=' + value + '&list_per_page=' + $( '.report .sndr_set_list_per_page' ).val();
+						}
+						location.href = url;
+					}
+				}
+			});
 		}
 	});
 })(jQuery);

@@ -1,10 +1,10 @@
 === Sender by BestWebSoft ===
 Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
-Tags: bulk mailing, create mailout, email, e-mail, mail, mailout, php, send mail, send mail to administrator, send mail to users, send mail through smtp server, send mail to all users, send mail to categories of users, send mail with php functions, send mail with interval, send multiple messages, sender, sander, sendar, sendr, sender plugin, users, user categories
-Requires at least: 3.3
-Tested up to: 4.3
-Stable tag: 1.0.8
+Tags: best mail sender, best sender plugin, best mail sender plugin, bulk mailing, create mailout, e-mail, email, free, free mail sender, free sender, mail, mail sender, mail sender plugin, mailout, outgoing mail, plugin, php, simple sender plugin, simple mail sender plugin, sander, send mail, send mail through smtp server, send mail to administrator, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, send mail with php functions, simple mail sender, simple sender, send multiple messages, sendar, sender, sender plugin, sendr, smtp, user categories, users, wp simple mail sender, wp sender, wp plugin, wp sender plugin, wordpress sender plugin, wp mail sender plugin, wordpress mail sender plugin
+Requires at least: 3.8
+Tested up to: 4.3.1
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,13 +17,13 @@ To send letters, you can use the php functions such as sending emails, wordpress
 
 http://www.youtube.com/watch?v=kwbkOXrF10M
 
-<a href="http://www.youtube.com/watch?v=BuBa0lluNbE" target="_blank">Video instruction on Installation</a>
+<a href="http://www.youtube.com/watch?v=BuBa0lluNbE" target="_blank">Sender by BestWebSoft Video instruction on Installation</a>
 
-<a href="http://wordpress.org/plugins/sender/faq/" target="_blank">FAQ</a>
+<a href="http://wordpress.org/plugins/sender/faq/" target="_blank">Sender by BestWebSoft FAQ</a>
 
-<a href="http://support.bestwebsoft.com" target="_blank">Support</a>
+<a href="http://support.bestwebsoft.com" target="_blank">Sender by BestWebSoft Support</a>
 
-<a href="http://bestwebsoft.com/products/sender/?k=f658a48b03f44d5d82ec3cbccba9664b" target="_blank">Upgrade to Pro Version</a>
+<a href="http://bestwebsoft.com/products/sender/?k=f658a48b03f44d5d82ec3cbccba9664b" target="_blank">Upgrade to Sender Pro by BestWebSoft</a>
 
 = Recommended Plugins =
 
@@ -106,6 +106,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
+= V1.0.9 - 13.10.2015 =
+* Bugfix : We fixed bug with pagination on the report page.
+* Update : Auxiliary notices were added. Tooltips displaying was updated.
+* Update : BWS plugins section is updated.
+
 = V1.0.8 - 19.08.2015 =
 * Update : We updated all functionality for wordpress 4.3.
 
@@ -172,6 +177,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.0.9 =
+We fixed bug with pagination on the report page. Auxiliary notices were added. Tooltips displaying was updated. BWS plugins section is updated.
 
 = V1.0.8 = 
 We updated all functionality for wordpress 4.3.

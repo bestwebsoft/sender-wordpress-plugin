@@ -5,10 +5,6 @@
 #sndr-send-table tr td{
 	padding-left: 8px;
 }
-.sndr_info {
-	font-size: 10px;
-	color: #888;
-}
 #sndr-calculate {
 	color: green;
 	font-weight: bold;
@@ -105,9 +101,9 @@
 	font-size: 24px;
 	line-height: 24px;
 	padding: 0 5px;
-	vertical-align: top;
 }
-.total_pages {
+.total_pages,
+.total_pages span {
 	display: inline-block;
 	padding-top: 3px !important;
 	font-size: 13px !important;
@@ -205,22 +201,6 @@
     margin: 10px;
     text-align: center;
 }
-div.sndrpr-help-box {
-    padding-left: 0;
-    top: 15px;
-    width: 29px;
-}
-.sndrpr-help-box {
-    background: url("../images/tooltip_icons.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
-    float: left;
-    font-weight: normal;
-    height: 29px;
-    margin: 0 10px;
-    padding-left: 40px;
-    position: relative;
-    top: 10px;
-    width: 200px;
-}
 .sndrpr-fonts-list label {
     margin: 10px;
 }
@@ -232,4 +212,7 @@ div.sndrpr-help-box {
 .sndr_letters_list .date.column-date,
 .sndr_distribution_list .date.column-date {
     word-wrap: normal;
+}
+.sndrpr-form-label .bws_help_box {
+	z-index: 10;
 }
