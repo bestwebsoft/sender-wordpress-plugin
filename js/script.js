@@ -80,19 +80,6 @@
 		smtpRadio.click( function() {
 			smtpOptions.show();
 		});
-		
-		/**
-		 * show not necessary columns on report page
-		 */
-		if ( ! $( '#subject-hide' ).is( ':checked' ) ) {
-			$( '.column-subject' ).hide();
-		}
-		if ( ! $( '#status-hide' ).is( ':checked' ) ) {
-			$( '.column-status' ).hide();
-		}
-		if ( ! $( '#date-hide' ).is( ':checked' ) ) {
-			$( '.column-date' ).hide();
-		}
 
 		/**
 		 * scroll to report table

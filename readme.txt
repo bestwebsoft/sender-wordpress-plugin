@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
 Tags: best mail sender, best sender plugin, best mail sender plugin, bulk mailing, create mailout, e-mail, email, free, free mail sender, free sender, mail, mail sender, mail sender plugin, mailout, outgoing mail, plugin, php, simple sender plugin, simple mail sender plugin, sander, send mail, send mail through smtp server, send mail to administrator, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, send mail with php functions, simple mail sender, simple sender, send multiple messages, sendar, sender, sender plugin, sendr, smtp, user categories, users, wp simple mail sender, wp sender, wp plugin, wp sender plugin, wordpress sender plugin, wp mail sender plugin, wordpress mail sender plugin
 Requires at least: 3.8
-Tested up to: 4.3.1
-Stable tag: 1.0.9
+Tested up to: 4.4-RC1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -106,6 +106,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
+= V1.1.0 - 01.12.2015 =
+* Bugfix : The bug with plugin menu duplicating was fixed.
+
 = V1.0.9 - 13.10.2015 =
 * Bugfix : We fixed bug with pagination on the report page.
 * Update : Auxiliary notices were added. Tooltips displaying was updated.
@@ -177,6 +180,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.1.0 =
+The bug with plugin menu duplicating was fixed.
 
 = V1.0.9 =
 We fixed bug with pagination on the report page. Auxiliary notices were added. Tooltips displaying was updated. BWS plugins section is updated.
