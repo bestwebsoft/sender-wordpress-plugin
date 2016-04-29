@@ -1,10 +1,10 @@
 === Sender by BestWebSoft ===
 Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
-Tags: best mail sender, best sender plugin, best mail sender plugin, bulk mailing, create mailout, e-mail, email, free, free mail sender, free sender, mail, mail sender, mail sender plugin, mailout, outgoing mail, plugin, php, simple sender plugin, simple mail sender plugin, sander, send mail, send mail through smtp server, send mail to administrator, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, send mail with php functions, simple mail sender, simple sender, send multiple messages, sendar, sender, sender plugin, sendr, smtp, user categories, users, wp simple mail sender, wp sender, wp plugin, wp sender plugin, wordpress sender plugin, wp mail sender plugin, wordpress mail sender plugin
+Tags: best mail sender, best sender plugin, best mail sender plugin, bulk mailing, create mailout, e-mail, email, free, free mail sender, free sender, mail, mail sender, mail sender plugin, mailout, outgoing mail, plugin, php, simple sender plugin, simple mail sender plugin, sander, send mail, send mail to administrator, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, send mail with php functions, simple mail sender, simple sender, send multiple messages, sendar, sender, sender plugin, sendr, user categories, users, wp simple mail sender, wp sender, wp plugin, wp sender plugin, wordpress sender plugin, wp mail sender plugin, wordpress mail sender plugin
 Requires at least: 3.8
-Tested up to: 4.4-RC1
-Stable tag: 1.1.0
+Tested up to: 4.5.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ This plugin sends mail to registered users.
 == Description ==
 
 This plugin allows you send mails to all users or to certain categories of users via several clicks.
-To send letters, you can use the php functions such as sending emails, wordpress functions, or send an email through the SMTP server. Also, the plugin provides a bulk mailing for a certain period of time.
+To send letters, you can use the php functions such as sending emails, wordpress functions. Also, the plugin provides a bulk mailing for a certain period of time.
 
 http://www.youtube.com/watch?v=kwbkOXrF10M
 
@@ -25,12 +25,21 @@ http://www.youtube.com/watch?v=kwbkOXrF10M
 
 <a href="http://bestwebsoft.com/products/sender/?k=f658a48b03f44d5d82ec3cbccba9664b" target="_blank">Upgrade to Sender Pro by BestWebSoft</a>
 
+= Features =
+
+* Send mails to all users or to certain categories of users.
+* To send letters, You can use the php functions such as sending emails, wordpress functions.
+* You can do a bulk mailing for a certain period of time.
+
+If you have a feature, suggestion or idea you'd like to see in the plugin, we'd love to hear about it! <a href="http://support.bestwebsoft.com/hc/en-us/requests/new" target="_blank">Suggest a Feature</a>
+
 = Recommended Plugins =
 
 The author of the Sender also recommends the following plugins:
 
 * <a href="http://wordpress.org/plugins/subscriber/">Subscriber</a> - This plugin is an exclusive add-on for the Sender Plugin. This plugin allows your site visitors to subscribe for newsletters, coming from your website.
 There is also a premium version of the plugin <a href="http://bestwebsoft.com/plugin/subscriber/?k=9e068dce9989e5146fafbf42ee471f54">Subscriber Pro</a> - Apart from the basic options provided in the Free version, you can also send subscription confirmation letters, manage the "Unsubscribe" button and see the reason for unsubscribing in the Subscribers chart.
+* <a href="http://wordpress.org/plugins/bws-smtp/">SMTP by BestWebSoft</a> - SMTP by BestWebSoft plugin allows you to configure the sending email messages using mail gateways and email services such as Gmail, Yahoo, Hotmail and many others. This plugin offers an easy and problem-free solution to sending test emails, so that you will not have to struggle with bothersome settings configuration process.
 * <a href="http://wordpress.org/plugins/updater/">Updater</a> - This plugin updates WordPress core and the plugins to the recent versions. You can also use the auto mode or manual mode for updating and set email notifications.
 There is also a premium version of the plugin <a href="http://bestwebsoft.com/products/updater/?k=94d3b6d567ade1cd7a988b80874cdee7">Updater Pro</a> with more useful features available. It can make backup of all your files and database before updating. Also it can forbid some plugins or WordPress Core update.
 
@@ -43,7 +52,7 @@ If you would like to create your own language pack or update the existing one, y
 
 = Technical support =
 
-Dear users, our plugins are available for free download. If you have any questions or recommendations regarding the functionality of our plugins (existing options, new options, current issues), please feel free to contact us. Please note that we accept requests in English only. All messages in another languages won't be accepted.
+Dear users, our plugins are available for free download. If you have any questions or recommendations regarding the functionality of our plugins (existing options, new options, current issues), please feel free to contact us. Please note that we accept requests in English only. All messages in other languages won't be accepted.
 
 If you notice any bugs in the plugins, you can notify us about it and we'll investigate and fix the issue then. Your request should contain URL of the website, issues description and WordPress admin panel credentials.
 Moreover we can customize the plugin according to your requirements. It's a paid service (as a rule it costs $40, but the price can vary depending on the amount of the necessary changes and their complexity). Please note that we could also include this or that feature (developed for you) in the next release and share with the other users then. 
@@ -105,6 +114,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 4. Plugin`s "Report" page with subscribers list. 
 
 == Changelog ==
+
+= V1.1.1 - 29.04.2016 =
+* Update : The amount has been added to the "In progress" status.
+* Update : "Hide report" has been added.
+* Bugfix : The bug with filling "From" field when sending test emails has been fixed.
 
 = V1.1.0 - 01.12.2015 =
 * Bugfix : The bug with plugin menu duplicating was fixed.
@@ -180,6 +194,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.1.1 =
+The amount has been added to the "In progress" status. "Hide report" has been added. The bug with filling "From" field when sending test emails has been fixed.
 
 = V1.1.0 =
 The bug with plugin menu duplicating was fixed.

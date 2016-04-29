@@ -18,6 +18,13 @@
 	background: url( '../images/preloader.gif' );
 	background-size: 100%;
 }
+td.sndr_from{
+	width: 270px;
+	vertical-align: top;
+}
+.rtl .sndr-user-roles {
+	float:none;
+}
 /**
  * Mail editor page
  */
@@ -44,8 +51,7 @@
 }
 /* table columns */
 .sndr-report-list-page .column-status {
-	width: 100px;
-	text-align: center;
+	width: 200px;
 }
 .sndr-done-status {
 	color: #006505;
@@ -111,6 +117,20 @@
 .total-users {
 	text-align: center;
 }
+
+.sndr_distribution_list h1 span,
+#sndrpr-mail h1 span,
+.sndr_letters_list h1 span,
+.sndrpr-letter-template-page h1 span,
+.sndrpr-priorities-list-page h1 span {
+	line-height: 1.9em;
+}
+
+@media only screen and ( max-width: 790px ) {
+	td.sndr_from {
+		width: auto; 
+	}
+}
 @media only screen and ( max-width: 782px ) {
 	input[type="radio"] {
 		margin-bottom: 10px;
@@ -155,6 +175,12 @@
 		word-wrap: break-word;
 	}
 }
+@media only screen and ( max-width: 380px ) {
+	#sndrpr-load-template-button {
+		display:block!important;
+	}
+}
+
 /* pro elements style */
 .sndrpr-page-table {
     width: 100%;
@@ -215,4 +241,10 @@
 }
 .sndrpr-form-label .bws_help_box {
 	z-index: 10;
+}
+#sndrpr-mail-send-table textarea {
+	width: 100%;
+}
+.rtl .sndrpr-letter-custom {
+	float:right;
 }

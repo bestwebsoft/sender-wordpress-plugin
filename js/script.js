@@ -69,19 +69,6 @@
 		});
 
 		/**
-		 * Show/hide some blocks on plugin settings page
-		 */
-		var phpRadio    = $( '#sndr_wp_mail_radio, #sndr_php_mail_radio' ),
-			smtpRadio   = $( '#sndr_smtp_mail_radio' ),
-			smtpOptions = $( '.sndr_smtp_options' );
-		phpRadio.click( function() {
-			smtpOptions.hide();
-		});
-		smtpRadio.click( function() {
-			smtpOptions.show();
-		});
-
-		/**
 		 * scroll to report table
 		 */
 		if ( $( '.report' ).length ) {
