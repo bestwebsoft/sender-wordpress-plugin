@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: Sender by BestWebSoft
-Plugin URI: http://bestwebsoft.com/products/
-Description: This plugin send mail to registered users.
+Plugin URI: http://bestwebsoft.com/products/sender/
+Description: Send bulk email messages to WordPress users. Custom templates, advanced settings and detailed reports.
 Author: BestWebSoft
 Text Domain: sender
 Domain Path: /languages
-Version: 1.1.1
+Version: 1.1.2
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -41,7 +41,7 @@ if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 		$icon_path = plugins_url( "images/plugin_icon_38.png",  __FILE__ );
 		bws_general_menu();
 
-		$settings = add_submenu_page( 'bws_plugins', 'Sender', 'Sender', 'manage_options', 'sndr_settings', 'sndr_admin_settings_content' );
+		$settings = add_submenu_page( 'bws_panel', 'Sender', 'Sender', 'manage_options', 'sndr_settings', 'sndr_admin_settings_content' );
 		$sndr_send_user = add_menu_page( 'Sender', 'Sender', 'manage_options', 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, '57.1' );
 		$hook = add_submenu_page( 'sndr_send_user', __( 'Reports', 'sender' ), __( 'Reports', 'sender' ), 'manage_options', 'view_mail_send', 'sndr_mail_view' );
 
@@ -91,7 +91,7 @@ if ( ! function_exists ( 'sndr_init' ) ) {
 		}
 
 		/* check WordPress version */
-		bws_wp_min_version_check( plugin_basename( __FILE__ ), $sndr_plugin_info, '3.8', '3.3' );
+		bws_wp_min_version_check( plugin_basename( __FILE__ ), $sndr_plugin_info, '3.8' );
 	}
 }
 
@@ -106,7 +106,7 @@ if ( ! function_exists ( 'sndr_admin_init' ) ) {
 		if ( ! $sndr_plugin_info )
 			$sndr_plugin_info = get_plugin_data( __FILE__ );
 
-		if ( ! isset( $bws_plugin_info ) || empty( $bws_plugin_info ) )
+		if ( empty( $bws_plugin_info ) )
 			$bws_plugin_info = array( 'id' => '114', 'version' => $sndr_plugin_info["Version"] );
 
 		if ( isset( $_REQUEST['page'] ) && ( 'sndr_send_user' == $_REQUEST['page'] || 'view_mail_send' == $_REQUEST['page'] || 'sndr_settings' == $_REQUEST['page'] ) ) {
@@ -190,8 +190,6 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 		}
 
 		if ( ! isset( $sndr_options['plugin_option_version'] ) || $sndr_options['plugin_option_version'] != $sndr_plugin_info["Version"] ) {
-
-			$sndr_options_default['display_settings_notice'] = 0;
 						
 			/* array merge incase new version of plugin has added new options */
 			$sndr_options = array_merge( $sndr_options_default, $sndr_options );
@@ -1546,7 +1544,6 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 						'body'			=> $_POST['sndr_content'],
 						'date_create'	=> time() 
 					);
-					require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 					if ( function_exists( 'mlq_if_mail_plugin_is_in_queue' ) && mlq_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) {
 						$mail_data['remote_delivery']	= '1';
 					}
@@ -1829,8 +1826,7 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 		$from_name	=	'=?UTF-8?B?' . base64_encode( $from_name ) . '?=';
 
 		/* get messages */
-		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		if ( ( is_plugin_active( 'email-queue/email-queue.php' ) || is_plugin_active( 'email-queue-pro/email-queue-pro.php' ) ) && function_exists( 'mlq_if_mail_plugin_is_in_queue' ) && mlq_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) {
+		if ( function_exists( 'mlq_if_mail_plugin_is_in_queue' ) && mlq_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) {
 			$users_mail_sends = $wpdb->get_results( "
 				SELECT * FROM `" . $wpdb->prefix . "sndr_users` AS users 
 				JOIN `" . $wpdb->prefix . "sndr_mail_send` AS mails ON (
@@ -2007,39 +2003,39 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 										<tr>
 											<td><strong>{site_url}</strong></td>
 											<td><?php _e( 'site URL', 'sender' ); ?></td>
-										<tr>
+										</tr>
 										<tr>
 											<td><strong>{site_name}</strong></td>
 											<td><?php _e( 'site name', 'sender' ); ?></td>
-										<tr>
+										</tr>
 										<tr>
 											<td><strong>{user_email}</strong></td>
 											<td><?php _e( 'user e-mail', 'sender' ); ?></td>
-										<tr>
+										</tr>
 										<tr>
 											<td><strong>{user_name}</strong></td>
 											<td><?php _e( 'user name', 'sender' ); ?></td>
-										<tr>
+										</tr>
 										<tr>
 											<td><strong>{new_post_title}</strong></td>
 											<td><?php _e( 'new post title - only for automatic mailout when publishing a new post', 'sender' ); ?></td>
-										<tr>
+										</tr>
 										<tr>
 											<td><strong>{new_post_link}</strong></td>
 											<td><?php _e( 'link to new post - only for automatic mailout when publishing a new post', 'sender' ); ?></td>
-										<tr>
+										</tr>
 										<tr>
 											<td><strong>{profile_page}</strong></td>
 											<td><?php _e( 'link to profile page of current user', 'sender' ); ?></td>
-										<tr>
+										</tr>
 										<tr>
 											<td><strong>{unsubscribe_link="<i>text</i>"}</strong></td>
 											<td><?php _e( 'link to unsubscribe user from mailout', 'sender' ); ?></td>
-										<tr>
+										</tr>
 										<tr>
 											<td><strong>{view_in_browser_link="<i>text</i>"}</strong></td>
 											<td><?php _e( 'link to view letter in new browser tab', 'sender' ); ?></td>
-										<tr>
+										</tr>
 									</table>
 								</div>
 							</div> <strong><?php _e( 'Use shortcodes!', 'sender' ); ?></strong>
@@ -2813,7 +2809,7 @@ if ( ! function_exists ( 'sndr_plugin_banner' ) ) {
 				if ( isset( $sndr_options['first_install'] ) && strtotime( '-1 week' ) > $sndr_options['first_install'] )
 					bws_plugin_banner( $sndr_plugin_info, 'sndr', 'sender', 'c273031fe5f64b4ea95f2815ae9313b5', '114', '//ps.w.org/sender/assets/icon-128x128.png' ); 
 			
-				bws_plugin_banner_to_settings( $sndr_plugin_info, 'sndr_options', 'sender', 'admin.php?page=sndr_settings', 'admin.php?page=sndr_send_user', 'Mailout' );
+				bws_plugin_banner_to_settings( $sndr_plugin_info, 'sndr_options', 'sender', 'admin.php?page=sndr_settings', 'admin.php?page=sndr_send_user' );
 			}
 
 			if ( is_multisite() && ! is_network_admin() && is_admin() ) { ?>
@@ -2862,7 +2858,6 @@ add_action( 'admin_notices', 'sndr_plugin_banner' );
 add_action( 'network_admin_notices', 'sndr_plugin_banner' );
 
 add_action( 'mlq_change_status_on_sender_mail', 'sndr_get_update_on_mail_from_email_queue', 10, 3 );
-add_action( 'mlqpr_change_status_on_sender_mail', 'sndr_get_update_on_mail_from_email_queue', 10, 3 );
 
 register_deactivation_hook( plugin_basename( __FILE__ ), 'sndr_send_deactivate' );
 register_uninstall_hook( plugin_basename( __FILE__ ), 'sndr_send_uninstall' );

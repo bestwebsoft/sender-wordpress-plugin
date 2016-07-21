@@ -1,14 +1,14 @@
 === Sender by BestWebSoft ===
 Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
-Tags: best mail sender, best sender plugin, best mail sender plugin, bulk mailing, create mailout, e-mail, email, free, free mail sender, free sender, mail, mail sender, mail sender plugin, mailout, outgoing mail, plugin, php, simple sender plugin, simple mail sender plugin, sander, send mail, send mail to administrator, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, send mail with php functions, simple mail sender, simple sender, send multiple messages, sendar, sender, sender plugin, sendr, user categories, users, wp simple mail sender, wp sender, wp plugin, wp sender plugin, wordpress sender plugin, wp mail sender plugin, wordpress mail sender plugin
+Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 3.8
-Tested up to: 4.5.1
-Stable tag: 1.1.1
+Tested up to: 4.5.3
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin sends mail to registered users. 
+Send bulk email messages to WordPress users. Custom templates, advanced settings and detailed reports.
 
 == Description ==
 
@@ -48,7 +48,7 @@ There is also a premium version of the plugin <a href="http://bestwebsoft.com/pr
 * Russian (ru_RU)
 * Ukrainian (uk)
 
-If you would like to create your own language pack or update the existing one, you can send <a href="http://codex.wordpress.org/Translating_WordPress" target="_blank">the text of PO and MO files</a> for <a href="http://support.bestwebsoft.com" target="_blank">BestWebSoft</a> and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO files  <a href="http://www.poedit.net/download.php" target="_blank">Poedit</a>.
+If you would like to create your own language pack or update the existing one, you can send <a href="http://codex.wordpress.org/Translating_WordPress" target="_blank">the text of PO and MO files</a> for <a href="http://support.bestwebsoft.com/hc/en-us/requests/new" target="_blank">BestWebSoft</a> and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO files  <a href="http://www.poedit.net/download.php" target="_blank">Poedit</a>.
 
 = Technical support =
 
@@ -62,7 +62,7 @@ We can fix some things for free for the users who provide translation of our plu
 
 1. Upload `sender` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin via the 'Plugins' menu in WordPress.
-3. Plugin settings are located in 'BWS Plugins', 'Sender'.
+3. Plugin settings are located in 'BWS Panel', 'Sender'.
 
 <a href="https://docs.google.com/document/d/12virLN1kFgnpXAtZ4F8g2bU2fnahiGzU2I4KLQzW7qU/edit" target="_blank">View a Step-by-step Instruction on Sender Installation</a>.
 
@@ -73,7 +73,7 @@ http://www.youtube.com/watch?v=BuBa0lluNbE
 = How to use the plugin? =
 
 1. Install and activate the plugin.
-2. Go to the plugin settings page ( on dashboard "BWS Plugins" -> "Sender" ) and edit the necessary options.
+2. Go to the plugin settings page ( on dashboard "BWS Panel" -> "Sender" ) and edit the necessary options.
 3. Go to the edit mail page ( on Dashboard "Sender" -> "Sender" ) and then:
 	- select the users ( by roles ) you want to send a mail to
 	- enter the subject and text of the mail
@@ -114,6 +114,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 4. Plugin`s "Report" page with subscribers list. 
 
 == Changelog ==
+
+= V1.1.2 - 21.07.2016 =
+* Bugfix : Notice Undefined index was fixed.
 
 = V1.1.1 - 29.04.2016 =
 * Update : The amount has been added to the "In progress" status.
@@ -194,6 +197,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.1.2 =
+* Bugs fixed
 
 = V1.1.1 =
 The amount has been added to the "In progress" status. "Hide report" has been added. The bug with filling "From" field when sending test emails has been fixed.
