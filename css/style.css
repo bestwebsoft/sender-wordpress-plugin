@@ -98,9 +98,15 @@ td.sndr_from{
 .sndr-pagination {
 	float: right;
 }
+.rtl .sndr-pagination {
+	float: left;
+}
 
 .sndr-pagination div {
 	float: left;
+}
+.rtl .sndr-pagination div {
+	float: right;
 }
 .sndr-pagination a,
 .sndr-pagination span {
@@ -119,16 +125,16 @@ td.sndr_from{
 }
 
 .sndr_distribution_list h1 span,
-#sndrpr-mail h1 span,
+#sndr-mail h1 span,
 .sndr_letters_list h1 span,
-.sndrpr-letter-template-page h1 span,
-.sndrpr-priorities-list-page h1 span {
+.sndr-letter-template-page h1 span,
+.sndr-priorities-list-page h1 span {
 	line-height: 1.9em;
 }
 
 @media only screen and ( max-width: 790px ) {
 	td.sndr_from {
-		width: auto; 
+		width: auto;
 	}
 }
 @media only screen and ( max-width: 782px ) {
@@ -142,7 +148,7 @@ td.sndr_from{
 	.sndr-count {
 		vertical-align: top;
 	}
-	.sndr-check-all, 
+	.sndr-check-all,
 	.sndr-role {
 		margin-bottom: 15px !important;
 	}
@@ -157,11 +163,14 @@ td.sndr_from{
 	.sndr-pagination {
 		float: left;
 	}
+	.rtl .sndr-pagination {
+		float: right;
+	}
 	.report {
 		display: block;
 		position: relative;
 		left: -60px;
-	}	
+	}
 }
 @media only screen and ( max-width: 450px ) {
 	.sndr-pagination div {
@@ -176,75 +185,75 @@ td.sndr_from{
 	}
 }
 @media only screen and ( max-width: 380px ) {
-	#sndrpr-load-template-button {
+	#sndr-load-template-button {
 		display:block!important;
 	}
 }
 
 /* pro elements style */
-.sndrpr-page-table {
-    width: 100%;
+.sndr-page-table {
+	width: 100%;
 }
-.sndrpr-form-label {
-    display: block;
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-top: 20px;
+.sndr-form-label {
+	display: block;
+	font-size: 1.1em;
+	font-weight: bold;
+	margin-top: 20px;
 }
-.sndrpr-letter-custom {
-    float: left;
-    margin-right: 20px;
+.sndr-letter-custom {
+	float: left;
+	margin-right: 20px;
 }
-.sndrpr-letter-custom ul {
-    background: #FFFFFF;
-    border: 1px solid #DDDDDD;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07) inset;
-    max-height: 250px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    width: 280px;
+.rtl .sndr-letter-custom {
+	float: right;
 }
-.sndrpr-default-templates, .sndrpr-user-templates {
-    background: #CCCCCC;
-    border-bottom: 1px solid #C2C2C2;
-    border-top: 1px solid #C2C2C2;
-    font-weight: bold;
-    line-height: 1.2;
-    padding: 10px 0;
-    text-align: center;
+.sndr-letter-custom ul {
+	background: #FFFFFF;
+	border: 1px solid #DDDDDD;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07) inset;
+	max-height: 250px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 280px;
 }
-.sndrpr-distributions-list, .sndrpr-letters-list, .sndrpr-template-info {
-    clear: both;
-    padding: 10px 0;
+.sndr-default-templates, .sndr-user-templates {
+	background: #CCCCCC;
+	border-bottom: 1px solid #C2C2C2;
+	border-top: 1px solid #C2C2C2;
+	font-weight: bold;
+	line-height: 1.2;
+	padding: 10px 0;
+	text-align: center;
 }
-.sndrpr-template-info img {
-    border: 1px solid #ECECEC;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
-    display: block;
-    margin: 0 auto;
+.sndr-distributions-list, .sndr-letters-list, .sndr-template-info {
+	clear: both;
+	padding: 10px 0;
 }
-.sndrpr-template-info label p {
-    margin: 10px;
-    text-align: center;
+.sndr-template-info img {
+	border: 1px solid #ECECEC;
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+	display: block;
+	margin: 0 auto;
 }
-.sndrpr-fonts-list label {
-    margin: 10px;
+.sndr-template-info label p {
+	margin: 10px;
+	text-align: center;
 }
-.sndrpr-letter-template-page .column-status,
-.sndrpr-priorities-list-page .column-number {
-    text-align: center;
-    width: 100px;
+.sndr-fonts-list label {
+	margin: 10px;
+}
+.sndr-letter-template-page .column-status,
+.sndr-priorities-list-page .column-number {
+	text-align: center;
+	width: 100px;
 }
 .sndr_letters_list .date.column-date,
 .sndr_distribution_list .date.column-date {
-    word-wrap: normal;
+	word-wrap: normal;
 }
-.sndrpr-form-label .bws_help_box {
+.sndr-form-label .bws_help_box {
 	z-index: 10;
 }
-#sndrpr-mail-send-table textarea {
+#sndr-mail-send-table textarea {
 	width: 100%;
-}
-.rtl .sndrpr-letter-custom {
-	float:right;
 }

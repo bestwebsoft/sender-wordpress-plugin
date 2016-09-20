@@ -39,34 +39,56 @@
 		 * calculte maximum number of sent mails and show confirm-window if user enter too large value
 		 */
 		var runTime      = $( '#sndr_mail_run_time' ),
-			runTimeVal   = runTime.val(),
 			sendCount    = $( '#sndr_mail_send_count' ),
-			sendCountVal = sendCount.val(),
 			number       = 0;
+		runTime.on( 'input change', function() {
+			if ( $( this ).val() >= 60 ) {
+				number = parseInt( sendCount.val() );
+			} else {
+				if ( 0 == ( 60 % $( this ).val() ) ) {
+					number = Math.floor( 60 / $( this ).val() ) * parseInt( sendCount.val() );
+				} else {
+					number = ( Math.floor( 60 / $( this ).val() ) + 1 ) * parseInt( sendCount.val() );
+				}
+			}
+			$( '#sndr-calculate' ).text( '' ).text( number );
+		} );
 		runTime.change( function() {
 			if ( parseInt( $( this ).val() ) < 1 || !( /^\s*(\+|-)?\d+\s*$/.test( $( this ).val() ) ) ) {
 				$( this ).val( '1' ).text( '1' );
+				$( this ).trigger('change');
 			}
 			if ( parseInt( $( this ).val() ) > 360 ) {
 				if( ! confirm( sndrScriptVars['toLongMessage'] ) ) {
-					$( this ).val( runTimeVal ).text( runTimeVal );
+					$( this ).val( runTime.val() ).text( runTime.val() );
+					$( this ).trigger('change');
 				}
 			}
-			number = Math.floor( ( 60 / $( this ).val() )  * parseInt( sendCount.val() ) );
+		} );
+		sendCount.on( 'input change', function() {
+			if ( parseInt( runTime.val() ) >= 60 ) {
+				number = $( this ).val();
+			} else {
+				if ( 0 == ( 60 % parseInt( runTime.val() ) ) ) {
+					number = Math.floor( 60 / parseInt( runTime.val() ) ) * $( this ).val();
+				} else {
+					number = ( Math.floor( 60 / parseInt( runTime.val() ) ) + 1 ) * $( this ).val();
+				}
+			}
 			$( '#sndr-calculate' ).text( '' ).text( number );
-		});
+		} );
 		sendCount.change( function() {
 			if ( parseInt( $( this ).val() ) < 1 || !( /^\s*(\+|-)?\d+\s*$/.test( $( this ).val() ) ) ) {
 				$( this ).val( '1' ).text( '1' );
+				$( this ).trigger('change');
 			}
 			if ( parseInt( $( this ).val() ) > 50 ) {
 				if( ! confirm( sndrScriptVars['toLongMessage'] ) ) {
-					$( this ).val( sendCountVal ).text( sendCountVal );
+					$( this ).val( sendCount.val() ).text( sendCount.val() );
+					$( this ).trigger('change');
 				}
 			}
-			number = parseInt( ( 60 / runTime.val() ) * $( this ).val() );
-			$( '#sndr-calculate' ).text( '' ).text( number );
-		});
+		} );
 
 		/**
 		 * scroll to report table
@@ -77,7 +99,7 @@
 			}, 0 );
 
 			/* set lists per page or set page */
-			$( '.report .sndr_set_list_per_page, .report .sndr_list_paged' ).focusout( function() { 
+			$( '.report .sndr_set_list_per_page, .report .sndr_list_paged' ).focusout( function() {
 				var value = $( this ).val();
 				if ( $( this ).next( '.total_pages' ).find( '.hide-if-js' ).val() != value ) {
 					var url = $( 'input[name="sndr_url"]' ).val();
@@ -95,7 +117,7 @@
 					location.href = url;
 				}
 			});
-			$( '.report .sndr_set_list_per_page, .report .sndr_list_paged' ).on( 'keypress', function( event ) { 
+			$( '.report .sndr_set_list_per_page, .report .sndr_list_paged' ).on( 'keypress', function( event ) {
 				if ( event.which == 13 ) {
 					event.preventDefault();
 					var value = $( this ).val();

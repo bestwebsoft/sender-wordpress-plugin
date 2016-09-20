@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sender\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-28 12:01+0300\n"
-"PO-Revision-Date: 2016-04-28 12:04+0300\n"
+"POT-Creation-Date: 2016-09-12 15:45+0300\n"
+"PO-Revision-Date: 2016-09-12 15:46+0300\n"
 "Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language-Team: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language: ru_RU\n"
@@ -18,63 +18,63 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: sender.php:46 sender.php:806 sender.php:808
+#: sender.php:47 sender.php:792 sender.php:794
 msgid "Reports"
 msgstr "Звіти"
 
-#: sender.php:49
+#: sender.php:50
 msgid "New Mailout"
 msgstr "Нова розсилка"
 
-#: sender.php:50
+#: sender.php:51
 msgid "Letters"
 msgstr "Листи"
 
-#: sender.php:51 sender.php:2215
+#: sender.php:52 sender.php:2219
 msgid "Mailings Lists"
 msgstr "Списки розсилок"
 
-#: sender.php:52
+#: sender.php:53
 msgid "Letters Templates"
 msgstr "Шаблони листів"
 
-#: sender.php:53 sender.php:2473
+#: sender.php:54 sender.php:2519
 msgid "Priorities"
 msgstr "Пріоритети"
 
-#: sender.php:58 sender.php:245 sender.php:264 sender.php:528
+#: sender.php:59 sender.php:243 sender.php:262 sender.php:515
 msgid "Settings"
 msgstr "Налаштування"
 
-#: sender.php:266
+#: sender.php:264
 msgid "FAQ"
 msgstr "FAQ"
 
-#: sender.php:267
+#: sender.php:265
 msgid "Support"
 msgstr "Підтримка"
 
-#: sender.php:400
+#: sender.php:388
 msgid "Close Report"
 msgstr "Закрити звіт"
 
-#: sender.php:401 sender.php:1046
+#: sender.php:389 sender.php:1032
 msgid "Show Report"
 msgstr "Показати звіт"
 
-#: sender.php:402
+#: sender.php:390
 msgid "The data of this report can't be found."
 msgstr "По звіту немає даних."
 
-#: sender.php:403
+#: sender.php:391
 msgid "Error while sending request."
 msgstr "Помилка при надсиланні запиту."
 
-#: sender.php:404
+#: sender.php:392
 msgid "Are you sure that you want to enter such a large value?"
 msgstr "Ви упевнені, що потрібне таке велике значення?"
 
-#: sender.php:451
+#: sender.php:439
 msgid ""
 "You may have entered too large a value in the \"Interval for sending mail\" "
 "option. Check please."
@@ -82,7 +82,7 @@ msgstr ""
 "Можливо, ви ввели занадто велике значення у поле \"Інтервал між надсиланням "
 "повідомлень\". Перевірте, будь ласка."
 
-#: sender.php:465
+#: sender.php:453
 msgid ""
 "You may have entered too large a value in the \"Number of sent messages at "
 "one time\" option. Check please."
@@ -90,7 +90,7 @@ msgstr ""
 "Можливо, ви ввели занадто велике значення у поле \"Кількість одночасно "
 "надісланих повідомлень\". Перевірте, будь ласка."
 
-#: sender.php:475
+#: sender.php:463
 msgid ""
 "Email 'FROM' field option was changed, which may cause email messages being "
 "moved to the spam folder or email delivery failures."
@@ -98,72 +98,47 @@ msgstr ""
 "Налаштування поля емейла поля \"Від\" змінено, що може призвести до того, що "
 "ваші листи не будуть доставлені або потраплять до папки Спам."
 
-#: sender.php:501
+#: sender.php:488
 msgid "Settings saved."
 msgstr "Налаштування збережено."
 
-#: sender.php:513
+#: sender.php:500
 msgid "All plugin settings were restored."
 msgstr "Всі налаштування плагіну було скинуто до стандартних."
 
-#: sender.php:526
+#: sender.php:513
 msgid "Sender Settings"
 msgstr "Налаштування Sender"
 
-#: sender.php:529
+#: sender.php:516
 msgid "Go PRO"
 msgstr "Перейти на PRO"
 
-#: sender.php:539
-msgid "use"
-msgstr "використовуйте"
-
-#: sender.php:541
-msgid "activate"
-msgstr "активуйте"
-
-#: sender.php:544
-msgid "download"
-msgstr "завантажте"
-
-#: sender.php:552
-msgid ""
-"In current plugin version, there is an opportunity to use SMTP method from "
-"old plugin settings. If you're using this method for sending e-mails, please"
-msgstr ""
-"У поточнiй версiї плагiну можливiсть використання SMTP-методу iз налаштувань "
-"плагiну було вилучено. Якщо ви використовували саме цей метод для "
-"вiдправлення пошти будь ласка"
-
-#: sender.php:552
-msgid "and configure it in accordance with your settings"
-msgstr "та налаштуйте його у вiдповiдностi до ваших налаштувань"
-
-#: sender.php:558 sender.php:2732
+#: sender.php:528 sender.php:2803
 msgid "Notice:"
 msgstr "Зауважте:"
 
-#: sender.php:571
+#: sender.php:541
 msgid "Interval for sending mail"
 msgstr "Інтервал між надсиланням повідомлень"
 
-#: sender.php:572
+#: sender.php:542
 msgid "(min)"
 msgstr "(хв.)"
 
-#: sender.php:575
+#: sender.php:545
 msgid "Number of messages sent at one time"
 msgstr "Кількість повідомлень, що надсилаються одночасно"
 
-#: sender.php:580
+#: sender.php:556
 msgid "maximum number of sent mails:"
 msgstr "максимальна кількість надісланих повідомлень:"
 
-#: sender.php:580
+#: sender.php:556
 msgid "per hour"
 msgstr "за годину"
 
-#: sender.php:580
+#: sender.php:556
 msgid ""
 "Please make sure that this number is smaller than max allowed number of sent "
 "mails from your hosting account."
@@ -171,35 +146,35 @@ msgstr ""
 "Будь ласка, переконайтесь, що це значення не перевищує максимально дозволену "
 "вашим хостингом кількість повідомлень."
 
-#: sender.php:588 sender.php:670
+#: sender.php:564 sender.php:646
 msgid "Close"
 msgstr "Закрити"
 
-#: sender.php:592
+#: sender.php:568
 msgid "Attempts number"
 msgstr "Кількість спроб"
 
-#: sender.php:595
+#: sender.php:571
 msgid "Maximum number of attempts to send a message to a single user"
 msgstr "Максимальна кількість спроб надіслати повідомлення одному користувачу"
 
-#: sender.php:599
+#: sender.php:575
 msgid "Email in HTML format sending"
 msgstr "Відправка емейлу у форматі HTML"
 
-#: sender.php:603
+#: sender.php:579
 msgid "Send email with confirmation"
 msgstr "Надіслати листа з підтвердженням"
 
-#: sender.php:607
+#: sender.php:583
 msgid "This function works not on all mail servers."
 msgstr "Ця функція працює не на усіх поштових серверах."
 
-#: sender.php:611
+#: sender.php:587
 msgid "Display fonts list on \"Edit letter\" or \"Edit Template\" Pages"
 msgstr "Показати список шрифтів на сторінках редагування листів та шаблонів"
 
-#: sender.php:615
+#: sender.php:591
 msgid ""
 "Due to security reasons, the additional fonts may not be reflected on some "
 "postal services."
@@ -207,33 +182,33 @@ msgstr ""
 "Через політику безпеки, додаткові шрифти можуть не відображатися на деяких "
 "поштових сервісах."
 
-#: sender.php:620 sender.php:694
+#: sender.php:596 sender.php:680
 msgid "If you upgrade to Pro version all your settings will be saved."
 msgstr "Якщо ви перейдете на Pro версію, всі налаштування буде збережено."
 
-#: sender.php:627 sender.php:700 sender.php:2076 sender.php:2200
-#: sender.php:2319 sender.php:2458 sender.php:2613
+#: sender.php:603 sender.php:686 sender.php:2061 sender.php:2204
+#: sender.php:2343 sender.php:2504 sender.php:2685
 msgid "Unlock premium options by upgrading to Pro version"
 msgstr "Відкрити додаткові опції, перейшовши на Pro версію"
 
-#: sender.php:629 sender.php:702 sender.php:2078 sender.php:2202
-#: sender.php:2321 sender.php:2460 sender.php:2615
+#: sender.php:605 sender.php:688 sender.php:2063 sender.php:2206
+#: sender.php:2345 sender.php:2506 sender.php:2687
 msgid "Learn More"
 msgstr "Дізнатись більше"
 
-#: sender.php:636
+#: sender.php:612
 msgid "'FROM' field"
 msgstr "Поле \"Від\""
 
-#: sender.php:638
+#: sender.php:614
 msgid "Name"
 msgstr "Ім'я"
 
-#: sender.php:644
+#: sender.php:620
 msgid "Email"
 msgstr "Емейл"
 
-#: sender.php:648
+#: sender.php:624
 msgid ""
 "If this option is changed, email messages may be moved to the spam folder or "
 "email delivery failures may occur."
@@ -241,47 +216,51 @@ msgstr ""
 "Зміна цих налаштувань може призвести до того, що ваші листи не будуть "
 "доставлені або потраплять до папки Спам."
 
-#: sender.php:652
-msgid "What to use?"
-msgstr "Що використовувати?"
+#: sender.php:628
+msgid "Sending method"
+msgstr "Метод відправки листів"
 
-#: sender.php:657
+#: sender.php:633
 msgid "Wp-mail"
 msgstr "Wp-mail"
 
-#: sender.php:657
+#: sender.php:633
 msgid "You can use the wp_mail function for mailing"
 msgstr "Ви можете використовувати функцію wp_mail для розсилок"
 
-#: sender.php:661
+#: sender.php:637
 msgid "Mail"
 msgstr "Mail"
 
-#: sender.php:661
+#: sender.php:637
 msgid "To send mail you can use the php mail function"
 msgstr "Для надсилання листів, ви можете використовувати функцію PHP mail"
 
-#: sender.php:674
+#: sender.php:650
 msgid "Automatic mailout when publishing a new post"
 msgstr "Автоматична розсилка про появу нових постів"
 
-#: sender.php:679
+#: sender.php:655
 msgid "Choose a mailing list"
 msgstr "Оберіть список розсилок"
 
-#: sender.php:683
+#: sender.php:659
 msgid "Choose a letter"
 msgstr "Оберіть шаблон листа"
 
-#: sender.php:687
+#: sender.php:663
 msgid "Select letter priority"
 msgstr "Оберіть пріорітет для  листа:"
 
-#: sender.php:688
+#: sender.php:664
 msgid "Less number - higher priority"
 msgstr "Меньша цифра - більший пріорітет"
 
-#: sender.php:709
+#: sender.php:670
+msgid "Slug for 'view email in browser' link"
+msgstr "Слаг для посилання \"переглянути лист у браузері\""
+
+#: sender.php:695
 msgid ""
 "If you want to allows your site visitors to subscribe for newsletters, "
 "coming from your website, use"
@@ -289,31 +268,31 @@ msgstr ""
 "Якщо ви хочете, щоб відвідувачі підписувались на розсилки з вашого сайту, "
 "використайте"
 
-#: sender.php:709
+#: sender.php:695
 msgid "that is an exclusive add-on for the Sender Plugin by BestWebSoft."
 msgstr "це ексклюзивне доповнення до плагіну Sender від BestWebSoft."
 
-#: sender.php:712
+#: sender.php:698
 msgid "Save Changes"
 msgstr "Зберегти зміни"
 
-#: sender.php:817
+#: sender.php:803
 msgid "You can check sending reports on the page"
 msgstr "Переглянути звiтнiсть по вiдправленням ви можете на сторiнцi"
 
-#: sender.php:824
+#: sender.php:810
 msgid "Send to"
 msgstr "Надіслати"
 
-#: sender.php:828
+#: sender.php:814
 msgid "all"
 msgstr "всі"
 
-#: sender.php:844
+#: sender.php:830
 msgid "Number of mails which would be sent"
 msgstr "Кількість повідомлень, що будуть надіслані"
 
-#: sender.php:854
+#: sender.php:840
 msgid ""
 "WARNING: as you are using multisite, the total number of sent mails may not "
 "coincide with the counter. It will be fixed in the stable version of plugin."
@@ -322,252 +301,252 @@ msgstr ""
 "відправлених повідомлень може не співпадати з цим лічильником. Це буде "
 "виправлено у стабільній версії плагіну."
 
-#: sender.php:859 sender.php:948 sender.php:2119 sender.php:2177
+#: sender.php:845 sender.php:934 sender.php:2110 sender.php:2181
 msgid "Subject"
 msgstr "Тема"
 
-#: sender.php:865
+#: sender.php:851
 msgid "Content"
 msgstr "Контент:"
 
-#: sender.php:872
+#: sender.php:858
 msgid "Send"
 msgstr "Надіслати"
 
-#: sender.php:898
+#: sender.php:884
 msgid "report"
 msgstr "звіт"
 
-#: sender.php:899
+#: sender.php:885
 msgid "reports"
 msgstr "звіти"
 
-#: sender.php:938
+#: sender.php:924
 msgid "No messages sent"
 msgstr "Надісланих повідомлень немає"
 
-#: sender.php:949 sender.php:1236 sender.php:1243 sender.php:2368
-#: sender.php:2438
+#: sender.php:935 sender.php:1223 sender.php:1230 sender.php:2399
+#: sender.php:2484
 msgid "Status"
 msgstr "Статус"
 
-#: sender.php:950
+#: sender.php:936
 msgid "Date"
 msgstr "Дата"
 
-#: sender.php:993 sender.php:2093 sender.php:2217 sender.php:2336
-#: sender.php:2475
+#: sender.php:979 sender.php:2078 sender.php:2221 sender.php:2360
+#: sender.php:2521
 msgid "All"
 msgstr "Всi"
 
-#: sender.php:994 sender.php:1075
+#: sender.php:980 sender.php:1061
 msgid "In Progress"
 msgstr "У процесі"
 
-#: sender.php:995
+#: sender.php:981
 msgid "Done"
 msgstr "Виконано"
 
-#: sender.php:1005
+#: sender.php:991
 msgid "Delete Reports"
 msgstr "Видалити звіти"
 
-#: sender.php:1049
+#: sender.php:1035
 msgid "Hide Report"
 msgstr "Закрити звіт"
 
-#: sender.php:1051
+#: sender.php:1037
 msgid "Delete Report"
 msgstr "Видалити звіт"
 
-#: sender.php:1075 sender.php:1331
+#: sender.php:1061 sender.php:1318
 msgid "of"
 msgstr "з"
 
-#: sender.php:1078
+#: sender.php:1064
 msgid "All Done"
 msgstr "Виконано все"
 
-#: sender.php:1159
+#: sender.php:1145
 msgid "No Subject"
 msgstr "Без теми"
 
-#: sender.php:1235 sender.php:1242
+#: sender.php:1222 sender.php:1229
 msgid "Username"
 msgstr "Ім'я Користувача"
 
-#: sender.php:1237 sender.php:1244
+#: sender.php:1224 sender.php:1231
 msgid "Try"
 msgstr "Спроб"
 
-#: sender.php:1254
+#: sender.php:1241
 msgid "User was deleted"
 msgstr "Користувача видалено"
 
-#: sender.php:1260
+#: sender.php:1247
 msgid "received"
 msgstr "отримано"
 
-#: sender.php:1262
+#: sender.php:1249
 msgid "in the queue"
 msgstr "у черзі"
 
-#: sender.php:1267
+#: sender.php:1254
 msgid "read"
 msgstr "прочитано"
 
-#: sender.php:1269
+#: sender.php:1256
 msgid "not read"
 msgstr "не прочитано"
 
-#: sender.php:1280
+#: sender.php:1267
 msgid "The list of subscribers can't be found."
 msgstr "Списку користувачів не знайдено."
 
-#: sender.php:1305
+#: sender.php:1292
 msgid "Total Subscribers:"
 msgstr "Всього підписників:"
 
-#: sender.php:1307
+#: sender.php:1294
 msgid "Number of Subscribers on Page"
 msgstr "Кількість підписників на сторінці"
 
-#: sender.php:1308
+#: sender.php:1295
 msgid "on page"
 msgstr "на сторінці"
 
-#: sender.php:1321
+#: sender.php:1308
 msgid "Go to the First Page"
 msgstr "На першу сторінку"
 
-#: sender.php:1322
+#: sender.php:1309
 msgid "Go to the Previous Page"
 msgstr "На попередню сторінку"
 
-#: sender.php:1330
+#: sender.php:1317
 msgid "Current Page"
 msgstr "Поточна сторінка"
 
-#: sender.php:1331
+#: sender.php:1318
 msgid "pages"
 msgstr "сторінок"
 
-#: sender.php:1336
+#: sender.php:1323
 msgid "Go to the Next Page"
 msgstr "На наступну сторінку"
 
-#: sender.php:1337
+#: sender.php:1324
 msgid "Go to the Last Page"
 msgstr "На останню сторінку"
 
-#: sender.php:1365
+#: sender.php:1352
 msgid "Reports per page"
 msgstr "Звітів на сторінці"
 
-#: sender.php:1407
+#: sender.php:1394
 msgid "Sender Reports"
 msgstr "Звіти Sender"
 
-#: sender.php:1417
+#: sender.php:1404
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Результати пошуку для &#8220;%s&#8221;"
 
-#: sender.php:1419
+#: sender.php:1406
 msgid "Filter reports list"
 msgstr "Фільтр списка звітів"
 
-#: sender.php:1423 sender.php:2099 sender.php:2223 sender.php:2344
-#: sender.php:2481
+#: sender.php:1410 sender.php:2084 sender.php:2227 sender.php:2368
+#: sender.php:2527
 msgid "search"
 msgstr "пошук"
 
-#: sender.php:1447
+#: sender.php:1434
 msgid "You need to choose some reports."
 msgstr "Вам необхідно обрати декілька звітів."
 
-#: sender.php:1448
+#: sender.php:1435
 msgid "Error while deleting report."
 msgstr "Помилка при видаленні звіту."
 
-#: sender.php:1449
+#: sender.php:1436
 msgid "Error while deleting mail."
 msgstr "Помилка при видаленні повідомлення."
 
-#: sender.php:1450
+#: sender.php:1437
 msgid "You cannot send an empty mail."
 msgstr "Ви не можете надіслати пусте повідомлення."
 
-#: sender.php:1451
+#: sender.php:1438
 msgid "Select a list of users to send messages."
 msgstr "Оберіть список користувачів для надсилання повідомлень."
 
-#: sender.php:1452
+#: sender.php:1439
 msgid "It is impossible to get the list of users."
 msgstr "Неможливо отримати список користувачів."
 
-#: sender.php:1453
+#: sender.php:1440
 msgid "Please, try it later."
 msgstr "Будь ласка, спробуйте пізніше."
 
-#: sender.php:1454
+#: sender.php:1441
 msgid "New mailout was created successfully."
 msgstr "Нову розсилку успішно створено."
 
-#: sender.php:1455
+#: sender.php:1442
 msgid "Mailout was not create"
 msgstr "Розсилку не було створено."
 
-#: sender.php:1487 sender.php:1521
+#: sender.php:1474 sender.php:1508
 msgid "Report was deleted."
 msgstr "Звіт було видалено."
 
-#: sender.php:1487 sender.php:1521
+#: sender.php:1474 sender.php:1508
 msgid "Reports were deleted."
 msgstr "Звіти (звітів) були видалені."
 
-#: sender.php:1708
+#: sender.php:1694
 msgid "Subscribe on newsletters"
 msgstr "Підписатися на розсилку"
 
-#: sender.php:1712
+#: sender.php:1698
 msgid "Sorry, but you denied to subscribe to the newsletter."
 msgstr "Вибачте, але вам відмовлено у можливості підписатися на розсилку."
 
-#: sender.php:1742
+#: sender.php:1728
 msgid "unsubscribed from the user profile"
 msgstr "відписан з профілю користувача"
 
-#: sender.php:1797
+#: sender.php:1783
 msgid "Your interval"
 msgstr "Ваш інтервал"
 
-#: sender.php:1925
+#: sender.php:1910
 msgid "Add new letter"
 msgstr "Додати новий лист"
 
-#: sender.php:1925 sender.php:2091 sender.php:2215 sender.php:2334
-#: sender.php:2473
+#: sender.php:1910 sender.php:2076 sender.php:2219 sender.php:2358
+#: sender.php:2519
 msgid "Add New"
 msgstr "Додати нове"
 
-#: sender.php:1929
+#: sender.php:1914
 msgid "Subject:"
 msgstr "Тема:"
 
-#: sender.php:1936
+#: sender.php:1921
 msgid "Select letter template:"
 msgstr "Оберіть шаблон листа:"
 
-#: sender.php:1938
+#: sender.php:1923
 msgid "Default Templates:"
 msgstr "Стандартні шаблони:"
 
-#: sender.php:1963
+#: sender.php:1948
 msgid "in order to use the necessary fonts you need:"
 msgstr "для використання необхідних шрифтів вам необхідно:"
 
-#: sender.php:1964
+#: sender.php:1949
 msgid ""
 "select the desired font (or multiple fonts), and click on the \"Load "
 "Additional Data\" button"
@@ -575,11 +554,11 @@ msgstr ""
 "оберіть необхідний шрифт (або декілька шрифті ) та клікніть \"Завантажити "
 "додаткові дані\""
 
-#: sender.php:1965
+#: sender.php:1950
 msgid "click on the \"Text\" tab in content editor"
 msgstr "натисніть на вкладку \"Текст\" у редакторі контенту"
 
-#: sender.php:1966
+#: sender.php:1951
 msgid ""
 "find a necessary html-element and edit when using the attribute \"style\" "
 "and CSS-property \"font-family\" as in example"
@@ -587,182 +566,184 @@ msgstr ""
 "знайдіть необхідний елемент та відредагуйте його, використовуючи атрибут "
 "\"style\" та CSS-властивість \"font-family\", як показано у прикладі"
 
-#: sender.php:1968
+#: sender.php:1953
 msgid "Example:"
 msgstr "Приклад:"
 
-#: sender.php:1972
+#: sender.php:1957
 msgid "Select additional fonts:"
 msgstr "Вибрати додаткові шрифти:"
 
-#: sender.php:1998
+#: sender.php:1983
 msgid "Load Additional Data"
 msgstr "Загрузити додаткову інформацiю"
 
-#: sender.php:1999
+#: sender.php:1984
 msgid "Reset Additional Data"
 msgstr "Скинути додаткову інформацiю"
 
-#: sender.php:2005
+#: sender.php:1990
 msgid "You can use the following shortcodes in the letter:"
 msgstr "Ви можете використовувати такі шорткоди у листі:"
 
-#: sender.php:2009
+#: sender.php:1994
 msgid "site URL"
 msgstr "URL сайту"
 
-#: sender.php:2013
+#: sender.php:1998
 msgid "site name"
 msgstr "назва сайту"
 
-#: sender.php:2017
+#: sender.php:2002
 msgid "user e-mail"
 msgstr "емейл користувача"
 
-#: sender.php:2021
+#: sender.php:2006
 msgid "user name"
 msgstr "ім’я користувача"
 
-#: sender.php:2025
+#: sender.php:2010
 msgid "new post title - only for automatic mailout when publishing a new post"
 msgstr ""
 "заголовок нового запису - тільки для автоматичної розсилки про появу нових "
 "постів"
 
-#: sender.php:2029
+#: sender.php:2014
 msgid ""
 "link to new post - only for automatic mailout when publishing a new post"
 msgstr ""
 "посилання на новий пост -  тільки для автоматичної розсилки про появу нових "
 "постів"
 
-#: sender.php:2033
+#: sender.php:2018
 msgid "link to profile page of current user"
 msgstr "посилання на сторінку профілю користувача"
 
-#: sender.php:2037
+#: sender.php:2022
 msgid "link to unsubscribe user from mailout"
 msgstr "посилання, щоб видалити користувача із розсилки"
 
-#: sender.php:2041
+#: sender.php:2026
 msgid "link to view letter in new browser tab"
 msgstr "посилання для перегляду листа у новій вкладці браузера"
 
-#: sender.php:2045
+#: sender.php:2030
 msgid "Use shortcodes!"
 msgstr "Використовуйте шорткоди!"
 
-#: sender.php:2049
+#: sender.php:2034
 msgid "Letter Content:"
 msgstr "Контент:"
 
-#: sender.php:2052
+#: sender.php:2037
 msgid "Add Media"
 msgstr "Додати Media"
 
-#: sender.php:2054
+#: sender.php:2039
 msgid "Text"
 msgstr "Текст"
 
-#: sender.php:2055
+#: sender.php:2040
 msgid "Visual"
 msgstr "Відображення"
 
-#: sender.php:2066 sender.php:2070
+#: sender.php:2051 sender.php:2055
 msgid "Create Mailout"
 msgstr "Створити розсилку"
 
-#: sender.php:2067
+#: sender.php:2052
 msgid "Send Test Message"
 msgstr "Надіслати тестове повідомлення"
 
-#: sender.php:2091
+#: sender.php:2076
 msgid "Letters Lists"
 msgstr "Список листів"
 
-#: sender.php:2094 sender.php:2104 sender.php:2135 sender.php:2149
-#: sender.php:2163 sender.php:2189 sender.php:2218 sender.php:2229
-#: sender.php:2258 sender.php:2270 sender.php:2282 sender.php:2308
-#: sender.php:2339 sender.php:2350 sender.php:2381 sender.php:2395
-#: sender.php:2409 sender.php:2421 sender.php:2447 sender.php:2476
-#: sender.php:2487 sender.php:2516 sender.php:2528 sender.php:2540
-#: sender.php:2552 sender.php:2564 sender.php:2576 sender.php:2602
+#: sender.php:2079 sender.php:2126 sender.php:2142 sender.php:2158
+#: sender.php:2193 sender.php:2222 sender.php:2233 sender.php:2269
+#: sender.php:2283 sender.php:2297 sender.php:2332 sender.php:2363
+#: sender.php:2374 sender.php:2412 sender.php:2428 sender.php:2444
+#: sender.php:2458 sender.php:2493 sender.php:2522 sender.php:2533
+#: sender.php:2569 sender.php:2583 sender.php:2597 sender.php:2611
+#: sender.php:2625 sender.php:2639 sender.php:2674
 msgid "Trash"
 msgstr "Кошик"
 
-#: sender.php:2097 sender.php:2221 sender.php:2342 sender.php:2479
+#: sender.php:2082 sender.php:2225 sender.php:2366 sender.php:2525
 msgid "search:"
 msgstr "пошук:"
 
-#: sender.php:2103 sender.php:2188 sender.php:2228 sender.php:2307
-#: sender.php:2349 sender.php:2446 sender.php:2486 sender.php:2601
+#: sender.php:2088 sender.php:2192 sender.php:2232 sender.php:2331
+#: sender.php:2373 sender.php:2492 sender.php:2532 sender.php:2673
 msgid "Bulk Actions"
 msgstr "Масові дії"
 
-#: sender.php:2106 sender.php:2191 sender.php:2231 sender.php:2310
-#: sender.php:2352 sender.php:2449 sender.php:2489 sender.php:2604
+#: sender.php:2090 sender.php:2195 sender.php:2235 sender.php:2334
+#: sender.php:2376 sender.php:2495 sender.php:2535 sender.php:2676
 msgid "Apply"
 msgstr "Додати"
 
-#: sender.php:2108 sender.php:2193 sender.php:2233 sender.php:2312
-#: sender.php:2354 sender.php:2451 sender.php:2491 sender.php:2606
+#: sender.php:2092 sender.php:2197 sender.php:2237 sender.php:2336
+#: sender.php:2378 sender.php:2497 sender.php:2537 sender.php:2678
 msgid "items"
 msgstr "пункти"
 
-#: sender.php:2115 sender.php:2173 sender.php:2240 sender.php:2292
-#: sender.php:2361 sender.php:2431 sender.php:2498 sender.php:2586
+#: sender.php:2100 sender.php:2105 sender.php:2171 sender.php:2176
+#: sender.php:2245 sender.php:2250 sender.php:2310 sender.php:2315
+#: sender.php:2386 sender.php:2391 sender.php:2471 sender.php:2476
+#: sender.php:2545 sender.php:2550 sender.php:2652 sender.php:2657
 msgid "Select All"
 msgstr "Вибрати всi"
 
-#: sender.php:2122 sender.php:2180 sender.php:2247 sender.php:2299
+#: sender.php:2113 sender.php:2184 sender.php:2258 sender.php:2323
 msgid "Date of creation"
 msgstr "Дата створення"
 
-#: sender.php:2134 sender.php:2148 sender.php:2162 sender.php:2257
-#: sender.php:2269 sender.php:2281 sender.php:2380 sender.php:2394
-#: sender.php:2408 sender.php:2420 sender.php:2515 sender.php:2527
-#: sender.php:2539 sender.php:2551 sender.php:2563 sender.php:2575
+#: sender.php:2125 sender.php:2141 sender.php:2157 sender.php:2268
+#: sender.php:2282 sender.php:2296 sender.php:2411 sender.php:2427
+#: sender.php:2443 sender.php:2457 sender.php:2568 sender.php:2582
+#: sender.php:2596 sender.php:2610 sender.php:2624 sender.php:2638
 msgid "Edit"
 msgstr "Редагувати"
 
-#: sender.php:2244 sender.php:2296 sender.php:2365 sender.php:2435
-#: sender.php:2502 sender.php:2590
+#: sender.php:2255 sender.php:2320 sender.php:2396 sender.php:2481
+#: sender.php:2555 sender.php:2662
 msgid "Title"
 msgstr "Назва"
 
-#: sender.php:2334
+#: sender.php:2358
 msgid "Letter Templates"
 msgstr "Шаблони листів"
 
-#: sender.php:2337
+#: sender.php:2361
 msgid "Default templates"
 msgstr "Стандартні шаблони"
 
-#: sender.php:2338
+#: sender.php:2362
 msgid "User`s templates"
 msgstr "Шаблони користувача"
 
-#: sender.php:2385 sender.php:2399 sender.php:2413
+#: sender.php:2418 sender.php:2434 sender.php:2450
 msgid "default"
 msgstr "стандартні"
 
-#: sender.php:2425
-msgid "user`s"
+#: sender.php:2464
+msgid "user's"
 msgstr "користувача"
 
-#: sender.php:2505 sender.php:2593
+#: sender.php:2558 sender.php:2665
 msgid "Number"
 msgstr "Число"
 
-#: sender.php:2734
+#: sender.php:2805
 msgid "Due to the peculiarities of the multisite work, Sender plugin has only"
 msgstr "Через особливості роботи мультисайту, плагін Sender має тільки"
 
-#: sender.php:2734
+#: sender.php:2805
 msgid "Network settings page"
 msgstr "Сторінку налаштувань в мережі"
 
-#: sender.php:2736
+#: sender.php:2807
 msgid ""
 "Due to the peculiarities of the multisite work, Sender plugin has the "
 "network settings page only and it should be Network Activated. Please"
@@ -770,9 +751,37 @@ msgstr ""
 "Через особливості роботи мультисайту, плагін Sender має сторінку "
 "налаштування тільки в мережі та має бути увімкнен для мережі. Будь ласка,"
 
-#: sender.php:2736
+#: sender.php:2807
 msgid "Activate Sender for Network"
 msgstr "Увімкніть Sender для мережі"
+
+#: inc/deprecated.php:62
+msgid "use"
+msgstr "використовуйте"
+
+#: inc/deprecated.php:64
+msgid "activate"
+msgstr "активуйте"
+
+#: inc/deprecated.php:67
+msgid "download"
+msgstr "завантажте"
+
+#: inc/deprecated.php:75
+msgid ""
+"In current plugin version, there is an opportunity to use SMTP method from "
+"old plugin settings. If you're using this method for sending e-mails, please"
+msgstr ""
+"У поточнiй версiї плагiну можливiсть використання SMTP-методу iз налаштувань "
+"плагiну було вилучено. Якщо ви використовували саме цей метод для "
+"вiдправлення пошти будь ласка"
+
+#: inc/deprecated.php:75
+msgid "and configure it in accordance with your settings"
+msgstr "та налаштуйте його у вiдповiдностi до ваших налаштувань"
+
+#~ msgid "What to use?"
+#~ msgstr "Що використовувати?"
 
 #~ msgid ""
 #~ "В текущей версии плагина возможность использования SMTP-метода из "

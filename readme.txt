@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 3.8
-Tested up to: 4.6
-Stable tag: 1.1.3
+Tested up to: 4.6.1
+Stable tag: 1.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,7 +55,7 @@ If you would like to create your own language pack or update the existing one, y
 Dear users, our plugins are available for free download. If you have any questions or recommendations regarding the functionality of our plugins (existing options, new options, current issues), please feel free to contact us. Please note that we accept requests in English only. All messages in other languages won't be accepted.
 
 If you notice any bugs in the plugins, you can notify us about it and we'll investigate and fix the issue then. Your request should contain URL of the website, issues description and WordPress admin panel credentials.
-Moreover we can customize the plugin according to your requirements. It's a paid service (as a rule it costs $40, but the price can vary depending on the amount of the necessary changes and their complexity). Please note that we could also include this or that feature (developed for you) in the next release and share with the other users then. 
+Moreover we can customize the plugin according to your requirements. It's a paid service (as a rule it costs $40, but the price can vary depending on the amount of the necessary changes and their complexity). Please note that we could also include this or that feature (developed for you) in the next release and share with the other users then.
 We can fix some things for free for the users who provide translation of our plugin into their native language (this should be a new translation of a certain plugin, you can check available translations on the official plugin page).
 
 == Installation ==
@@ -90,7 +90,7 @@ For sending letters in plugin used wp_cron - Wordpress function for periodic exe
 
 = Why am I unable to send letters to all users at the same time? =
 
-1. Simultaneous sending of a large number of messages can slow down your site. 
+1. Simultaneous sending of a large number of messages can slow down your site.
 2. Your site can be identified as a source of spamming, which can lead to blocking of your website or hosting-account.
 
 = There is something wrong with the date and status of my mails in the Sender Reports table while switching between free & PRO versions. Is there any way to fix that? =
@@ -111,9 +111,12 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 1. Plugin`s settings page.
 2. Plugin`s "Edit mail" page.
 3. Plugin`s "Report" page.
-4. Plugin`s "Report" page with subscribers list. 
+4. Plugin`s "Report" page with subscribers list.
 
 == Changelog ==
+
+= V1.1.8 - 20.09.2016 =
+* Bugfix : All functionality for WordPress 4.6.1 was updated.
 
 = V1.1.3 - 16.08.2016 =
 * Update : All functionality for WordPress 4.6 was updated.
@@ -140,24 +143,24 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 = V1.0.7 - 26.06.2015 =
 * NEW : Ability to restore settings to defaults.
 
-= V1.0.6 - 19.05.2015 = 
+= V1.0.6 - 19.05.2015 =
 * Update : We updated all functionality for wordpress 4.2.2.
 
 = V1.0.5 - 21.04.2015 =
-* Bugfix : We fixed bug with displaying the lists on plugin pages 
+* Bugfix : We fixed bug with displaying the lists on plugin pages
 
-= V1.0.4 - 26.03.2015 = 
+= V1.0.4 - 26.03.2015 =
 * Update : We updated all functionality for wordpress 4.1.1
 * Update : BWS plugins section is updated.
 
-= V1.0.3 - 27.01.2015 = 
+= V1.0.3 - 27.01.2015 =
 * Update : We updated all functionality for Subscriber Pro plugin.
 
-= V1.0.2 - 06.01.2015 = 
+= V1.0.2 - 06.01.2015 =
 * Update : BWS plugins section is updated.
 * Update : We updated all functionality for wordpress 4.1.
 
-= V1.0.1 - 02.10.2014 = 
+= V1.0.1 - 02.10.2014 =
 * Bugfix : Updating user data no more automatically unsubscribes user from the mailing list.
 
 = V1.0.0 - 11.09.2014 =
@@ -193,13 +196,16 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Update : Optimized functions register and update the plugin settings.
 
 = V0.2 - 20.02.2014 =
-* Update : Database tables is renamed. 
+* Update : Database tables is renamed.
 * Update : Changed structure of settings page.
 
 = V0.1 =
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.1.8 =
+* The compatibility with new WordPress version updated.
 
 = V1.1.3 =
 * The compatibility with new WordPress version updated.
@@ -216,25 +222,25 @@ The bug with plugin menu duplicating was fixed.
 = V1.0.9 =
 We fixed bug with pagination on the report page. Auxiliary notices were added. Tooltips displaying was updated. BWS plugins section is updated.
 
-= V1.0.8 = 
+= V1.0.8 =
 We updated all functionality for wordpress 4.3.
 
 = V1.0.7 =
 Ability to restore settings to defaults.
 
-= V1.0.6 = 
+= V1.0.6 =
 We updated all functionality for wordpress 4.2.2.
 
 = V1.0.5 =
 We fixed bug with displaying the lists on plugin pages.
 
-= V1.0.4 = 
+= V1.0.4 =
 We updated all functionality for wordpress 4.1.1. BWS plugins section is updated.
 
-= V1.0.3 = 
+= V1.0.3 =
 We updated all functionality for Subscriber Pro plugin.
 
-= V1.0.2 = 
+= V1.0.2 =
 BWS plugins section is updated. We updated all functionality for wordpress 4.1.
 
 = V1.0.1 =
