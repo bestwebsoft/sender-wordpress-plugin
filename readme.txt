@@ -12,51 +12,78 @@ Send bulk email messages to WordPress users. Custom templates, advanced settings
 
 == Description ==
 
-This plugin allows you send mails to all users or to certain categories of users via several clicks.
-To send letters, you can use the php functions such as sending emails, wordpress functions. Also, the plugin provides a bulk mailing for a certain period of time.
+Sender plugin sends a bulk newsletter mailing to your WordPress website users. Set the time interval and a number of messages sent at once, customize “FROM” field, choose the mail sending function, send emails with confirmation and more. 
+
+Connect with your customers, increase traffic, and drive sales!
 
 http://www.youtube.com/watch?v=kwbkOXrF10M
 
-<a href="http://www.youtube.com/watch?v=BuBa0lluNbE" target="_blank">Sender by BestWebSoft Video instruction on Installation</a>
+= Free Features =
 
-<a href="http://wordpress.org/plugins/sender/faq/" target="_blank">Sender by BestWebSoft FAQ</a>
+* Add and manage unlimited mailouts
+* Send emails to:
+	* All users
+	* Certain categories of users
+* Manage sender reports
+* Set time interval for mail sending
+* Set the number of messages sent at one time
+* Compatible with [Subscriber](http://bestwebsoft.com/plugin/subscriber/?k=9e068dce9989e5146fafbf42ee471f54)
+* Customize 'FROM' field with:
+	* Name
+	* Email
+* Compatible with latest WordPress version
+* Incredibly simple settings for fast setup without modifying code
+* Detailed step-by-step documentation and videos
 
-<a href="http://support.bestwebsoft.com" target="_blank">Sender by BestWebSoft Support</a>
+> **Pro Features**
+>
+> All features from Free version included plus:
+>
+> * Add and manage unlimited email templates
+> * Use pre-built email templates
+> * Set mailing priority
+> * Set the number of attempts for email sending
+> * Edit message content with a TinyMCE visual editor
+> * Enable email sending in HTML format
+> * Send email with confirmation
+> * Display fonts list on Edit letter/Edit Template pages
+> * Provide the access for Editors to create email templates, emails and send test emails
+> * Automatic mailout for new posts
+> * Get answer to your question within one business day ([Support Policy](http://bestwebsoft.com/support-policy/))
+>
+> [Upgrade to Pro Now](http://bestwebsoft.com/products/sender/?k=f658a48b03f44d5d82ec3cbccba9664b)
 
-<a href="http://bestwebsoft.com/products/sender/?k=f658a48b03f44d5d82ec3cbccba9664b" target="_blank">Upgrade to Sender Pro by BestWebSoft</a>
+If you have a feature suggestion or idea you'd like to see in the plugin, we'd love to hear about it! [Suggest a Feature](http://support.bestwebsoft.com/hc/en-us/requests/new)
 
-= Features =
+= Documentation & Videos =
 
-* Send mails to all users or to certain categories of users.
-* To send letters, You can use the php functions such as sending emails, wordpress functions.
-* You can do a bulk mailing for a certain period of time.
+* [[Doc] Installation](https://docs.google.com/document/d/12virLN1kFgnpXAtZ4F8g2bU2fnahiGzU2I4KLQzW7qU/)
+* [[Doc] Purchase, Installation & Configuration](https://docs.google.com/document/d/19I3pRBzEv2WI_UmMYzrXmUHVANbat1Z8wACkQoDphiY/)
+* [[Video] Installation Instruction](https://www.youtube.com/watch?v=VIrkPiUJv08)
 
-If you have a feature, suggestion or idea you'd like to see in the plugin, we'd love to hear about it! <a href="http://support.bestwebsoft.com/hc/en-us/requests/new" target="_blank">Suggest a Feature</a>
+= Help & Support =
 
-= Recommended Plugins =
-
-The author of the Sender also recommends the following plugins:
-
-* <a href="http://wordpress.org/plugins/subscriber/">Subscriber</a> - This plugin is an exclusive add-on for the Sender Plugin. This plugin allows your site visitors to subscribe for newsletters, coming from your website.
-There is also a premium version of the plugin <a href="http://bestwebsoft.com/plugin/subscriber/?k=9e068dce9989e5146fafbf42ee471f54">Subscriber Pro</a> - Apart from the basic options provided in the Free version, you can also send subscription confirmation letters, manage the "Unsubscribe" button and see the reason for unsubscribing in the Subscribers chart.
-* <a href="http://wordpress.org/plugins/bws-smtp/">SMTP by BestWebSoft</a> - SMTP by BestWebSoft plugin allows you to configure the sending email messages using mail gateways and email services such as Gmail, Yahoo, Hotmail and many others. This plugin offers an easy and problem-free solution to sending test emails, so that you will not have to struggle with bothersome settings configuration process.
-* <a href="http://wordpress.org/plugins/updater/">Updater</a> - This plugin updates WordPress core and the plugins to the recent versions. You can also use the auto mode or manual mode for updating and set email notifications.
-There is also a premium version of the plugin <a href="http://bestwebsoft.com/products/updater/?k=94d3b6d567ade1cd7a988b80874cdee7">Updater Pro</a> with more useful features available. It can make backup of all your files and database before updating. Also it can forbid some plugins or WordPress Core update.
+Visit our Help Center if you have any questions, our friendly Support Team is happy to help — <http://support.bestwebsoft.com/>
 
 = Translation =
 
 * Russian (ru_RU)
 * Ukrainian (uk)
 
-If you would like to create your own language pack or update the existing one, you can send <a href="http://codex.wordpress.org/Translating_WordPress" target="_blank">the text of PO and MO files</a> for <a href="http://support.bestwebsoft.com/hc/en-us/requests/new" target="_blank">BestWebSoft</a> and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO files  <a href="http://www.poedit.net/download.php" target="_blank">Poedit</a>.
+Some of these translations are not complete. We are constantly adding new features which should be translated. If you would like to create your own language pack or update the existing one, you can send [the text of PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [BestWebSoft](http://support.bestwebsoft.com/hc/en-us/requests/new) and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO [files Poedit](http://www.poedit.net/download.php).
 
-= Technical support =
+= Recommended Plugins =
 
-Dear users, our plugins are available for free download. If you have any questions or recommendations regarding the functionality of our plugins (existing options, new options, current issues), please feel free to contact us. Please note that we accept requests in English only. All messages in other languages won't be accepted.
+* [Updater](http://bestwebsoft.com/products/updater/?k=94d3b6d567ade1cd7a988b80874cdee7) - Automatically check and update WordPress core with all installed plugins to the latest versions. Manual mode, email notifications and backups of all your files and database before updating.
+* [SMTP](http://bestwebsoft.com/products/smtp/) - Configure SMTP server to receive email messages from WordPress to Gmail, Yahoo, Hotmail and other services.
+* [Subscriber](http://bestwebsoft.com/plugin/subscriber/?k=9e068dce9989e5146fafbf42ee471f54) - Add email newsletter sign up form to WordPress posts, pages and widgets. Collect data and subscribe your users.
+* [User Role](http://bestwebsoft.com/products/user-role/?k=dd628108fbb7abe1e063391ae40b7056) - Powerful user role management plugin for WordPress website. Create, edit, copy, and delete user roles.
 
-If you notice any bugs in the plugins, you can notify us about it and we'll investigate and fix the issue then. Your request should contain URL of the website, issues description and WordPress admin panel credentials.
-Moreover we can customize the plugin according to your requirements. It's a paid service (as a rule it costs $40, but the price can vary depending on the amount of the necessary changes and their complexity). Please note that we could also include this or that feature (developed for you) in the next release and share with the other users then.
-We can fix some things for free for the users who provide translation of our plugin into their native language (this should be a new translation of a certain plugin, you can check available translations on the official plugin page).
+= Donate =
+
+Donations play an important role in supporting open-source projects. We greatly appreciate any donation you can make to help us continue further development of free products.
+
+[Donate Now](http://bestwebsoft.com/donate/)
 
 == Installation ==
 
@@ -64,9 +91,9 @@ We can fix some things for free for the users who provide translation of our plu
 2. Activate the plugin via the 'Plugins' menu in WordPress.
 3. Plugin settings are located in 'BWS Panel', 'Sender'.
 
-<a href="https://docs.google.com/document/d/12virLN1kFgnpXAtZ4F8g2bU2fnahiGzU2I4KLQzW7qU/edit" target="_blank">View a Step-by-step Instruction on Sender Installation</a>.
+[View a Step-by-step Instruction on Sender Installation](https://docs.google.com/document/d/12virLN1kFgnpXAtZ4F8g2bU2fnahiGzU2I4KLQzW7qU/)
 
-http://www.youtube.com/watch?v=BuBa0lluNbE
+http://www.youtube.com/watch?v=VIrkPiUJv08
 
 == Frequently Asked Questions ==
 
@@ -99,12 +126,12 @@ Try to deactivate and activate the version you want to use (either free or PRO).
 
 = I have some problems with the plugin's work. What Information should I provide to receive proper support? =
 
-Please make sure that the problem hasn't been discussed yet on our forum (<a href="http://support.bestwebsoft.com" target="_blank">http://support.bestwebsoft.com</a>). If no, please provide the following data along with your problem's description:
+Please make sure that the problem hasn't been discussed yet on our forum (<http://support.bestwebsoft.com>). If no, please provide the following data along with your problem's description:
 
 1. the link to the page where the problem occurs
 2. the name of the plugin and its version. If you are using a pro version - your order number.
 3. the version of your WordPress installation
-4. copy and paste into the message your system status report. Please read more here: <a href="https://docs.google.com/document/d/1Wi2X8RdRGXk9kMszQy1xItJrpN0ncXgioH935MaBKtc/edit?pli=1" target="_blank">Instruction on System Status</a>
+4. copy and paste into the message your system status report. Please read more here: [Instruction on System Status](https://docs.google.com/document/d/1Wi2X8RdRGXk9kMszQy1xItJrpN0ncXgioH935MaBKtc/edit)
 
 == Screenshots ==
 
