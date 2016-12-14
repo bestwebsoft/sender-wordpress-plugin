@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 3.8
-Tested up to: 4.6.1
-Stable tag: 1.1.8
+Tested up to: 4.7
+Stable tag: 1.1.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Send bulk email messages to WordPress users. Custom templates, advanced settings
 
 == Description ==
 
-Sender plugin sends a bulk newsletter mailing to your WordPress website users. Set the time interval and a number of messages sent at once, customize “FROM” field, choose the mail sending function, send emails with confirmation and more. 
+Sender plugin sends a bulk newsletter mailing to your WordPress website users. Set the time interval and a number of messages sent at once, customize “FROM” field, choose the mail sending function, send emails with confirmation and more.
 
 Connect with your customers, increase traffic, and drive sales!
 
@@ -51,7 +51,7 @@ http://www.youtube.com/watch?v=kwbkOXrF10M
 > * Automatic mailout for new posts
 > * Get answer to your question within one business day ([Support Policy](http://bestwebsoft.com/support-policy/))
 >
-> [Upgrade to Pro Now](http://bestwebsoft.com/products/sender/?k=f658a48b03f44d5d82ec3cbccba9664b)
+> [Upgrade to Pro Now](http://bestwebsoft.com/products/wordpress/plugins/sender/?k=f658a48b03f44d5d82ec3cbccba9664b)
 
 If you have a feature suggestion or idea you'd like to see in the plugin, we'd love to hear about it! [Suggest a Feature](http://support.bestwebsoft.com/hc/en-us/requests/new)
 
@@ -59,6 +59,7 @@ If you have a feature suggestion or idea you'd like to see in the plugin, we'd l
 
 * [[Doc] Installation](https://docs.google.com/document/d/12virLN1kFgnpXAtZ4F8g2bU2fnahiGzU2I4KLQzW7qU/)
 * [[Doc] Purchase, Installation & Configuration](https://docs.google.com/document/d/19I3pRBzEv2WI_UmMYzrXmUHVANbat1Z8wACkQoDphiY/)
+* [[Doc] Sender & Subscriber Usage instruction](https://docs.google.com/document/d/1VHSpwcPpNSmrBFUdiEiVSikxLyTqcUT1cPivGyQYvxo/)
 * [[Video] Installation Instruction](https://www.youtube.com/watch?v=VIrkPiUJv08)
 
 = Help & Support =
@@ -74,10 +75,10 @@ Some of these translations are not complete. We are constantly adding new featur
 
 = Recommended Plugins =
 
-* [Updater](http://bestwebsoft.com/products/updater/?k=94d3b6d567ade1cd7a988b80874cdee7) - Automatically check and update WordPress core with all installed plugins to the latest versions. Manual mode, email notifications and backups of all your files and database before updating.
-* [SMTP](http://bestwebsoft.com/products/smtp/) - Configure SMTP server to receive email messages from WordPress to Gmail, Yahoo, Hotmail and other services.
-* [Subscriber](http://bestwebsoft.com/plugin/subscriber/?k=9e068dce9989e5146fafbf42ee471f54) - Add email newsletter sign up form to WordPress posts, pages and widgets. Collect data and subscribe your users.
-* [User Role](http://bestwebsoft.com/products/user-role/?k=dd628108fbb7abe1e063391ae40b7056) - Powerful user role management plugin for WordPress website. Create, edit, copy, and delete user roles.
+* [Updater](http://bestwebsoft.com/products/wordpress/plugins/updater/?k=94d3b6d567ade1cd7a988b80874cdee7) - Automatically check and update WordPress core with all installed plugins to the latest versions. Manual mode, email notifications and backups of all your files and database before updating.
+* [SMTP](http://bestwebsoft.com/products/wordpress/plugins/smtp/) - Configure SMTP server to receive email messages from WordPress to Gmail, Yahoo, Hotmail and other services.
+* [Subscriber](http://bestwebsoft.com/products/wordpress/plugins/subscriber/?k=9e068dce9989e5146fafbf42ee471f54) - Add email newsletter sign up form to WordPress posts, pages and widgets. Collect data and subscribe your users.
+* [User Role](http://bestwebsoft.com/products/wordpress/plugins/user-role/?k=dd628108fbb7abe1e063391ae40b7056) - Powerful user role management plugin for WordPress website. Create, edit, copy, and delete user roles.
 
 = Donate =
 
@@ -141,6 +142,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 4. Plugin`s "Report" page with subscribers list.
 
 == Changelog ==
+
+= V1.1.9 - 14.12.2016 =
+* Update : BWS plugins section is updated.
 
 = V1.1.8 - 20.09.2016 =
 * Bugfix : All functionality for WordPress 4.6.1 was updated.
@@ -230,6 +234,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.1.9 =
+* Plugin optimization completed.
 
 = V1.1.8 =
 * The compatibility with new WordPress version updated.
