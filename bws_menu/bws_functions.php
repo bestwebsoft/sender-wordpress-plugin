@@ -637,7 +637,14 @@ if ( ! function_exists( 'bws_check_pro_license' ) ) {
 										unset( $bstwbsftwppdtplgns_options['trial'][ $plugin_basename ] );
 									}
 								}
+
 								if ( empty( $result['error'] ) ) {
+									if ( isset( $value->nonprofit ) ) {
+										$bstwbsftwppdtplgns_options['nonprofit'][ $plugin_basename ] = 1;
+									} else {
+										unset( $bstwbsftwppdtplgns_options['nonprofit'][ $plugin_basename ] );
+									}
+
 									if ( $bstwbsftwppdtplgns_options[ $plugin_basename ] != $license_key ) {
 										$bstwbsftwppdtplgns_options[ $plugin_basename ] = $license_key;
 
