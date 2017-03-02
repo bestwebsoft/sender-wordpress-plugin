@@ -1,4 +1,4 @@
-<a href="http://bestwebsoft.com/products/wordpress/plugins/sender/" target=_blank>Sender WordPress Plugin</a>
+<a href="https://bestwebsoft.com/products/wordpress/plugins/sender/" target=_blank>Sender WordPress Plugin</a>
 ========================
 
 Send bulk email messages to WordPress users. Custom templates, advanced settings and detailed reports.
