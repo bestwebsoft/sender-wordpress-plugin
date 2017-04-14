@@ -861,11 +861,11 @@ msgstr "Увімкніть Sender для мережі"
 
 #~ msgid ""
 #~ "Something went wrong. Try again later. If the error will appear again, "
-#~ "please, contact us <a href=http://support.bestwebsoft.com>BestWebSoft</"
+#~ "please, contact us <a href=https://support.bestwebsoft.com>BestWebSoft</"
 #~ "a>. We are sorry for inconvenience."
 #~ msgstr ""
 #~ "Щось не так, спробуйте пізніше. Якщо помилка повториться, будь ласка, "
-#~ "повідомте нам <a href=http://support.bestwebsoft.com>BestWebSoft</a>. "
+#~ "повідомте нам <a href=https://support.bestwebsoft.com>BestWebSoft</a>. "
 #~ "Просимо вибачення за незручності."
 
 #~ msgid "This license key is bind to another site"

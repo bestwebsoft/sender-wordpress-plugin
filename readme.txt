@@ -1,10 +1,10 @@
 === Sender by BestWebSoft ===
 Contributors: bestwebsoft
-Donate link: http://bestwebsoft.com/donate/
+Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 3.8
-Tested up to: 4.7.2
-Stable tag: 1.2.0
+Tested up to: 4.7.3
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ Sender plugin sends a bulk newsletter mailing to your WordPress website users. S
 
 Connect with your customers, increase traffic, and drive sales!
 
-http://www.youtube.com/watch?v=kwbkOXrF10M
+https://www.youtube.com/watch?v=kwbkOXrF10M
 
 = Free Features =
 
@@ -27,7 +27,7 @@ http://www.youtube.com/watch?v=kwbkOXrF10M
 * Manage sender reports
 * Set time interval for mail sending
 * Set the number of messages sent at one time
-* Compatible with [Subscriber](http://bestwebsoft.com/plugin/subscriber/?k=9e068dce9989e5146fafbf42ee471f54)
+* Compatible with [Subscriber](https://bestwebsoft.com/products/wordpress/plugins/subscriber/?k=9e068dce9989e5146fafbf42ee471f54)
 * Customize 'FROM' field with:
 	* Name
 	* Email
@@ -49,42 +49,36 @@ http://www.youtube.com/watch?v=kwbkOXrF10M
 > * Display fonts list on Edit letter/Edit Template pages
 > * Provide the access for Editors to create email templates, emails and send test emails
 > * Automatic mailout for new posts
-> * Get answer to your question within one business day ([Support Policy](http://bestwebsoft.com/support-policy/))
+> * Get answer to your question within one business day ([Support Policy](https://bestwebsoft.com/support-policy/))
 >
-> [Upgrade to Pro Now](http://bestwebsoft.com/products/wordpress/plugins/sender/?k=f658a48b03f44d5d82ec3cbccba9664b)
+> [Upgrade to Pro Now](https://bestwebsoft.com/products/wordpress/plugins/sender/?k=f658a48b03f44d5d82ec3cbccba9664b)
 
-If you have a feature suggestion or idea you'd like to see in the plugin, we'd love to hear about it! [Suggest a Feature](http://support.bestwebsoft.com/hc/en-us/requests/new)
+If you have a feature suggestion or idea you'd like to see in the plugin, we'd love to hear about it! [Suggest a Feature](https://support.bestwebsoft.com/hc/en-us/requests/new)
 
 = Documentation & Videos =
 
-* [[Doc] Installation](https://docs.google.com/document/d/12virLN1kFgnpXAtZ4F8g2bU2fnahiGzU2I4KLQzW7qU/)
-* [[Doc] Purchase, Installation & Configuration](https://docs.google.com/document/d/19I3pRBzEv2WI_UmMYzrXmUHVANbat1Z8wACkQoDphiY/)
+* [[Doc] Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
+* [[Doc] Purchase](https://docs.google.com/document/d/1EUdBVvnm7IHZ6y0DNyldZypUQKpB8UVPToSc_LdOYQI/)
 * [[Doc] Sender & Subscriber Usage instruction](https://docs.google.com/document/d/1VHSpwcPpNSmrBFUdiEiVSikxLyTqcUT1cPivGyQYvxo/)
 * [[Video] Installation Instruction](https://www.youtube.com/watch?v=VIrkPiUJv08)
 
 = Help & Support =
 
-Visit our Help Center if you have any questions, our friendly Support Team is happy to help — <http://support.bestwebsoft.com/>
+Visit our Help Center if you have any questions, our friendly Support Team is happy to help — <https://support.bestwebsoft.com/>
 
 = Translation =
 
 * Russian (ru_RU)
 * Ukrainian (uk)
 
-Some of these translations are not complete. We are constantly adding new features which should be translated. If you would like to create your own language pack or update the existing one, you can send [the text of PO and MO files](http://codex.wordpress.org/Translating_WordPress) to [BestWebSoft](http://support.bestwebsoft.com/hc/en-us/requests/new) and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO [files Poedit](http://www.poedit.net/download.php).
+Some of these translations are not complete. We are constantly adding new features which should be translated. If you would like to create your own language pack or update the existing one, you can send [the text of PO and MO files](https://codex.wordpress.org/Translating_WordPress) to [BestWebSoft](https://support.bestwebsoft.com/hc/en-us/requests/new) and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO [files Poedit](https://www.poedit.net/download.php).
 
 = Recommended Plugins =
 
-* [Updater](http://bestwebsoft.com/products/wordpress/plugins/updater/?k=94d3b6d567ade1cd7a988b80874cdee7) - Automatically check and update WordPress core with all installed plugins to the latest versions. Manual mode, email notifications and backups of all your files and database before updating.
-* [SMTP](http://bestwebsoft.com/products/wordpress/plugins/smtp/) - Configure SMTP server to receive email messages from WordPress to Gmail, Yahoo, Hotmail and other services.
-* [Subscriber](http://bestwebsoft.com/products/wordpress/plugins/subscriber/?k=9e068dce9989e5146fafbf42ee471f54) - Add email newsletter sign up form to WordPress posts, pages and widgets. Collect data and subscribe your users.
-* [User Role](http://bestwebsoft.com/products/wordpress/plugins/user-role/?k=dd628108fbb7abe1e063391ae40b7056) - Powerful user role management plugin for WordPress website. Create, edit, copy, and delete user roles.
-
-= Donate =
-
-Donations play an important role in supporting open-source projects. We greatly appreciate any donation you can make to help us continue further development of free products.
-
-[Donate Now](http://bestwebsoft.com/donate/)
+* [Updater](https://bestwebsoft.com/products/wordpress/plugins/updater/?k=94d3b6d567ade1cd7a988b80874cdee7) - Automatically check and update WordPress core with all installed plugins to the latest versions. Manual mode, email notifications and backups of all your files and database before updating.
+* [SMTP](https://bestwebsoft.com/products/wordpress/plugins/smtp/) - Configure SMTP server to receive email messages from WordPress to Gmail, Yahoo, Hotmail and other services.
+* [Subscriber](https://bestwebsoft.com/products/wordpress/plugins/subscriber/?k=9e068dce9989e5146fafbf42ee471f54) - Add email newsletter sign up form to WordPress posts, pages and widgets. Collect data and subscribe your users.
+* [User Role](https://bestwebsoft.com/products/wordpress/plugins/user-role/?k=dd628108fbb7abe1e063391ae40b7056) - Powerful user role management plugin for WordPress website. Create, edit, copy, and delete user roles.
 
 == Installation ==
 
@@ -92,9 +86,9 @@ Donations play an important role in supporting open-source projects. We greatly 
 2. Activate the plugin via the 'Plugins' menu in WordPress.
 3. Plugin settings are located in 'BWS Panel', 'Sender'.
 
-[View a Step-by-step Instruction on Sender Installation](https://docs.google.com/document/d/12virLN1kFgnpXAtZ4F8g2bU2fnahiGzU2I4KLQzW7qU/)
+[View a Step-by-step Instruction on Sender Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
 
-http://www.youtube.com/watch?v=VIrkPiUJv08
+https://www.youtube.com/watch?v=VIrkPiUJv08
 
 == Frequently Asked Questions ==
 
@@ -127,7 +121,7 @@ Try to deactivate and activate the version you want to use (either free or PRO).
 
 = I have some problems with the plugin's work. What Information should I provide to receive proper support? =
 
-Please make sure that the problem hasn't been discussed yet on our forum (<http://support.bestwebsoft.com>). If no, please provide the following data along with your problem's description:
+Please make sure that the problem hasn't been discussed yet on our forum (<https://support.bestwebsoft.com>). If no, please provide the following data along with your problem's description:
 
 1. the link to the page where the problem occurs
 2. the name of the plugin and its version. If you are using a pro version - your order number.
@@ -143,6 +137,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 
 == Changelog ==
 
+= V1.2.1 - 14.04.2017 =
+* Bugfix : Multiple Cross-Site Scripting (XSS) vulnerability was fixed.
+
 = V1.2.0 - 24.01.2016 =
 * Update : All functionality for WordPress 4.7.1 was updated.
 
@@ -150,7 +147,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 * Update : BWS plugins section is updated.
 
 = V1.1.8 - 20.09.2016 =
-* Bugfix : All functionality for WordPress 4.6.1 was updated.
+* Update : All functionality for WordPress 4.6.1 was updated.
 
 = V1.1.3 - 16.08.2016 =
 * Update : All functionality for WordPress 4.6 was updated.
@@ -237,6 +234,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<http:
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.2.1 =
+* Bugs fixed.
 
 = V1.2.0 =
 * The compatibility with new WordPress version updated.

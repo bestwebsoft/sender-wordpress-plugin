@@ -861,7 +861,7 @@ msgstr "Активируйте Sender для сети"
 
 #~ msgid ""
 #~ "Something went wrong. Try again later. If the error will appear again, "
-#~ "please, contact us <a href=http://support.bestwebsoft.com>BestWebSoft</"
+#~ "please, contact us <a href=https://support.bestwebsoft.com>BestWebSoft</"
 #~ "a>. We are sorry for inconvenience."
 #~ msgstr ""
 #~ "Что-то пошло не так. Попробуйте еще раз позже. Если ошибка появится "
