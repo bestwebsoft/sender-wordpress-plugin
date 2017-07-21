@@ -2,9 +2,9 @@
 Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
-Requires at least: 3.8
-Tested up to: 4.7.3
-Stable tag: 1.2.1
+Requires at least: 3.9
+Tested up to: 4.8
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,7 +75,7 @@ Some of these translations are not complete. We are constantly adding new featur
 
 = Recommended Plugins =
 
-* [Updater](https://bestwebsoft.com/products/wordpress/plugins/updater/?k=94d3b6d567ade1cd7a988b80874cdee7) - Automatically check and update WordPress core with all installed plugins to the latest versions. Manual mode, email notifications and backups of all your files and database before updating.
+* [Updater](https://bestwebsoft.com/products/wordpress/plugins/updater/?k=94d3b6d567ade1cd7a988b80874cdee7) - Automatically check and update WordPress website core with all installed plugins and themes to the latest versions.
 * [SMTP](https://bestwebsoft.com/products/wordpress/plugins/smtp/) - Configure SMTP server to receive email messages from WordPress to Gmail, Yahoo, Hotmail and other services.
 * [Subscriber](https://bestwebsoft.com/products/wordpress/plugins/subscriber/?k=9e068dce9989e5146fafbf42ee471f54) - Add email newsletter sign up form to WordPress posts, pages and widgets. Collect data and subscribe your users.
 * [User Role](https://bestwebsoft.com/products/wordpress/plugins/user-role/?k=dd628108fbb7abe1e063391ae40b7056) - Powerful user role management plugin for WordPress website. Create, edit, copy, and delete user roles.
@@ -136,6 +136,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 4. Plugin`s "Report" page with subscribers list.
 
 == Changelog ==
+
+= V1.2.2 - 21.07.2017 =
+* Update : All functionality for WordPress 4.8 was updated.
 
 = V1.2.1 - 14.04.2017 =
 * Bugfix : Multiple Cross-Site Scripting (XSS) vulnerability was fixed.
@@ -234,6 +237,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.2.2 =
+* The compatibility with new WordPress version updated.
 
 = V1.2.1 =
 * Bugs fixed.

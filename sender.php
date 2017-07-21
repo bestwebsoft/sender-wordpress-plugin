@@ -6,7 +6,7 @@ Description: Send bulk email messages to WordPress users. Custom templates, adva
 Author: BestWebSoft
 Text Domain: sender
 Domain Path: /languages
-Version: 1.2.1
+Version: 1.2.2
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -26,8 +26,6 @@ License: GPLv2 or later
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-require_once( dirname( __FILE__ ) . '/inc/deprecated.php' );
 
 /**
 * Add menu and submenu.
@@ -92,7 +90,7 @@ if ( ! function_exists ( 'sndr_init' ) ) {
 		}
 
 		/* check WordPress version */
-		bws_wp_min_version_check( plugin_basename( __FILE__ ), $sndr_plugin_info, '3.8' );
+		bws_wp_min_version_check( plugin_basename( __FILE__ ), $sndr_plugin_info, '3.9' );
 	}
 }
 
@@ -184,14 +182,6 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 
 			if ( 0 == $colum_exists )
 				$wpdb->query( "ALTER TABLE `" . $wpdb->prefix . "sndr_mail_send` ADD `remote_delivery` INT(1) NOT NULL DEFAULT '0';" );
-
-			/**
-			 * @deprecated since 1.1.8
-			 * @todo remove after 01.04.2017
-			 */
-			if ( function_exists( 'sndr_check_date_create_type' ) )
-				sndr_check_date_create_type();
-			/* deprecated (end) */
 
 			$sndr_options['plugin_db_version'] = $sndr_db_version;
 
@@ -387,6 +377,8 @@ if ( ! function_exists ( 'sndr_admin_head' ) ) {
 			);
 			wp_enqueue_script( 'sndr_script', plugins_url( 'js/script.js', __FILE__ ), array( 'jquery' ) );
 			wp_localize_script( 'sndr_script', 'sndrScriptVars', $script_vars );
+
+			bws_enqueue_settings_scripts();
 		}
 	}
 }
@@ -1918,18 +1910,15 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 								</div><!-- .sndr-letter-custom -->
 								<div class="sndr-letter-custom">
 									<label class="sndr-form-label">
-										<div class="bws_help_box dashicons dashicons-editor-help">
-											<div class="bws_hidden_help_text" style="min-width: 300px;">
-												<p><?php _e( 'in order to use the necessary fonts you need:', 'sender' ); ?></p>
-												<ol><li><?php _e( 'select the desired font (or multiple fonts), and click on the "Load Additional Data" button', 'sender' ); ?></li>
-													<li><?php _e( 'click on the "Text" tab in content editor', 'sender' ); ?></li>
-												<li><?php _e( 'find a necessary html-element and edit when using the attribute "style" and CSS-property "font-family" as in example', 'sender' ); ?></li>
-												</ol>
-												<p><?php _e( 'Example:', 'sender' ); ?></p>
-												<code>&ltspan style="font-family: 'Open Sans';">Lorem ipsum set amet&lt/span></code>
-											</div>
-										</div>
-										<?php _e( 'Select additional fonts:', 'sender' ); ?>
+										<?php echo bws_add_help_box( 
+											__( 'in order to use the necessary fonts you need:', 'sender' ) . 
+											'<ol><li>' . __( 'select the desired font (or multiple fonts), and click on the "Load Additional Data" button', 'sender' ) . '</li>
+												<li>' . __( 'click on the "Text" tab in content editor', 'sender' ) . '</li>
+											<li>' . __( 'find a necessary html-element and edit when using the attribute "style" and CSS-property "font-family" as in example', 'sender' ) . '</li>
+											</ol>'
+											. __( 'Example:', 'sender' ) . ' <code>&ltspan style="font-family: \'Open Sans\';">Lorem ipsum set amet&lt/span></code>'
+										);
+										_e( 'Select additional fonts:', 'sender' ); ?>
 									</label>
 									<ul class="sndr-fonts-list">
 										<li><label><input disabled type="checkbox"/><span style="font-family: 'Open Sans';">Open Sans</span></label></li>
@@ -1959,51 +1948,52 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 								<input disabled type="button" id="sndr-reset-additional-data" value="<?php _e( 'Reset Additional Data', 'sender' ); ?>"/>
 							</td>
 						</tr>
-						<tr><td class="sndr-form-label">
-							<div class="bws_help_box dashicons dashicons-editor-help">
-								<div class="bws_hidden_help_text" style="min-width: 300px;">
-									<p><?php _e( 'You can use the following shortcodes in the letter:', 'sender' ); ?></p>
-									<table>
+						<tr>
+							<td class="sndr-form-label">
+								<?php echo bws_add_help_box( 
+									__( 'You can use the following shortcodes in the letter:', 'sender' ) . 
+									'<table>
 										<tr>
 											<td><strong>{site_url}</strong></td>
-											<td><?php _e( 'site URL', 'sender' ); ?></td>
+											<td>' . __( 'site URL', 'sender' ) . '</td>
 										</tr>
 										<tr>
 											<td><strong>{site_name}</strong></td>
-											<td><?php _e( 'site name', 'sender' ); ?></td>
+											<td>' . __( 'site name', 'sender' ) . '</td>
 										</tr>
 										<tr>
 											<td><strong>{user_email}</strong></td>
-											<td><?php _e( 'user e-mail', 'sender' ); ?></td>
+											<td>' . __( 'user e-mail', 'sender' ) . '</td>
 										</tr>
 										<tr>
 											<td><strong>{user_name}</strong></td>
-											<td><?php _e( 'user name', 'sender' ); ?></td>
+											<td>' . __( 'user name', 'sender' ) . '</td>
 										</tr>
 										<tr>
 											<td><strong>{new_post_title}</strong></td>
-											<td><?php _e( 'new post title - only for automatic mailout when publishing a new post', 'sender' ); ?></td>
+											<td>' . __( 'new post title - only for automatic mailout when publishing a new post', 'sender' ) . '</td>
 										</tr>
 										<tr>
 											<td><strong>{new_post_link}</strong></td>
-											<td><?php _e( 'link to new post - only for automatic mailout when publishing a new post', 'sender' ); ?></td>
+											<td>' . __( 'link to new post - only for automatic mailout when publishing a new post', 'sender' ) . '</td>
 										</tr>
 										<tr>
 											<td><strong>{profile_page}</strong></td>
-											<td><?php _e( 'link to profile page of current user', 'sender' ); ?></td>
+											<td>' . __( 'link to profile page of current user', 'sender' ) . '</td>
 										</tr>
 										<tr>
 											<td><strong>{unsubscribe_link="<i>text</i>"}</strong></td>
-											<td><?php _e( 'link to unsubscribe user from mailout', 'sender' ); ?></td>
+											<td>' . __( 'link to unsubscribe user from mailout', 'sender' ) . '</td>
 										</tr>
 										<tr>
 											<td><strong>{view_in_browser_link="<i>text</i>"}</strong></td>
-											<td><?php _e( 'link to view letter in new browser tab', 'sender' ); ?></td>
+											<td>' . __( 'link to view letter in new browser tab', 'sender' ) . '</td>
 										</tr>
-									</table>
-								</div>
-							</div> <strong><?php _e( 'Use shortcodes!', 'sender' ); ?></strong>
-						</td></tr>
+									</table>'
+								); ?>
+								 <strong><?php _e( 'Use shortcodes!', 'sender' ); ?></strong>
+							</td>
+						</tr>
 						<tr>
 							<td>
 								<label class="sndr-form-label"><?php _e( 'Letter Content:', 'sender' ); ?></label>
