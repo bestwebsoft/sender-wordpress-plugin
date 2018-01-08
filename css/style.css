@@ -257,3 +257,26 @@ td.sndr_from{
 #sndr-mail-send-table textarea {
 	width: 100%;
 }
+
+@media screen and (max-width: 782px) {
+	.bws_pro_version_bloc .bws_pro_version_tooltip {
+		margin-top: 40px;
+		padding: 10px;
+		text-align: center;
+	}
+	.bws_pro_version_bloc .bws_pro_version_tooltip .bws_button {
+		float: none;
+		display: inline-block;
+	}
+	.sndr-letter-template-page .search-box input[type=search] {
+		height: auto;
+		float: none;
+		width: 100%;
+		margin-bottom: 10px;
+		vertical-align: middle;
+		-webkit-appearance: none;
+	}
+	.sndr-pagination .total-users {
+		margin-top: 25px;
+	}
+}

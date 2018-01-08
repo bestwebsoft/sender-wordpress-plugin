@@ -6,7 +6,7 @@ Description: Send bulk email messages to WordPress users. Custom templates, adva
 Author: BestWebSoft
 Text Domain: sender
 Domain Path: /languages
-Version: 1.2.2
+Version: 1.2.3
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -38,9 +38,7 @@ if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 			return;
 		}
 		$icon_path = plugins_url( "images/plugin_icon_38.png",  __FILE__ );
-		bws_general_menu();
 
-		$settings = add_submenu_page( 'bws_panel', 'Sender', 'Sender', 'manage_options', 'sndr_settings', 'sndr_admin_settings_content' );
 		$sndr_send_user = add_menu_page( 'Sender', 'Sender', 'manage_options', 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, '57.1' );
 		$hook = add_submenu_page( 'sndr_send_user', __( 'Reports', 'sender' ), __( 'Reports', 'sender' ), 'manage_options', 'view_mail_send', 'sndr_mail_view' );
 
@@ -51,10 +49,9 @@ if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 		add_submenu_page( 'sndr_send_user', __( 'Letters Templates', 'sender' ), __( 'Letters Templates', 'sender' ), 'manage_options', 'sndr_letter_templates', 'sndr_letter_templates' );
 		add_submenu_page( 'sndr_send_user', __( 'Priorities', 'sender' ), __( 'Priorities', 'sender' ), 'manage_options', 'sndr_priorities', 'sndr_priorities' );
 
-		$admin_url = is_multisite() ? network_admin_url( 'admin.php?page=sndr_settings' ) : admin_url( 'admin.php?page=sndr_settings' );
+		$settings = add_submenu_page( 'sndr_send_user', 'Sender', __( 'Settings', 'sender' ), 'manage_options', 'sndr_settings', 'sndr_admin_settings_content' );
 
-		if ( isset( $submenu['sndr_send_user'] ) )
-			$submenu['sndr_send_user'][] = array( __( 'Settings', 'sender' ), 'manage_options', $admin_url );
+		add_submenu_page( 'sndr_send_user', 'BWS Panel', 'BWS Panel', 'manage_options', 'sndr-bws-panel', 'bws_add_menu_render' );
 
 		add_action( "load-$settings", 'sndr_add_tabs' );
 		add_action( "load-$sndr_send_user", 'sndr_add_tabs' );
@@ -696,7 +693,7 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 				LEFT JOIN `" . $wpdb->prefix . "sndr_mail_users_info` ON `" . $wpdb->prefix . "usermeta`.`user_id`=`" . $wpdb->prefix . "sndr_mail_users_info`.`id_user`
 				WHERE `meta_key` LIKE '%capabilities%' AND `" . $wpdb->prefix . "sndr_mail_users_info`.`subscribe`=1" . $add_condition . " ORDER BY `meta_value`;",
 				ARRAY_A
-			);			
+			);
 			$user_roles = $roles;
 			if ( empty( $users_roles_list ) ) {
 				$all_count = 0;
@@ -871,7 +868,7 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 				$sndr_url = '?page=view_mail_send' . $paged . $mail_status . $orderby . $order;
 
 				$columns               = $this->get_columns();
-				$hidden                = array();
+				$hidden                = get_hidden_columns( $this->screen );
 				$sortable              = $this->get_sortable_columns();
 				$this->_column_headers = array( $columns, $hidden, $sortable );
 				$this->items           = $this->report_list();
@@ -1090,7 +1087,7 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 					$order_by = 'mail_send_id';
 				}
 				$order     = isset( $_REQUEST['order'] ) ? $_REQUEST['order'] : 'DESC';
-				$sql_query = "SELECT * FROM `" . $wpdb->prefix . "sndr_mail_send`";
+				$sql_query = "SELECT * FROM `" . $wpdb->prefix . "sndr_mail_send` ";
 				if ( isset( $_REQUEST['s'] ) ) {
 					$sql_query .= "WHERE `subject`LIKE '%" . $_REQUEST['s'] . "%'";
 				} else {
@@ -1128,7 +1125,7 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 			 */
 			public function items_count() {
 				global $wpdb;
-				$sql_query = "SELECT COUNT(`mail_send_id`) FROM `" . $wpdb->prefix . "sndr_mail_send`";
+				$sql_query = "SELECT COUNT(`mail_send_id`) FROM `" . $wpdb->prefix . "sndr_mail_send` ";
 				if ( isset( $_REQUEST['mail_status'] ) ) {
 					switch ( $_REQUEST['mail_status'] ) {
 						case 'in_progress':
@@ -1910,8 +1907,8 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 								</div><!-- .sndr-letter-custom -->
 								<div class="sndr-letter-custom">
 									<label class="sndr-form-label">
-										<?php echo bws_add_help_box( 
-											__( 'in order to use the necessary fonts you need:', 'sender' ) . 
+										<?php echo bws_add_help_box(
+											__( 'in order to use the necessary fonts you need:', 'sender' ) .
 											'<ol><li>' . __( 'select the desired font (or multiple fonts), and click on the "Load Additional Data" button', 'sender' ) . '</li>
 												<li>' . __( 'click on the "Text" tab in content editor', 'sender' ) . '</li>
 											<li>' . __( 'find a necessary html-element and edit when using the attribute "style" and CSS-property "font-family" as in example', 'sender' ) . '</li>
@@ -1950,8 +1947,8 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 						</tr>
 						<tr>
 							<td class="sndr-form-label">
-								<?php echo bws_add_help_box( 
-									__( 'You can use the following shortcodes in the letter:', 'sender' ) . 
+								<?php echo bws_add_help_box(
+									__( 'You can use the following shortcodes in the letter:', 'sender' ) .
 									'<table>
 										<tr>
 											<td><strong>{site_url}</strong></td>
@@ -2442,7 +2439,7 @@ if ( ! function_exists( 'sndr_letter_templates' ) ) {
 							</tr>
 						</tfoot>
 					</table>
-					<div class="tablenav top">
+					<div class="tablenav bottom">
 						<div class="alignleft actions bulkactions">
 							<select disabled name='action'>
 								<option value='-1' selected='selected'><?php _e( 'Bulk Actions', 'sender' ); ?></option>

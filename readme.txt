@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 3.9
-Tested up to: 4.8
-Stable tag: 1.2.2
+Tested up to: 4.9.1
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Send bulk email messages to WordPress users. Custom templates, advanced settings
 
 == Description ==
 
-Sender plugin sends a bulk newsletter mailing to your WordPress website users. Set the time interval and a number of messages sent at once, customize “FROM” field, choose the mail sending function, send emails with confirmation and more. 
+Sender plugin sends a bulk newsletter mailing to your WordPress website users. Set the time interval and a number of messages sent at once, customize "FROM" field, choose the mail sending function, send emails with confirmation and more.
 
 Connect with your customers, increase traffic, and drive sales!
 
@@ -59,12 +59,11 @@ If you have a feature suggestion or idea you'd like to see in the plugin, we'd l
 
 * [[Doc] Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
 * [[Doc] Purchase](https://docs.google.com/document/d/1EUdBVvnm7IHZ6y0DNyldZypUQKpB8UVPToSc_LdOYQI/)
-* [[Doc] Sender & Subscriber Usage instruction](https://docs.google.com/document/d/1VHSpwcPpNSmrBFUdiEiVSikxLyTqcUT1cPivGyQYvxo/)
 * [[Video] Installation Instruction](https://www.youtube.com/watch?v=VIrkPiUJv08)
 
 = Help & Support =
 
-Visit our Help Center if you have any questions, our friendly Support Team is happy to help — <https://support.bestwebsoft.com/>
+Visit our Help Center if you have any questions, our friendly Support Team is happy to help - <https://support.bestwebsoft.com/>
 
 = Translation =
 
@@ -84,7 +83,7 @@ Some of these translations are not complete. We are constantly adding new featur
 
 1. Upload `sender` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin via the 'Plugins' menu in WordPress.
-3. Plugin settings are located in 'BWS Panel', 'Sender'.
+3. Plugin settings are located in 'Sender'->'Settings'.
 
 [View a Step-by-step Instruction on Sender Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
 
@@ -95,7 +94,7 @@ https://www.youtube.com/watch?v=VIrkPiUJv08
 = How to use the plugin? =
 
 1. Install and activate the plugin.
-2. Go to the plugin settings page ( on dashboard "BWS Panel" -> "Sender" ) and edit the necessary options.
+2. Go to the plugin settings page ( on dashboard "Sender"-> "Settings" ) and edit the necessary options.
 3. Go to the edit mail page ( on Dashboard "Sender" -> "Sender" ) and then:
 	- select the users ( by roles ) you want to send a mail to
 	- enter the subject and text of the mail
@@ -130,12 +129,18 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Screenshots ==
 
-1. Plugin`s settings page.
-2. Plugin`s "Edit mail" page.
-3. Plugin`s "Report" page.
-4. Plugin`s "Report" page with subscribers list.
+1. Plugin settings page.
+2. Plugin "Edit mail" page.
+3. Plugin "Reports" page.
+4. Plugin "Reports List" page with subscribers list.
 
 == Changelog ==
+
+= V1.2.3 - 08.01.2018 =
+* Update : All functionality for WordPress 4.9.1 has been updated.
+* Update : Translation files have been updated.
+* Update : Responsive design has been improved.
+* Bugfix : SQL queries have been fixed.
 
 = V1.2.2 - 21.07.2017 =
 * Update : All functionality for WordPress 4.8 was updated.
@@ -237,6 +242,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.2.3 =
+* The compatibility with new WordPress version updated.
+* Appearance improved.
+* Bugs fixed.
 
 = V1.2.2 =
 * The compatibility with new WordPress version updated.

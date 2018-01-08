@@ -20,10 +20,11 @@
 		});
 		//click event on checkbox with user roles
 		roleCheckbox.click( function() {
-			if ( checkboxAll.is( ':checked' ) ) {
-				checkboxAll.attr( 'checked', false );
-				roleCheckbox.attr( 'checked', false );
-				$( this ).attr( 'checked', true );
+			var checked = roleCheckbox.filter( ':checked' );
+			if ( roleCheckbox.length == checked.length ) {
+				checkboxAll.attr( 'checked', true );
+			} else {
+				checkboxAll.removeAttr( 'checked' );
 			}
 			// get number of mails which would be sent
 			usersNumber = 0;
@@ -60,8 +61,8 @@
 			}
 			if ( parseInt( $( this ).val() ) > 360 ) {
 				if( ! confirm( sndrScriptVars['toLongMessage'] ) ) {
-					$( this ).val( runTime.val() ).text( runTime.val() );
-					$( this ).trigger('change');
+                    $( this ).val( '360' ).text( '360' );
+                    $( this ).trigger('change');
 				}
 			}
 		} );
@@ -84,8 +85,8 @@
 			}
 			if ( parseInt( $( this ).val() ) > 50 ) {
 				if( ! confirm( sndrScriptVars['toLongMessage'] ) ) {
-					$( this ).val( sendCount.val() ).text( sendCount.val() );
-					$( this ).trigger('change');
+                    $( this ).val( '50' ).text( '50' );
+                    $( this ).trigger('change');
 				}
 			}
 		} );

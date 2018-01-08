@@ -1,7 +1,7 @@
 <a href="https://bestwebsoft.com/products/wordpress/plugins/sender/" target=_blank>Sender WordPress Plugin</a>
 ========================
 
-<p>Sender plugin sends a bulk newsletter mailing to your WordPress website users. Set the time interval and a number of messages sent at once, customize “FROM” field, choose the mail sending function, send emails with confirmation and more.</p>
+<p>Sender plugin sends a bulk newsletter mailing to your WordPress website users. Set the time interval and a number of messages sent at once, customize &#8220;FROM&#8221; field, choose the mail sending function, send emails with confirmation and more.</p>
 <p>Connect with your customers, increase traffic, and drive sales!</p>
 <p><span class="embed-youtube" style="text-align:center; display: block;"></span></p>
 <h4>Free Features</h4>
@@ -50,11 +50,10 @@
 <ul>
 <li><a href="https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/" rel="nofollow">[Doc] Installation</a></li>
 <li><a href="https://docs.google.com/document/d/1EUdBVvnm7IHZ6y0DNyldZypUQKpB8UVPToSc_LdOYQI/" rel="nofollow">[Doc] Purchase</a></li>
-<li><a href="https://docs.google.com/document/d/1VHSpwcPpNSmrBFUdiEiVSikxLyTqcUT1cPivGyQYvxo/" rel="nofollow">[Doc] Sender &amp; Subscriber Usage instruction</a></li>
 <li><a href="https://www.youtube.com/watch?v=VIrkPiUJv08" rel="nofollow">[Video] Installation Instruction</a></li>
 </ul>
 <h4>Help &amp; Support</h4>
-<p>Visit our Help Center if you have any questions, our friendly Support Team is happy to help — <a href="https://support.bestwebsoft.com/" rel="nofollow">https://support.bestwebsoft.com/</a></p>
+<p>Visit our Help Center if you have any questions, our friendly Support Team is happy to help &#8211; <a href="https://support.bestwebsoft.com/" rel="nofollow">https://support.bestwebsoft.com/</a></p>
 <h4>Translation</h4>
 <ul>
 <li>Russian (ru_RU)</li>
