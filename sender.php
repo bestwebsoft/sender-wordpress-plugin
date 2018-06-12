@@ -6,7 +6,7 @@ Description: Send bulk email messages to WordPress users. Custom templates, adva
 Author: BestWebSoft
 Text Domain: sender
 Domain Path: /languages
-Version: 1.2.3
+Version: 1.2.4
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -1089,7 +1089,8 @@ if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' ) ) {
 				$order     = isset( $_REQUEST['order'] ) ? $_REQUEST['order'] : 'DESC';
 				$sql_query = "SELECT * FROM `" . $wpdb->prefix . "sndr_mail_send` ";
 				if ( isset( $_REQUEST['s'] ) ) {
-					$sql_query .= "WHERE `subject`LIKE '%" . $_REQUEST['s'] . "%'";
+					$search_query = esc_sql( $_REQUEST['s'] );
+					$sql_query .= "WHERE `subject`LIKE '%" . $search_query . "%'";
 				} else {
 					if ( isset( $_REQUEST['mail_status'] ) ) {
 						switch ( $_REQUEST['mail_status'] ) {
@@ -1498,9 +1499,6 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 						'body'			=> $_POST['sndr_content'],
 						'date_create'	=> date( 'Y-m-d H:i:s', time() + get_option('gmt_offset') * 3600 )
 					);
-					if ( function_exists( 'mlq_if_mail_plugin_is_in_queue' ) && mlq_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) {
-						$mail_data['remote_delivery']	= '1';
-					}
 					$wpdb->insert(
 						$wpdb->prefix . 'sndr_mail_send',
 						$mail_data
@@ -1574,29 +1572,6 @@ if ( ! function_exists( 'sndr_report_actions' ) ) {
 			}
 		}
 		return $action_message;
-	}
-}
-
-/**
- * Function to change mail status to "sent" if the letter was sent via Email Queue plugin.
- * @param arr $mail 		current mailout info ( user_id and mail_id)
- * @param int $mailing_try	mailing try for current mailout
- * @param bool $sent_or_not	whether message was successfuly sent or not
- * @return void
- */
-if ( ! function_exists( 'sndr_get_update_on_mail_from_email_queue' ) ) {
-	function sndr_get_update_on_mail_from_email_queue( $mail, $mailing_try, $sent_or_not ) {
-		global $wpdb;
-		$change_status = $sent_or_not ? "`status`=1, " : "";
-		$wpdb->query( "UPDATE `" . $wpdb->prefix . "sndr_users` SET " . $change_status . "`try`=" . $mailing_try . " WHERE `id_mail`= " . $mail['mail_id_in_sender'] . " AND `id_user`=" . $mail['user_id_in_sender'] . ";" );
-		if ( $sent_or_not ) {
-			/* set sent status on current mailout if no unsent users left  */
-			$mails = $wpdb->get_var( "SELECT `mail_users_id` FROM `" . $wpdb->prefix . "sndr_users` WHERE `status`='0' AND `id_mail`=" . $mail['mail_id_in_sender'] . ";");
-			if ( empty( $mails ) ) {
-				/* set done status for current mailout */
-				$wpdb->query( "UPDATE `" . $wpdb->prefix . "sndr_mail_send` SET `mail_status`=1 WHERE `mail_send_id`=" . $mail['mail_id_in_sender'] . ";" );
-			}
-		}
 	}
 }
 
@@ -1779,16 +1754,7 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 		$from_name	=	'=?UTF-8?B?' . base64_encode( $from_name ) . '?=';
 
 		/* get messages */
-		if ( function_exists( 'mlq_if_mail_plugin_is_in_queue' ) && mlq_if_mail_plugin_is_in_queue( plugin_basename( __FILE__ ) ) ) {
-			$users_mail_sends = $wpdb->get_results( "
-				SELECT * FROM `" . $wpdb->prefix . "sndr_users` AS users
-				JOIN `" . $wpdb->prefix . "sndr_mail_send` AS mails ON (
-					users.`id_mail` = mails.`mail_send_id` AND
-					mails.`remote_delivery` = 0 )
-				WHERE users.`status` = '0' LIMIT " . $sndr_options['sndr_send_count'] . ";", ARRAY_A );
-		} else {
-			$users_mail_sends = $wpdb->get_results( "SELECT * FROM `" . $wpdb->prefix . "sndr_users` WHERE `status` = '0' LIMIT " . $sndr_options['sndr_send_count'] . ";", ARRAY_A );
-		}
+		$users_mail_sends = $wpdb->get_results( "SELECT * FROM `" . $wpdb->prefix . "sndr_users` WHERE `status` = '0' LIMIT " . $sndr_options['sndr_send_count'] . ";", ARRAY_A );
 
 		if ( ! empty( $users_mail_sends ) ) {
 			foreach ( $users_mail_sends as $users_mail_send ) {
@@ -2790,8 +2756,6 @@ add_filter( 'set-screen-option', 'sndr_table_set_option', 10, 3 );
 
 add_action( 'admin_notices', 'sndr_plugin_banner' );
 add_action( 'network_admin_notices', 'sndr_plugin_banner' );
-
-add_action( 'mlq_change_status_on_sender_mail', 'sndr_get_update_on_mail_from_email_queue', 10, 3 );
 
 register_deactivation_hook( plugin_basename( __FILE__ ), 'sndr_send_deactivate' );
 register_uninstall_hook( plugin_basename( __FILE__ ), 'sndr_send_uninstall' );

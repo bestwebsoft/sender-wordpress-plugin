@@ -145,7 +145,8 @@ td.sndr_from{
 		float: none;
 		vertical-align: top;
 	}
-	.sndr-count {
+	.sndr-count,
+	#sndr-mail-send-table label input {
 		vertical-align: top;
 	}
 	.sndr-check-all,

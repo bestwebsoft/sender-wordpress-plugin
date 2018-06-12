@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 3.9
-Tested up to: 4.9.1
-Stable tag: 1.2.3
+Tested up to: 4.9.6
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,7 @@ If you have a feature suggestion or idea you'd like to see in the plugin, we'd l
 * [[Doc] Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
 * [[Doc] Purchase](https://docs.google.com/document/d/1EUdBVvnm7IHZ6y0DNyldZypUQKpB8UVPToSc_LdOYQI/)
 * [[Video] Installation Instruction](https://www.youtube.com/watch?v=VIrkPiUJv08)
+* [[Doc] Sender & Subscriber Usage Instruction](https://docs.google.com/document/d/1yazt_na2u364QCbUELlrBixZnRh6Jc0EbunXC02aYZM)
 
 = Help & Support =
 
@@ -135,6 +136,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 4. Plugin "Reports List" page with subscribers list.
 
 == Changelog ==
+
+= V1.2.4 - 12.06.2018 =
+* NEW : Compatibility with Email Queue by BestWebSoft has been removed.
 
 = V1.2.3 - 08.01.2018 =
 * Update : All functionality for WordPress 4.9.1 has been updated.
@@ -242,6 +246,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.2.4 =
+* Functionality improved.
 
 = V1.2.3 =
 * The compatibility with new WordPress version updated.
