@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 3.9
-Tested up to: 4.9.6
-Stable tag: 1.2.4
+Tested up to: 4.9.8
+Stable tag: 1.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,7 @@ https://www.youtube.com/watch?v=kwbkOXrF10M
 >
 > * Add and manage unlimited email templates
 > * Use pre-built email templates
+> * Create a custom mailing list [NEW]
 > * Set mailing priority
 > * Set the number of attempts for email sending
 > * Edit message content with a TinyMCE visual editor
@@ -136,6 +137,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 4. Plugin "Reports List" page with subscribers list.
 
 == Changelog ==
+
+= V1.2.5 - 08.11.2018 =
+* PRO : Ability to create a custom mailing list has been added.
 
 = V1.2.4 - 12.06.2018 =
 * NEW : Compatibility with Email Queue by BestWebSoft has been removed.
@@ -246,6 +250,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.2.5 =
+* New features added.
 
 = V1.2.4 =
 * Functionality improved.
