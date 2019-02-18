@@ -33,7 +33,7 @@
 <ul>
 <li>Add and manage unlimited email templates</li>
 <li>Use pre-built email templates</li>
-<li>Create a custom mailing list [NEW]</li>
+<li>Create a custom mailing list</li>
 <li>Set mailing priority</li>
 <li>Set the number of attempts for email sending</li>
 <li>Edit message content with a TinyMCE visual editor</li>

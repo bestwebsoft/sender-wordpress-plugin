@@ -6,12 +6,12 @@ Description: Send bulk email messages to WordPress users. Custom templates, adva
 Author: BestWebSoft
 Text Domain: sender
 Domain Path: /languages
-Version: 1.2.5
+Version: 1.2.6
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
 
-/*  © Copyright 2018  BestWebSoft  ( https://support.bestwebsoft.com )
+/*  © Copyright 2019  BestWebSoft  ( https://support.bestwebsoft.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -33,29 +33,36 @@ License: GPLv2 or later
 */
 if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 	function sndr_admin_default_setup() {
-		global $bstwbsftwppdtplgns_options, $bstwbsftwppdtplgns_added_menu, $submenu;
+		global $bstwbsftwppdtplgns_options, $bstwbsftwppdtplgns_added_menu, $submenu, $sndr_options;
 		if ( is_multisite()  && ! is_network_admin() ) {
 			return;
 		}
-		$icon_path = plugins_url( "images/plugin_icon_38.png",  __FILE__ );
+		if ( ! is_plugin_active( 'sender-pro/sender-pro.php' ) ) {
 
-		$sndr_send_user = add_menu_page( 'Sender', 'Sender', 'manage_options', 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, '57.1' );
-		$hook = add_submenu_page( 'sndr_send_user', __( 'Reports', 'sender' ), __( 'Reports', 'sender' ), 'manage_options', 'view_mail_send', 'sndr_mail_view' );
+			$icon_path = plugins_url("images/plugin_icon_38.png", __FILE__);
 
-		/* pro pages */
-		add_submenu_page( 'sndr_send_user', __( 'New Mailout', 'sender' ), __( 'New Mailout', 'sender' ), 'manage_options', 'sndr_create_mailout', 'sndr_create_mailout' );
-		add_submenu_page( 'sndr_send_user', __( 'Letters', 'sender' ), __( 'Letters', 'sender' ), 'manage_options', 'sndr_letters_list', 'sndr_letters_list' );
-		add_submenu_page( 'sndr_send_user', __( 'Mailings Lists', 'sender' ), __( 'Mailings Lists', 'sender' ), 'manage_options', 'sndr_distribution_list', 'sndr_distribution_list' );
-		add_submenu_page( 'sndr_send_user', __( 'Letters Templates', 'sender' ), __( 'Letters Templates', 'sender' ), 'manage_options', 'sndr_letter_templates', 'sndr_letter_templates' );
-		add_submenu_page( 'sndr_send_user', __( 'Priorities', 'sender' ), __( 'Priorities', 'sender' ), 'manage_options', 'sndr_priorities', 'sndr_priorities' );
+			$sndr_send_user = add_menu_page('Sender', 'Sender', 'manage_options', 'sndr_send_user', 'sndr_admin_mail_send', $icon_path, '57.1');
+			$hook = add_submenu_page('sndr_send_user', __('Reports', 'sender'), __('Reports', 'sender'), 'manage_options', 'view_mail_send', 'sndr_mail_view');
+			if ( empty( $sndr_options ) ) {
+				$sndr_options = ( is_multisite() ) ? get_site_option( 'sndr_options' ) : get_option( 'sndr_options' );
+			}
+			$bws_hide_premium_options_check = bws_hide_premium_options_check( $sndr_options );
+			/* pro pages */
+			if ( ! $bws_hide_premium_options_check ) {
+				add_submenu_page('sndr_send_user', __('New Mailout', 'sender'), __('New Mailout', 'sender'), 'manage_options', 'sndr_create_mailout', 'sndr_create_mailout');
+				add_submenu_page('sndr_send_user', __('Letters', 'sender'), __('Letters', 'sender'), 'manage_options', 'sndr_letters_list', 'sndr_letters_list');
+				add_submenu_page('sndr_send_user', __('Mailings Lists', 'sender'), __('Mailings Lists', 'sender'), 'manage_options', 'sndr_distribution_list', 'sndr_distribution_list');
+				add_submenu_page('sndr_send_user', __('Letters Templates', 'sender'), __('Letters Templates', 'sender'), 'manage_options', 'sndr_letter_templates', 'sndr_letter_templates');
+				add_submenu_page('sndr_send_user', __('Priorities', 'sender'), __('Priorities', 'sender'), 'manage_options', 'sndr_priorities', 'sndr_priorities');
+			}
+			$settings = add_submenu_page('sndr_send_user', 'Sender', __('Settings', 'sender'), 'manage_options', 'sndr_settings', 'sndr_admin_settings_content');
 
-		$settings = add_submenu_page( 'sndr_send_user', 'Sender', __( 'Settings', 'sender' ), 'manage_options', 'sndr_settings', 'sndr_admin_settings_content' );
+			add_submenu_page('sndr_send_user', 'BWS Panel', 'BWS Panel', 'manage_options', 'sndr-bws-panel', 'bws_add_menu_render');
 
-		add_submenu_page( 'sndr_send_user', 'BWS Panel', 'BWS Panel', 'manage_options', 'sndr-bws-panel', 'bws_add_menu_render' );
-
-		add_action( "load-$settings", 'sndr_add_tabs' );
-		add_action( "load-$sndr_send_user", 'sndr_add_tabs' );
-		add_action( "load-$hook", 'sndr_screen_options' );
+			add_action("load-$settings", 'sndr_add_tabs');
+			add_action("load-$sndr_send_user", 'sndr_add_tabs');
+			add_action("load-$hook", 'sndr_screen_options');
+		}
 	}
 }
 
@@ -405,11 +412,18 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 			ARRAY_A
 		);
 
+		if ( isset( $_POST['bws_hide_premium_options'] ) ) {
+			$hide_result = bws_hide_premium_options( $sndr_options );
+			$sndr_options = $hide_result['options'];
+
+			if ( is_multisite() )
+				update_site_option( 'sndr_options', $sndr_options );
+			else
+				update_option( 'sndr_options', $sndr_options );
+		}
+
+
 		if ( isset( $_POST['sndr_form_submit'] ) && check_admin_referer( $plugin_basename, 'sndr_nonce_name' ) ) {
-			if ( isset( $_POST['bws_hide_premium_options'] ) ) {
-				$hide_result = bws_hide_premium_options( $sndr_options );
-				$sndr_options = $hide_result['options'];
-			}
 
 			/* update settings to send messages */
 			/* check value from "Interval for sending mail" option */
@@ -486,6 +500,11 @@ if ( ! function_exists( 'sndr_admin_settings_content' ) ) {
 		} ?>
 		<div class="sndr-mail wrap" id="sndr-mail">
 			<h1><?php _e( "Sender Settings", 'sender' ); ?></h1>
+			<noscript>
+				<div class="error below-h2">
+					<p><strong><?php _e( 'WARNING', 'sender' ); ?>:</strong> <?php _e( 'The plugin works correctly only if JavaScript is enabled.', 'captcha-bws' ); ?></p>
+				</div>
+			</noscript>
 			<h2 class="nav-tab-wrapper">
 				<a class="nav-tab<?php if ( ! isset( $_GET['action'] ) ) echo ' nav-tab-active'; ?>" href="admin.php?page=sndr_settings"><?php _e( 'Settings', 'sender' ); ?></a>
 				<a class="nav-tab bws_go_pro_tab<?php if ( isset( $_GET['action'] ) && 'go_pro' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=sndr_settings&amp;action=go_pro"><?php _e( 'Go PRO', 'sender' ); ?></a>
@@ -733,7 +752,6 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 				WHERE `meta_key` = '" . $wpdb->prefix . "capabilities' AND `" . $wpdb->prefix . "sndr_mail_users_info`.`subscribe`=1" . $add_condition . " GROUP BY `meta_value`",
 				ARRAY_A
 			);
-
 			if ( empty( $rol ) ) {
 				$all_count = 0;
 			} else {
@@ -752,7 +770,6 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 				}
 			}
 		} /* deduce the mail form */
-
 		if ( is_multisite() ) {
 			$link = '<a href="' . network_admin_url( 'admin.php?page=view_mail_send' ) . '">'. __( 'Reports', 'sender' ) . '</a>';
 		} else {
@@ -802,7 +819,6 @@ if ( ! function_exists( 'sndr_admin_mail_send' ) ) {
 										echo '0';
 									} ?>
 								</span> .
-									<?php if ( is_multisite() ) { _e( 'WARNING: as you are using multisite, the total number of sent mails may not coincide with the counter. It will be fixed in the stable version of plugin.', 'sender' ); } ?>
 							</span>
 						</td>
 					</tr>
@@ -1832,9 +1848,12 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 /* pro pages */
 if ( ! function_exists( 'sndr_create_mailout' ) ) {
 	function sndr_create_mailout() {
-		global $sndr_plugin_info, $wp_version; ?>
+		global $sndr_plugin_info, $wp_version, $sndr_options, $sndr_options_default; ?>
 		<div class="bws_pro_version_bloc">
 			<div class="bws_pro_version_table_bloc">
+				<form method="post" action="admin.php?page=sndr_settings">
+					<button type="submit" name="bws_hide_premium_options" class="notice-dismiss bws_hide_premium_options" title="<?php _e( 'Close', 'sender' ); ?>"></button>
+				</form>
 				<div class="bws_table_bg" style="top:0;"></div>
 				<div class="wrap sndr-mail" id="sndr-mail" style="margin: 0 10px">
 					<h1><span><?php _e( 'Add new letter', 'sender' ); ?></span> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h1>
@@ -1989,13 +2008,16 @@ if ( ! function_exists( 'sndr_create_mailout' ) ) {
 				<div class="clear"></div>
 			</div>
 		</div>
-	<?php }
+	<?php 	}
 }
 if ( ! function_exists( 'sndr_letters_list' ) ) {
 	function sndr_letters_list() {
 		global $sndr_plugin_info, $wp_version; ?>
 		<div class="bws_pro_version_bloc">
 			<div class="bws_pro_version_table_bloc">
+				<form method="post" action="admin.php?page=sndr_settings">
+					<button type="submit" name="bws_hide_premium_options" class="notice-dismiss bws_hide_premium_options" title="<?php _e( 'Close', 'sender' ); ?>"></button>
+				</form>
 				<div class="bws_table_bg" style="top:0;"></div>
 				<div class="wrap sndr_letters_list" style="margin: 0 10px">
 					<h1><span><?php _e( 'Letters Lists', 'sender' ); ?></span> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h1>
@@ -2136,6 +2158,9 @@ if ( ! function_exists( 'sndr_distribution_list' ) ) {
 		global $sndr_plugin_info, $wp_version; ?>
 		<div class="bws_pro_version_bloc">
 			<div class="bws_pro_version_table_bloc">
+				<form method="post" action="admin.php?page=sndr_settings">
+					<button type="submit" name="bws_hide_premium_options" class="notice-dismiss bws_hide_premium_options" title="<?php _e( 'Close', 'sender' ); ?>"></button>
+				</form>
 				<div class="bws_table_bg" style="top:0;"></div>
 				<div class="wrap sndr_distribution_list" style="margin: 0 10px">
 					<h1><span><?php _e( 'Mailings Lists', 'sender' ); ?></span> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h1>
@@ -2272,6 +2297,9 @@ if ( ! function_exists( 'sndr_letter_templates' ) ) {
 		global $sndr_plugin_info, $wp_version; ?>
 		<div class="bws_pro_version_bloc">
 			<div class="bws_pro_version_table_bloc">
+				<form method="post" action="admin.php?page=sndr_settings">
+					<button type="submit" name="bws_hide_premium_options" class="notice-dismiss bws_hide_premium_options" title="<?php _e( 'Close', 'sender' ); ?>"></button>
+				</form>
 				<div class="bws_table_bg" style="top:0;"></div>
 				<div class="wrap sndr-letter-template-page" style="margin: 0 10px">
 					<h1><span><?php _e( 'Letter Templates', 'sender' ); ?></span> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h1>
@@ -2430,6 +2458,9 @@ if ( ! function_exists( 'sndr_priorities' ) ) {
 		global $sndr_plugin_info, $wp_version; ?>
 		<div class="bws_pro_version_bloc">
 			<div class="bws_pro_version_table_bloc">
+				<form method="post" action="admin.php?page=sndr_settings">
+					<button type="submit" name="bws_hide_premium_options" class="notice-dismiss bws_hide_premium_options" title="<?php _e( 'Close', 'sender' ); ?>"></button>
+				</form>
 				<div class="bws_table_bg" style="top:0;"></div>
 				<div class="wrap sndr-priorities-list-page" style="margin: 0 10px">
 					<h1><span><?php _e( 'Priorities', 'sender' ); ?></span> <a href="#" class="add-new-h2"><?php _e( 'Add New', 'sender' ); ?></a></h1>
