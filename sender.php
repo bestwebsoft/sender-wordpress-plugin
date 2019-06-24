@@ -6,7 +6,7 @@ Description: Send bulk email messages to WordPress users. Custom templates, adva
 Author: BestWebSoft
 Text Domain: sender
 Domain Path: /languages
-Version: 1.2.6
+Version: 1.2.7
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -127,7 +127,7 @@ if ( ! function_exists ( 'sndr_admin_init' ) ) {
 if ( ! function_exists( 'sndr_register_settings' ) ) {
 	function sndr_register_settings() {
 		global $wpdb, $sndr_options, $sndr_options_default, $sndr_plugin_info;
-		$sndr_db_version = '0.4';
+		$sndr_db_version = '0.5';
 
 		$sitename = strtolower( $_SERVER['SERVER_NAME'] );
 		if ( substr( $sitename, 0, 4 ) == 'www.' ) {
@@ -165,6 +165,14 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 		 * this code is needed to update plugin from old versions of plugin 0.1
 		 */
 		if ( ! isset( $sndr_options['plugin_db_version'] ) || $sndr_options['plugin_db_version'] != $sndr_db_version ) {
+
+			/* change column`s data type 'body' from table 'sndr_mail_send' */
+			$data_type_body = $wpdb->get_row( "DESCRIBE `" . $wpdb->base_prefix . "sndr_mail_send` `body`", ARRAY_A );
+
+			if ( 'longtext' != $data_type_body["Type"]) {
+				$wpdb->query( "ALTER TABLE `" . $wpdb->base_prefix . "sndr_mail_send` MODIFY COLUMN `body` LONGTEXT;" );
+			}
+
 			/* update plugin database */
 			$colum_exists = $wpdb->query( "SHOW COLUMNS FROM `" . $wpdb->prefix . "sndr_users` LIKE 'status';" );
 
@@ -275,7 +283,7 @@ if ( ! function_exists( 'sndr_send_activate' ) ) {
 			"CREATE TABLE IF NOT EXISTS `" . $wpdb->prefix . "sndr_mail_send` (
 			`mail_send_id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
 			`subject` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-			`body` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+			`body` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 			`date_create` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 			`mail_status` INT( 1 ) NOT NULL DEFAULT '0' ,
 			`remote_delivery` INT( 1 ) NOT NULL DEFAULT '0' ,
@@ -332,6 +340,14 @@ if ( ! function_exists( 'sndr_send_activate' ) ) {
 				);
 			}
 		}
+
+        /* change column`s data type 'body' from table 'sndr_mail_send' */
+        $data_type_body = $wpdb->get_row( "DESCRIBE `" . $wpdb->base_prefix . "sndr_mail_send` `body`", ARRAY_A );
+
+        if ( 'longtext' != $data_type_body["Type"]) {
+            $wpdb->query( "ALTER TABLE `" . $wpdb->base_prefix . "sndr_mail_send` MODIFY COLUMN `body` LONGTEXT;" );
+        }
+
 		/* after deactivating Pro */
 		$column_exists = $wpdb->query( "SHOW COLUMNS FROM `" . $wpdb->prefix . "sndr_mail_send` LIKE 'mail_status'" );
 		if ( empty( $column_exists ) )
