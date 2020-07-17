@@ -1,0 +1,12 @@
+#toplevel_page_view_mail_send .wp-menu-image {
+	font-family: 'bwsicons' !important;
+}
+#toplevel_page_view_mail_send .wp-menu-image:before {
+	content: "\e92a";
+	font-family: 'bwsicons' !important;
+}
+#adminmenu #toplevel_page_view_mail_send .wp-submenu li:nth-child(8) a {
+	border-top: 1px solid #444;
+	padding-top: 12px;
+	margin-top: 6px;
+}

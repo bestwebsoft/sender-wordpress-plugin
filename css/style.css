@@ -25,6 +25,22 @@ td.sndr_from{
 .rtl .sndr-user-roles {
 	float:none;
 }
+.sndr-form-select {
+	width: 220px;
+	margin-right: 20px;
+}
+.sndr_input_number input {
+	max-width: 80px;
+	width: 100%;
+}
+.sndr_input_text label {
+	width: 100%;
+}
+.sndr_input_text input {
+	max-width: 380px;
+	width: 100%;
+}
+
 /**
  * Mail editor page
  */

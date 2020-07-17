@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sender\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-07 17:12+0200\n"
-"PO-Revision-Date: 2019-02-07 17:13+0200\n"
+"POT-Creation-Date: 2020-07-15 15:28+0300\n"
+"PO-Revision-Date: 2020-07-15 15:29+0300\n"
 "Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language-Team: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language: ru_RU\n"
@@ -15,204 +15,60 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n%10==1 && n%100!=11) ? 3 : "
 "((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3.1\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: bws_menu\n"
 
-#: sender.php:45 sender.php:774 sender.php:776
-msgid "Reports"
-msgstr "Отчеты"
-
-#: sender.php:52
-msgid "New Mailout"
-msgstr "Новая рассылка"
-
-#: sender.php:53
-msgid "Letters"
-msgstr "Письма"
-
-#: sender.php:54 sender.php:2166
-msgid "Mailings Lists"
-msgstr "Списки рассылок"
-
-#: sender.php:55
-msgid "Letters Templates"
-msgstr "Шаблоны писем"
-
-#: sender.php:56 sender.php:2466
-msgid "Priorities"
-msgstr "Приоритеты"
-
-#: sender.php:58 sender.php:237 sender.php:256 sender.php:509
+#: includes/class-sndr-settings.php:21 sender.php:51 sender.php:252
+#: sender.php:271
 msgid "Settings"
 msgstr "Настройки"
 
-#: sender.php:258
-msgid "FAQ"
-msgstr "FAQ"
+#: includes/class-sndr-settings.php:22
+msgid "Misc"
+msgstr "Разное"
 
-#: sender.php:259
-msgid "Support"
-msgstr "Тех.поддержка"
+#: includes/class-sndr-settings.php:23
+msgid "License Key"
+msgstr "Лицензионный ключ"
 
-#: sender.php:375
-msgid "Close Report"
-msgstr "Закрыть отчет"
-
-#: sender.php:376 sender.php:1013
-msgid "Show Report"
-msgstr "Показать отчет"
-
-#: sender.php:377
-msgid "The data of this report can't be found."
-msgstr "Нет данных по этому отчету."
-
-#: sender.php:378
-msgid "Error while sending request."
-msgstr "Ошибка при отсылке запроса."
-
-#: sender.php:379
-msgid "Are you sure that you want to enter such a large value?"
-msgstr "Вы уверены, что необходимо такое большое значение?"
-
-#: sender.php:435
-msgid ""
-"You may have entered too large a value in the \"Interval for sending mail\" "
-"option. Check please."
-msgstr ""
-"Возможно, Вы ввели слишком большое значение в поле \"Интервал между "
-"отправками сообщений\". Проверьте, пожалуйста."
-
-#: sender.php:449
+#: includes/class-sndr-settings.php:57
 msgid ""
 "You may have entered too large a value in the \"Number of sent messages at "
-"one time\" option. Check please."
+"the same time\" option. Check please."
 msgstr ""
 "Возможно, Вы ввели слишком большое значение в поле \"Количество одновременно "
 "отправляемых сообщений\". Проверьте, пожалуйста."
 
-#: sender.php:459
+#: includes/class-sndr-settings.php:63
 msgid ""
-"Email 'FROM' field option was changed, which may cause email messages being "
-"moved to the spam folder or email delivery failures."
+"You may have entered too large value in the \"Interval for sending mail\" "
+"option. Check please."
 msgstr ""
-"Опция \"Электронный адрес поля 'От'\" была изменена, что может приводить к "
-"тому, что письма будут помечены как спам или не будут доставлены."
+"Возможно, Вы ввели слишком большое значение в поле \"Интервал между "
+"отправкой сообщений\". Проверьте, пожалуйста."
 
-#: sender.php:477
+#: includes/class-sndr-settings.php:75
 msgid "Settings saved."
 msgstr "Настройки сохранены."
 
-#: sender.php:489
-msgid "All plugin settings were restored."
-msgstr "Все настройки плагина восстановлены."
-
-#: sender.php:502
+#: includes/class-sndr-settings.php:82 sender.php:426
 msgid "Sender Settings"
 msgstr "Настройки Sender"
 
-#: sender.php:505
-msgid "WARNING"
-msgstr "ВНИМАНИЕ"
+#: includes/class-sndr-settings.php:87
+msgid "Send from"
+msgstr "Отправить от"
 
-#: sender.php:505
-msgid "The plugin works correctly only if JavaScript is enabled."
-msgstr "Плагин работает корректно только при включенном JavaScript."
-
-#: sender.php:510
-msgid "Go PRO"
-msgstr "Перейти на PRO версию"
-
-#: sender.php:515 sender.php:2747
-msgid "Notice:"
-msgstr "Внимание:"
-
-#: sender.php:528
-msgid "Interval for sending mail"
-msgstr "Интервал между отправкой сообщений"
-
-#: sender.php:529
-msgid "(min)"
-msgstr "(мин.)"
-
-#: sender.php:532
-msgid "Number of messages sent at one time"
-msgstr "Количество одновременно отправляемых сообщений"
-
-#: sender.php:545
-msgid "maximum number of sent mails:"
-msgstr "максимальное число отправляемых сообщений:"
-
-#: sender.php:545
-msgid "per hour"
-msgstr "в час"
-
-#: sender.php:545
-msgid ""
-"Please make sure that this number is smaller than max allowed number of sent "
-"mails from your hosting account."
-msgstr ""
-"Удостоверьтесь, что это значение меньше, чем максимально разрешенное "
-"количество отправляемых сообщений с Вашего хостинг аккаунта."
-
-#: sender.php:553 sender.php:632 sender.php:1855 sender.php:2019
-#: sender.php:2162 sender.php:2301 sender.php:2462
-msgid "Close"
-msgstr "Закрыть"
-
-#: sender.php:557
-msgid "Attempts number"
-msgstr "Количество попыток"
-
-#: sender.php:560
-msgid "Maximum number of attempts to send a message to a single user"
-msgstr "Максимальное число попыток отправить сообщение одному пользователю"
-
-#: sender.php:564
-msgid "Email in HTML format sending"
-msgstr "Отправка почты в формате HTML"
-
-#: sender.php:568
-msgid "Send email with confirmation"
-msgstr "Отослать письмо с подтверждением"
-
-#: sender.php:572
-msgid "This function works not on all mail servers."
-msgstr "Эта функция работает не на всех почтовых серверах."
-
-#: sender.php:576
-msgid "Display fonts list on \"Edit letter\" or \"Edit Template\" Pages"
-msgstr "Показать список шрифтов на страницах редактирования писем и шаблонов"
-
-#: sender.php:580
-msgid ""
-"Due to security reasons, the additional fonts may not be reflected on some "
-"postal services."
-msgstr ""
-"По соображениям безопасности дополнительные шрифты могут не отображаться на "
-"некоторых почтовых серверах."
-
-#: sender.php:585 sender.php:666
-msgid "If you upgrade to Pro version all your settings will be saved."
-msgstr "При установке Pro версии плагина, все ваши настройки сохраняются."
-
-#: sender.php:591 sender.php:671 sender.php:2007 sender.php:2150
-#: sender.php:2289 sender.php:2450 sender.php:2631
-msgid "Learn More"
-msgstr "Подробнее"
-
-#: sender.php:598
-msgid "'FROM' field"
-msgstr "Поле 'От'"
-
-#: sender.php:600
+#: includes/class-sndr-settings.php:91
 msgid "Name"
 msgstr "Имя"
 
-#: sender.php:606
+#: includes/class-sndr-settings.php:95
 msgid "Email"
 msgstr "Электронный адрес"
 
-#: sender.php:610
+#: includes/class-sndr-settings.php:99
 msgid ""
 "If this option is changed, email messages may be moved to the spam folder or "
 "email delivery failures may occur."
@@ -220,330 +76,462 @@ msgstr ""
 "Если эта настройка будет изменена, то это может приводить к тому, что письма "
 "могут быть помечены как спам или не будут доставлены."
 
-#: sender.php:614
-msgid "Sending method"
-msgstr "Метод отправки писем"
+#: includes/class-sndr-settings.php:103
+msgid "Sending Method"
+msgstr "Способ отправки"
 
-#: sender.php:619
-msgid "Wp-mail"
-msgstr "Wp-mail"
+#: includes/class-sndr-settings.php:108
+msgid "WP-Mail"
+msgstr "WP-Mail"
 
-#: sender.php:619
-msgid "You can use the wp_mail function for mailing"
-msgstr "Вы можете использовать функцию wp_mail для расссылки"
-
-#: sender.php:623
+#: includes/class-sndr-settings.php:112
 msgid "Mail"
 msgstr "Mail"
 
-#: sender.php:623
-msgid "To send mail you can use the php mail function"
-msgstr "Для отправки писем Вы можете использовать функцию PHP mail"
+#: includes/class-sndr-settings.php:121 includes/class-sndr-settings.php:166
+#: includes/class-sndr-settings.php:209
+msgid "Close"
+msgstr "Закрыть"
 
-#: sender.php:636
-msgid "Automatic mailout when publishing a new post"
-msgstr "Авторассылка при появлении новой записи"
+#: includes/class-sndr-settings.php:125
+msgid "HTML Format"
+msgstr "HTML формат"
 
-#: sender.php:641
+#: includes/class-sndr-settings.php:129
+msgid "Enable to send emails in HTML format"
+msgstr "Включить отправку писем в формате HTML"
+
+#: includes/class-sndr-settings.php:140
+msgid "Frequency"
+msgstr "Частота"
+
+#: includes/class-sndr-settings.php:143
+msgid "email(-s) every"
+msgstr "писем каждые"
+
+#: includes/class-sndr-settings.php:145
+msgid "minutes"
+msgstr "минут"
+
+#: includes/class-sndr-settings.php:155
+msgid "Total:"
+msgstr "Всего:"
+
+#: includes/class-sndr-settings.php:155
+msgid "emails per hour"
+msgstr "писем в час"
+
+#: includes/class-sndr-settings.php:157
+msgid ""
+"Make sure that this number is smaller than max allowed number allowed by "
+"your hosting provider."
+msgstr ""
+"Убедитесь, что это число меньше максимально допустимого числа, разрешенного "
+"вашим хостинг-провайдером."
+
+#: includes/class-sndr-settings.php:158
+msgid ""
+"This counter shows only the number of messages that will be sended by Sender "
+"Pro plugin, and does not shows the total number of outgoing messages from "
+"your site."
+msgstr ""
+"Этот счетчик показывает только количество сообщений, которые будут "
+"отправляться плагином Sender Pro, и не отражает общее число исходящих с "
+"Вашего сайта сообщений."
+
+#: includes/class-sndr-settings.php:170
+msgid "Attempts"
+msgstr "Попыток"
+
+#: includes/class-sndr-settings.php:173
+msgid "Maximum number of attempts per user."
+msgstr "Максимальное число попыток отправить сообщение одному пользователю."
+
+#: includes/class-sndr-settings.php:177
+msgid "Automatic Mailout when Publishing a New Post"
+msgstr "Автоматическая рассылка при публикации нового сообщения"
+
+#: includes/class-sndr-settings.php:182
+msgid "user group"
+msgstr "группа пользователей"
+
+#: includes/class-sndr-settings.php:183
 msgid "Choose a mailing list"
 msgstr "Выберите список рассылки"
 
-#: sender.php:645
+#: includes/class-sndr-settings.php:186
+msgid "letter"
+msgstr "письмо"
+
+#: includes/class-sndr-settings.php:187
 msgid "Choose a letter"
 msgstr "Выберите письмо"
 
-#: sender.php:649
-msgid "Select letter priority"
-msgstr "Выберите приоритет для письма:"
+#: includes/class-sndr-settings.php:190
+msgid "letter priority"
+msgstr "приоритет письма"
 
-#: sender.php:650
+#: includes/class-sndr-settings.php:191
+msgid "Select letter priority"
+msgstr "Выберите приоритет письма"
+
+#: includes/class-sndr-settings.php:192
 msgid "Less number - higher priority"
 msgstr "Чем меньше число - тем выше приоритет"
 
-#: sender.php:656
-msgid "Slug for 'view email in browser' link"
-msgstr "Слаг для ссылки \"просмотреть письмо в браузере\""
+#: includes/class-sndr-settings.php:213
+msgid "Sender Slug"
+msgstr "Слаг Sender"
 
-#: sender.php:678
+#: includes/class-sndr-settings.php:216
+msgid "Used for browser view."
+msgstr "Используется для просмотра в браузере."
+
+#: includes/class-sndr-settings.php:220
+msgid "Send Email with Confirmation"
+msgstr "Отправить письмо с подтверждением"
+
+#: includes/class-sndr-settings.php:224
+msgid "This function may not work on all mail servers."
+msgstr "Эта функция работает не на всех почтовых серверах."
+
+#: includes/class-sndr-settings.php:228
+msgid "Editors Access"
+msgstr "Доступ редакторов"
+
+#: includes/class-sndr-settings.php:232
 msgid ""
-"If you want to allows your site visitors to subscribe for newsletters, "
-"coming from your website, use"
+"Enable to provide the access for Editors to create letter templates, letters "
+"and send test letters."
 msgstr ""
-"Если вы хотите, чтобы ваши посетители имели возможность подписаться на "
-"новости вашего сайта, используйте"
+"Включите, чтобы предоставить редакторам доступ к созданию шаблонов писем, "
+"писем и отправке тестовых писем."
 
-#: sender.php:678
-msgid "that is an exclusive add-on for the Sender Plugin by BestWebSoft."
-msgstr ""
-"который является эксклюзивным дополнением для плагина Sender компании "
-"BestWebSoft."
+#: includes/class-sndr-settings.php:235
+msgid "If you want to create another role with special capabilities"
+msgstr "Если вы хотите создать другую роль с особыми правами"
 
-#: sender.php:681
-msgid "Save Changes"
-msgstr "Сохранить изменения"
+#: includes/class-sndr-settings.php:235
+msgid "download User Role Pro by BestWebSoft"
+msgstr "скачайте User Role Pro от BestWebSoft"
 
-#: sender.php:785
+#: sender.php:43 sender.php:515 sender.php:517 sender.php:1120
+msgid "Campaigns"
+msgstr "Кампании"
+
+#: sender.php:44 sender.php:1121 sender.php:1605
+msgid "Add New"
+msgstr "Создать новый"
+
+#: sender.php:46 sender.php:1603
+msgid "Letters"
+msgstr "Письма"
+
+#: sender.php:47
+msgid "Lists"
+msgstr "Списки"
+
+#: sender.php:48 sender.php:2044
+msgid "Templates"
+msgstr "Шаблоны"
+
+#: sender.php:49 sender.php:2218
+msgid "Priorities"
+msgstr "Приоритеты"
+
+#: sender.php:56 sender.php:1869 sender.php:2021 sender.php:2195
+#: sender.php:2389
+msgid "Upgrade to Pro"
+msgstr "Обновить до Pro"
+
+#: sender.php:273
+msgid "FAQ"
+msgstr "FAQ"
+
+#: sender.php:274
+msgid "Support"
+msgstr "Тех.поддержка"
+
+#: sender.php:400
+msgid "Close Report"
+msgstr "Закрыть отчет"
+
+#: sender.php:401 sender.php:756
+msgid "Show Report"
+msgstr "Показать отчет"
+
+#: sender.php:402
+msgid "The data of this report can't be found."
+msgstr "Нет данных по этому отчету."
+
+#: sender.php:403
+msgid "Error while sending request."
+msgstr "Ошибка при отсылке запроса."
+
+#: sender.php:404
+msgid "Are you sure that you want to enter such a large value?"
+msgstr "Вы уверены, что необходимо такое большое значение?"
+
+#: sender.php:429
+msgid "WARNING"
+msgstr "ВНИМАНИЕ"
+
+#: sender.php:429
+msgid "The plugin works correctly only if JavaScript is enabled."
+msgstr "Плагин работает корректно только при включенном JavaScript."
+
+#: sender.php:528
 msgid "You can check sending reports on the page"
 msgstr "Просмотреть отчеты об отправке вы можете на странице"
 
-#: sender.php:792
+#: sender.php:535
 msgid "Send to"
 msgstr "Кому отправить"
 
-#: sender.php:796
+#: sender.php:539
 msgid "all"
 msgstr "все"
 
-#: sender.php:812
+#: sender.php:555
 msgid "Number of mails which would be sent"
 msgstr "Количество сообщений, которое будет отправлено"
 
-#: sender.php:826 sender.php:915 sender.php:2057 sender.php:2128
+#: sender.php:569 sender.php:658 sender.php:1788 sender.php:1846
 msgid "Subject"
 msgstr "Тема"
 
-#: sender.php:832
+#: sender.php:575
 msgid "Content"
 msgstr "Контент"
 
-#: sender.php:839
-msgid "Send"
-msgstr "Отослать"
+#: sender.php:582
+msgid "Save Campaign"
+msgstr "Сохранить кампанию"
 
-#: sender.php:865
+#: sender.php:608
 msgid "report"
 msgstr "отчет"
 
-#: sender.php:866
+#: sender.php:609
 msgid "reports"
 msgstr "отчеты"
 
-#: sender.php:905
+#: sender.php:648
 msgid "No messages sent"
 msgstr "Отправленных сообщений нет"
 
-#: sender.php:916 sender.php:1205 sender.php:1212 sender.php:2346
-#: sender.php:2431
+#: sender.php:659 sender.php:948 sender.php:955 sender.php:2091 sender.php:2176
 msgid "Status"
 msgstr "Статус"
 
-#: sender.php:917
+#: sender.php:660
 msgid "Date"
 msgstr "Дата"
 
-#: sender.php:960 sender.php:2025 sender.php:2168 sender.php:2307
-#: sender.php:2468
+#: sender.php:703 sender.php:1763 sender.php:1900 sender.php:2052
+#: sender.php:2226
 msgid "All"
 msgstr "Все"
 
-#: sender.php:961 sender.php:1042
+#: sender.php:704 sender.php:785
 msgid "In Progress"
 msgstr "В процессе"
 
-#: sender.php:962
+#: sender.php:705
 msgid "Done"
 msgstr "Выполнено"
 
-#: sender.php:972
-msgid "Delete Reports"
-msgstr "Удалить отчеты"
+#: sender.php:715
+msgid "Delete Campaigns"
+msgstr "Удаление кампаний"
 
-#: sender.php:1016
+#: sender.php:759
 msgid "Hide Report"
 msgstr "Закрыть отчет"
 
-#: sender.php:1018
+#: sender.php:761
 msgid "Delete Report"
 msgstr "Удалить отчет"
 
-#: sender.php:1042 sender.php:1300
+#: sender.php:785 sender.php:1043
 msgid "of"
 msgstr "из"
 
-#: sender.php:1045
+#: sender.php:788
 msgid "All Done"
 msgstr "Выполнено"
 
-#: sender.php:1127
+#: sender.php:870
 msgid "No Subject"
 msgstr "Без Темы"
 
-#: sender.php:1204 sender.php:1211
+#: sender.php:947 sender.php:954
 msgid "Username"
 msgstr "Пользователь"
 
-#: sender.php:1206 sender.php:1213
+#: sender.php:949 sender.php:956
 msgid "Try"
 msgstr "Попыток"
 
-#: sender.php:1223
+#: sender.php:966
 msgid "User was deleted"
 msgstr "Пользователь был удален"
 
-#: sender.php:1229
+#: sender.php:972
 msgid "received"
 msgstr "отправлено"
 
-#: sender.php:1231
+#: sender.php:974
 msgid "in the queue"
 msgstr "в очереди"
 
-#: sender.php:1236
+#: sender.php:979
 msgid "read"
 msgstr "прочитано"
 
-#: sender.php:1238
+#: sender.php:981
 msgid "not read"
 msgstr "не прочитано"
 
-#: sender.php:1249
+#: sender.php:992
 msgid "The list of subscribers can't be found."
 msgstr "Список пользователей не найден."
 
-#: sender.php:1274
+#: sender.php:1017
 msgid "Total Subscribers:"
 msgstr "Подписчиков:"
 
-#: sender.php:1276
+#: sender.php:1019
 msgid "Number of Subscribers on Page"
 msgstr "Количество подписчиков на странице"
 
-#: sender.php:1277
+#: sender.php:1020
 msgid "on page"
 msgstr "на странице"
 
-#: sender.php:1290
+#: sender.php:1033
 msgid "Go to the First Page"
 msgstr "На первую страницу"
 
-#: sender.php:1291
+#: sender.php:1034
 msgid "Go to the Previous Page"
 msgstr "На предидущую страницу"
 
-#: sender.php:1299
+#: sender.php:1042
 msgid "Current Page"
 msgstr "Текущая страница"
 
-#: sender.php:1300
+#: sender.php:1043
 msgid "pages"
 msgstr "страниц"
 
-#: sender.php:1305
+#: sender.php:1048
 msgid "Go to the Next Page"
 msgstr "На следующую страницу"
 
-#: sender.php:1306
+#: sender.php:1049
 msgid "Go to the Last Page"
 msgstr "На последнюю страницу"
 
-#: sender.php:1334
+#: sender.php:1077
 msgid "Reports per page"
 msgstr "Отчетов на странице"
 
-#: sender.php:1376
-msgid "Sender Reports"
-msgstr "Sender Отчеты"
-
-#: sender.php:1386
+#: sender.php:1132
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Результаты поиска для &#8220;%s&#8221;"
 
-#: sender.php:1388
+#: sender.php:1134
 msgid "Filter reports list"
 msgstr "Фильтр списка отчетов"
 
-#: sender.php:1392 sender.php:2031 sender.php:2174 sender.php:2315
-#: sender.php:2474
+#: sender.php:1138 sender.php:1769 sender.php:1906 sender.php:2060
+#: sender.php:2232
 msgid "search"
 msgstr "поиск"
 
-#: sender.php:1416
+#: sender.php:1162
 msgid "You need to choose some reports."
 msgstr "Вам необходимо выбрать несколько отчетов."
 
-#: sender.php:1417
+#: sender.php:1163
 msgid "Error while deleting report."
 msgstr "Ошибка при удалении отчетов."
 
-#: sender.php:1418
+#: sender.php:1164
 msgid "Error while deleting mail."
 msgstr "Ошибка при удалении письма."
 
-#: sender.php:1419
+#: sender.php:1165
 msgid "You cannot send an empty mail."
 msgstr "Вы не можете отправлять пустые сообщения."
 
-#: sender.php:1420
+#: sender.php:1166
 msgid "Select a list of users to send messages."
 msgstr "Выберите список пользователей для отправки сообщений."
 
-#: sender.php:1421
+#: sender.php:1167
 msgid "It is impossible to get the list of users."
 msgstr "Невозможно получить список пользователей."
 
-#: sender.php:1422
+#: sender.php:1168
 msgid "Please, try it later."
 msgstr "Пожалуйста, попробуйте позднее."
 
-#: sender.php:1423
+#: sender.php:1169
 msgid "New mailout was created successfully."
 msgstr "Новая рассылка была успешно создана."
 
-#: sender.php:1424
+#: sender.php:1170
 msgid "Mailout was not create"
 msgstr "Рассылка на создана"
 
-#: sender.php:1456 sender.php:1490
+#: sender.php:1202 sender.php:1236
 msgid "Report was deleted."
 msgstr "Отчет был удален."
 
-#: sender.php:1456 sender.php:1490
+#: sender.php:1202 sender.php:1236
 msgid "Reports were deleted."
 msgstr "Отчета (отчетов) было удалено."
 
-#: sender.php:1650
+#: sender.php:1396
 msgid "Subscribe on newsletters"
 msgstr "Подписаться на рассылку"
 
-#: sender.php:1654
+#: sender.php:1400
 msgid "Sorry, but you denied to subscribe to the newsletter."
 msgstr "Извините, но Вам отказано в возможности подписаться на рассылку."
 
-#: sender.php:1684
+#: sender.php:1430
 msgid "unsubscribed from the user profile"
 msgstr "отписан из профиля пользователя"
 
-#: sender.php:1739
+#: sender.php:1485
 msgid "Your interval"
 msgstr "Установить интервал"
 
-#: sender.php:1859
-msgid "Add new letter"
+#: sender.php:1603
+msgid "Add New Letters"
 msgstr "Создать новое письмо"
 
-#: sender.php:1859 sender.php:2023 sender.php:2166 sender.php:2305
-#: sender.php:2466
-msgid "Add New"
-msgstr "Создать новый"
-
-#: sender.php:1863
+#: sender.php:1619
 msgid "Subject:"
 msgstr "Тема:"
 
-#: sender.php:1870
+#: sender.php:1627
 msgid "Select letter template:"
 msgstr "Выберите шаблон письма:"
 
-#: sender.php:1872
+#: sender.php:1629
 msgid "Default Templates:"
 msgstr "Шаблоны по умолчанию:"
 
-#: sender.php:1896
+#: sender.php:1653
 msgid "in order to use the necessary fonts you need:"
 msgstr "для использования дополнительных шрифтов Вам необходимо:"
 
-#: sender.php:1897
+#: sender.php:1654
 msgid ""
 "select the desired font (or multiple fonts), and click on the \"Load "
 "Additional Data\" button"
@@ -551,11 +539,11 @@ msgstr ""
 "выберите необходимый шрифт (или несколько шрифтов) и нажмите на кнопку "
 "\"Загрузить дополнительные данные\""
 
-#: sender.php:1898
+#: sender.php:1655
 msgid "click on the \"Text\" tab in content editor"
 msgstr "нажмите на вкладку \"Text\" в редакторе контента"
 
-#: sender.php:1899
+#: sender.php:1656
 msgid ""
 "find a necessary html-element and edit when using the attribute \"style\" "
 "and CSS-property \"font-family\" as in example"
@@ -563,182 +551,191 @@ msgstr ""
 "найдите необходимый html-элемент и отредактируйте его, используя аттрибут "
 "\"стиль\" и CSS-свойство \"font-family\", как показано в примере"
 
-#: sender.php:1901
+#: sender.php:1658
 msgid "Example:"
 msgstr "Пример:"
 
-#: sender.php:1903
+#: sender.php:1660
 msgid "Select additional fonts:"
 msgstr "Выберите дополнительные шрифты:"
 
-#: sender.php:1929
+#: sender.php:1686
 msgid "Load Additional Data"
 msgstr "Загрузить дополнительную информацию"
 
-#: sender.php:1930
+#: sender.php:1687
 msgid "Reset Additional Data"
 msgstr "Сбросить дополнительную информацию"
 
-#: sender.php:1936
+#: sender.php:1693
 msgid "You can use the following shortcodes in the letter:"
 msgstr "Вы можете использовать следующие шорткоды в письме:"
 
-#: sender.php:1940
+#: sender.php:1697
 msgid "site URL"
 msgstr "URL сайта"
 
-#: sender.php:1944
+#: sender.php:1701
 msgid "site name"
 msgstr "название сайта"
 
-#: sender.php:1948
+#: sender.php:1705
 msgid "user e-mail"
 msgstr "емейл пользователя"
 
-#: sender.php:1952
+#: sender.php:1709
 msgid "user name"
 msgstr "имя пользователя"
 
-#: sender.php:1956
+#: sender.php:1713
 msgid "new post title - only for automatic mailout when publishing a new post"
 msgstr ""
 "заголовок новой записи - только для авторассылки при появлении новой записи"
 
-#: sender.php:1960
+#: sender.php:1717
 msgid ""
 "link to new post - only for automatic mailout when publishing a new post"
 msgstr ""
 "ссылка на новую запись - только для авторассылки при появлении новой записи"
 
-#: sender.php:1964
+#: sender.php:1721
 msgid "link to profile page of current user"
 msgstr "ссылка на страницу профиля текущего пользователя"
 
-#: sender.php:1968
+#: sender.php:1725
 msgid "link to unsubscribe user from mailout"
 msgstr "ссылка для отписки пользователя от рассылки"
 
-#: sender.php:1972
+#: sender.php:1729
 msgid "link to view letter in new browser tab"
 msgstr "ссылка для просмотра письма в новой вкладке браузера"
 
-#: sender.php:1976
+#: sender.php:1733
 msgid "Use shortcodes!"
 msgstr "Использовать шорткоды!"
 
-#: sender.php:1981
+#: sender.php:1738
 msgid "Letter Content:"
 msgstr "Содержимое письма:"
 
-#: sender.php:1984
+#: sender.php:1741
 msgid "Add Media"
 msgstr "Add Media"
 
-#: sender.php:1986
+#: sender.php:1743
 msgid "Text"
 msgstr "Text"
 
-#: sender.php:1987
+#: sender.php:1744
 msgid "Visual"
 msgstr "Visual"
 
-#: sender.php:1998 sender.php:2002
+#: sender.php:1755 sender.php:1759
 msgid "Create Mailout"
 msgstr "Создать рассылку"
 
-#: sender.php:1999
+#: sender.php:1756
 msgid "Send Test Message"
 msgstr "Отправить тестовое сообщение"
 
-#: sender.php:2023
-msgid "Letters Lists"
-msgstr "Список писем"
-
-#: sender.php:2026 sender.php:2073 sender.php:2089 sender.php:2105
-#: sender.php:2140 sender.php:2169 sender.php:2180 sender.php:2216
-#: sender.php:2230 sender.php:2244 sender.php:2279 sender.php:2310
-#: sender.php:2321 sender.php:2359 sender.php:2375 sender.php:2391
-#: sender.php:2405 sender.php:2440 sender.php:2469 sender.php:2480
-#: sender.php:2516 sender.php:2530 sender.php:2544 sender.php:2558
-#: sender.php:2572 sender.php:2586 sender.php:2621
+#: sender.php:1764 sender.php:1804 sender.php:1818 sender.php:1832
+#: sender.php:1858 sender.php:1901 sender.php:1912 sender.php:1948
+#: sender.php:1962 sender.php:1976 sender.php:2011 sender.php:2055
+#: sender.php:2066 sender.php:2104 sender.php:2120 sender.php:2136
+#: sender.php:2150 sender.php:2185 sender.php:2227 sender.php:2238
+#: sender.php:2274 sender.php:2288 sender.php:2302 sender.php:2316
+#: sender.php:2330 sender.php:2344 sender.php:2379
 msgid "Trash"
 msgstr "Корзина"
 
-#: sender.php:2029 sender.php:2172 sender.php:2313 sender.php:2472
+#: sender.php:1767 sender.php:1904 sender.php:2058 sender.php:2230
 msgid "search:"
 msgstr "поиск:"
 
-#: sender.php:2035 sender.php:2139 sender.php:2179 sender.php:2278
-#: sender.php:2320 sender.php:2439 sender.php:2479 sender.php:2620
+#: sender.php:1773 sender.php:1857 sender.php:1911 sender.php:2010
+#: sender.php:2065 sender.php:2184 sender.php:2237 sender.php:2378
 msgid "Bulk Actions"
 msgstr "Действия"
 
-#: sender.php:2037 sender.php:2142 sender.php:2182 sender.php:2281
-#: sender.php:2323 sender.php:2442 sender.php:2482 sender.php:2623
+#: sender.php:1775 sender.php:1860 sender.php:1914 sender.php:2013
+#: sender.php:2068 sender.php:2187 sender.php:2240 sender.php:2381
 msgid "Apply"
 msgstr "Применить"
 
-#: sender.php:2039 sender.php:2144 sender.php:2184 sender.php:2283
-#: sender.php:2325 sender.php:2444 sender.php:2484 sender.php:2625
+#: sender.php:1777 sender.php:1862 sender.php:1916 sender.php:2015
+#: sender.php:2070 sender.php:2189 sender.php:2242 sender.php:2383
 msgid "items"
 msgstr "элементов"
 
-#: sender.php:2047 sender.php:2052 sender.php:2118 sender.php:2123
-#: sender.php:2192 sender.php:2197 sender.php:2257 sender.php:2262
-#: sender.php:2333 sender.php:2338 sender.php:2418 sender.php:2423
-#: sender.php:2492 sender.php:2497 sender.php:2599 sender.php:2604
+#: sender.php:1784 sender.php:1842 sender.php:1924 sender.php:1929
+#: sender.php:1989 sender.php:1994 sender.php:2078 sender.php:2083
+#: sender.php:2163 sender.php:2168 sender.php:2250 sender.php:2255
+#: sender.php:2357 sender.php:2362
 msgid "Select All"
 msgstr "Выбрать все"
 
-#: sender.php:2060 sender.php:2131 sender.php:2205 sender.php:2270
+#: sender.php:1791 sender.php:1849 sender.php:1937 sender.php:2002
 msgid "Date of creation"
 msgstr "Дата создания"
 
-#: sender.php:2072 sender.php:2088 sender.php:2104 sender.php:2215
-#: sender.php:2229 sender.php:2243 sender.php:2358 sender.php:2374
-#: sender.php:2390 sender.php:2404 sender.php:2515 sender.php:2529
-#: sender.php:2543 sender.php:2557 sender.php:2571 sender.php:2585
+#: sender.php:1803 sender.php:1817 sender.php:1831 sender.php:1947
+#: sender.php:1961 sender.php:1975 sender.php:2103 sender.php:2119
+#: sender.php:2135 sender.php:2149 sender.php:2273 sender.php:2287
+#: sender.php:2301 sender.php:2315 sender.php:2329 sender.php:2343
 msgid "Edit"
 msgstr "Редактировать"
 
-#: sender.php:2202 sender.php:2267 sender.php:2343 sender.php:2428
-#: sender.php:2502 sender.php:2609
+#: sender.php:1874 sender.php:2026 sender.php:2200 sender.php:2394
+msgid "This tab contains Pro options only."
+msgstr "Эта вкладка содержит только Pro опции."
+
+#: sender.php:1876 sender.php:2028 sender.php:2202 sender.php:2396
+#, php-format
+msgid "%sChange the settings%s to view the Pro options."
+msgstr "%sИзмените настройки%s, чтобы просмотреть Pro опции."
+
+#: sender.php:1892
+msgid "Mailings Lists"
+msgstr "Списки рассылок"
+
+#: sender.php:1934 sender.php:1999 sender.php:2088 sender.php:2173
+#: sender.php:2260 sender.php:2367
 msgid "Title"
 msgstr "Название"
 
-#: sender.php:2305
-msgid "Letter Templates"
-msgstr "Шаблоны писем"
-
-#: sender.php:2308
+#: sender.php:2053
 msgid "Default templates"
 msgstr "Шаблоны по умолчанию"
 
-#: sender.php:2309
+#: sender.php:2054
 msgid "User`s templates"
 msgstr "Пользовательские шаблоны"
 
-#: sender.php:2365 sender.php:2381 sender.php:2397
+#: sender.php:2110 sender.php:2126 sender.php:2142
 msgid "default"
 msgstr "по умолчанию"
 
-#: sender.php:2411
+#: sender.php:2156
 msgid "user's"
 msgstr "пользовательские"
 
-#: sender.php:2505 sender.php:2612
+#: sender.php:2263 sender.php:2370
 msgid "Number"
 msgstr "Количество"
 
-#: sender.php:2749
+#: sender.php:2507
+msgid "Notice:"
+msgstr "Внимание:"
+
+#: sender.php:2509
 msgid "Due to the peculiarities of the multisite work, Sender plugin has only"
 msgstr "В связи с особенностями работы мультисайта плагин Sender имеет только"
 
-#: sender.php:2749
+#: sender.php:2509
 msgid "Network settings page"
-msgstr "cтраницу настроек сети"
+msgstr "Страница настроек сети"
 
-#: sender.php:2751
+#: sender.php:2511
 msgid ""
 "Due to the peculiarities of the multisite work, Sender plugin has the "
 "network settings page only and it should be Network Activated. Please"
@@ -746,9 +743,459 @@ msgstr ""
 "В связи с особенностями работы мультисайта плагин Sender имеет только "
 "страницу настроек сети и должен быть активирован для сети. Пожалуйста,"
 
-#: sender.php:2751
+#: sender.php:2511
 msgid "Activate Sender for Network"
 msgstr "Активируйте Sender для сети"
+
+#~ msgid "New Letter"
+#~ msgstr "Новое письмо"
+
+#~ msgid "Learn More"
+#~ msgstr "Подробнее"
+
+#~ msgid "Letters Lists"
+#~ msgstr "Список писем"
+
+#~ msgid "Send"
+#~ msgstr "Отослать"
+
+#~ msgid "Reports"
+#~ msgstr "Отчеты"
+
+#~ msgid "Delete Reports"
+#~ msgstr "Удалить отчеты"
+
+#~ msgid "requires"
+#~ msgstr "необходимо"
+
+#~ msgid ""
+#~ "or higher, that is why it has been deactivated! Please upgrade WordPress "
+#~ "and try again."
+#~ msgstr ""
+#~ "или выше, по-этому плагин нобходимо деактивировать! Пожалуйста, обновите "
+#~ "WordPress и попробуйте снова."
+
+#~ msgid "Back to the WordPress"
+#~ msgstr "Назад к WordPress"
+
+#~ msgid "Plugins page"
+#~ msgstr "Странице плагинов"
+
+#, fuzzy
+#~| msgid "Rate the plugin"
+#~ msgid "Like the plugin?"
+#~ msgstr "Оценить плагин"
+
+#, fuzzy
+#~| msgid "Rate the plugin"
+#~ msgid "Want to support the plugin?"
+#~ msgstr "Оценить плагин"
+
+#, fuzzy
+#~| msgid "Learn More"
+#~ msgid "Learn more"
+#~ msgstr "Подробнее"
+
+#, fuzzy
+#~| msgid "Close Report"
+#~ msgid "Close notice"
+#~ msgstr "Закрыть отчет"
+
+#, fuzzy
+#~| msgid "Extend standard plugin functionality with new great options"
+#~ msgid "Extend standard plugin functionality with new great options."
+#~ msgstr "Расширение стандартного функционала плагина новыми опциями."
+
+#, fuzzy
+#~| msgid "Notice:"
+#~ msgid "Notice"
+#~ msgstr "Внимание:"
+
+#, fuzzy
+#~| msgid "All plugin settings were restored."
+#~ msgid "The plugin's settings have been changed."
+#~ msgstr "Все настройки плагина восстановлены."
+
+#~ msgid "Save Changes"
+#~ msgstr "Сохранить изменения"
+
+#, fuzzy
+#~| msgid "Use shortcodes!"
+#~ msgid "Add shortcode"
+#~ msgstr "Использовать шорткоды!"
+
+#, fuzzy
+#~| msgid "Are you sure that you want to enter such a large value?"
+#~ msgid "Are you sure you want to restore default settings?"
+#~ msgstr "Вы уверены, что необходимо такое большое значение?"
+
+#, fuzzy
+#~| msgid "Network settings page"
+#~ msgid "No, go back to the settings page"
+#~ msgstr "cтраницу настроек сети"
+
+#, fuzzy
+#~| msgid "Plugins page"
+#~ msgid "Plugin"
+#~ msgstr "Странице плагинов"
+
+#, fuzzy
+#~| msgid "Sender Settings"
+#~ msgid "Shortcode settings"
+#~ msgstr "Настройки Sender"
+
+#, fuzzy
+#~| msgid "Date of creation"
+#~ msgid "Documentation"
+#~ msgstr "Дата создания"
+
+#~ msgid "Wrong license key"
+#~ msgstr "Неправильный лицензионный ключ"
+
+#, fuzzy
+#~| msgid ""
+#~| "Something went wrong. Try again later. If the error will appear again, "
+#~| "please, contact us <a href=https://support.bestwebsoft.com>BestWebSoft</"
+#~| "a>. We are sorry for inconvenience."
+#~ msgid ""
+#~ "Something went wrong. Please try again later. If the error appears again, "
+#~ "please contact us"
+#~ msgstr ""
+#~ "Что-то пошло не так. Попробуйте еще раз позже. Если ошибка появится "
+#~ "снова, пожалуйста, свяжитесь с нами <a href=http://support.bestwebsoft."
+#~ "com>BestWebSoft</a>. Приносим извинения за неудобства."
+
+#, fuzzy
+#~| msgid "Wrong license key"
+#~ msgid "Wrong license key."
+#~ msgstr "Неправильный лицензионный ключ"
+
+#, fuzzy
+#~| msgid "This license key is bind to another site"
+#~ msgid ""
+#~ "This license key is bound to another site. Change it via personal Client "
+#~ "Area."
+#~ msgstr "Этот лицензионный ключ привязан к другому сайту"
+
+#, fuzzy
+#~| msgid ""
+#~| "Unfortunately, you have exceeded the number of available tries per day. "
+#~| "Please, upload the plugin manually."
+#~ msgid ""
+#~ "Unfortunately, you have exceeded the number of available tries per day."
+#~ msgstr "К сожалению, вы превысили количество доступных попыток."
+
+#, fuzzy
+#~| msgid "This license key is bind to another site"
+#~ msgid "The license key is valid."
+#~ msgstr "Этот лицензионный ключ привязан к другому сайту"
+
+#, fuzzy
+#~| msgid ""
+#~| "Something went wrong. Try again later or upload the plugin manually. We "
+#~| "are sorry for inconvienience."
+#~ msgid ""
+#~ "Something went wrong. Try again later or upload the plugin manually. We "
+#~ "are sorry for inconvenience."
+#~ msgstr ""
+#~ "Что-то пошло не так. Повторите попытку позже или загрузите плагин "
+#~ "вручную. Приносим извинения за неудобства."
+
+#, fuzzy
+#~| msgid "Please, enter Your license key"
+#~ msgid "Please enter your license key."
+#~ msgstr "Пожалуйста, введите ваш лицензионный ключ"
+
+#, fuzzy
+#~| msgid "site URL"
+#~ msgid "Home URL"
+#~ msgstr "URL сайта"
+
+#, fuzzy
+#~| msgid "site URL"
+#~ msgid "Website URL"
+#~ msgstr "URL сайта"
+
+#, fuzzy
+#~| msgid "SMTP server"
+#~ msgid "Server"
+#~ msgstr "SMTP Сервер"
+
+#, fuzzy
+#~| msgid ""
+#~| "Please enter a valid email address in the 'FROM' field. Settings are not "
+#~| "saved."
+#~ msgid "Please enter a valid email address."
+#~ msgstr ""
+#~ "Пожалуйста, введите правильный адрес электронной почты в поле \"От\". "
+#~ "Настройки не сохранены."
+
+#, fuzzy
+#~| msgid "Plugins page"
+#~ msgid "Plugins"
+#~ msgstr "Странице плагинов"
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "System status"
+#~ msgstr "Статус"
+
+#, fuzzy
+#~| msgid "Subscribe to newsletters"
+#~ msgid "Subscribe to Pro Membership"
+#~ msgstr "Подписаться на рассылку"
+
+#, fuzzy
+#~| msgid "Wrong license key"
+#~ msgid "Check license key"
+#~ msgstr "Неправильный лицензионный ключ"
+
+#, fuzzy
+#~| msgid "Please, enter Your license key"
+#~ msgid "Enter your license key"
+#~ msgstr "Пожалуйста, введите ваш лицензионный ключ"
+
+#, fuzzy
+#~| msgid "activate"
+#~ msgid "Activate"
+#~ msgstr "активировать"
+
+#, fuzzy
+#~| msgid "download"
+#~ msgid "Download Now"
+#~ msgstr "загрузите"
+
+#, fuzzy
+#~| msgid "Filter reports list"
+#~ msgid "Filter results"
+#~ msgstr "Фильтр списка отчетов"
+
+#, fuzzy
+#~| msgid "Rate the plugin"
+#~ msgid "Activate this plugin"
+#~ msgstr "Оценить плагин"
+
+#, fuzzy
+#~| msgid "Rate the plugin"
+#~ msgid "Install this plugin"
+#~ msgstr "Оценить плагин"
+
+#, fuzzy
+#~| msgid "Send to"
+#~ msgid "Send to support"
+#~ msgstr "Кому отправить"
+
+#, fuzzy
+#~| msgid "activate"
+#~ msgid "Inactive"
+#~ msgstr "активировать"
+
+#, fuzzy
+#~| msgid "activate"
+#~ msgid "Active"
+#~ msgstr "активировать"
+
+#~ msgid "All plugin settings were restored."
+#~ msgstr "Все настройки плагина восстановлены."
+
+#, fuzzy
+#~| msgid "Learn More"
+#~ msgid "Learn more about %s"
+#~ msgstr "Подробнее"
+
+#, fuzzy
+#~| msgid "Sender Settings"
+#~ msgid "Miscellaneous Settings"
+#~ msgstr "Настройки Sender"
+
+#, fuzzy
+#~| msgid "Settings"
+#~ msgid "Default Settings"
+#~ msgstr "Настройки"
+
+#, fuzzy
+#~| msgid "Sender Settings"
+#~ msgid "Restore Settings"
+#~ msgstr "Настройки Sender"
+
+#~ msgid ""
+#~ "Unfortunately, you have exceeded the number of available tries per day. "
+#~ "Please, upload the plugin manually."
+#~ msgstr "К сожалению, вы превысили количество доступных попыток."
+
+#, fuzzy
+#~| msgid "Sender Settings"
+#~ msgid "Manage License Settings"
+#~ msgstr "Настройки Sender"
+
+#, fuzzy
+#~| msgid "This license key is bind to another site"
+#~ msgid "This license key is bound to another site."
+#~ msgstr "Этот лицензионный ключ привязан к другому сайту"
+
+#, fuzzy
+#~| msgid ""
+#~| "Unfortunately, you have exceeded the number of available tries per day. "
+#~| "Please, upload the plugin manually."
+#~ msgid "Unfortunately, you have exceeded the number of available tries."
+#~ msgstr "К сожалению, вы превысили количество доступных попыток."
+
+#~ msgid "Please, enter Your license key"
+#~ msgstr "Пожалуйста, введите ваш лицензионный ключ"
+
+#, fuzzy
+#~| msgid "Support"
+#~ msgid "Contact Support"
+#~ msgstr "Тех.поддержка"
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "System Status"
+#~ msgstr "Статус"
+
+#, fuzzy
+#~| msgid "version of this plugin by entering Your license key."
+#~ msgid "After that, you can activate it by entering your license key."
+#~ msgstr "версию этого плагина, введя ваш лицензионный ключ."
+
+#, fuzzy
+#~| msgid ""
+#~| "(your username is the email you specify when purchasing the product)."
+#~ msgid "(your username is the email address specified during the purchase)."
+#~ msgstr ""
+#~ "(ваше имя пользователя - это электронный адрес, указанный при покупке "
+#~ "продукта)."
+
+#, fuzzy
+#~| msgid ""
+#~| "Congratulations! The PRO version of the plugin is successfully download "
+#~| "and activated."
+#~ msgid ""
+#~ "Congratulations! The Pro license of the plugin is activated successfully."
+#~ msgstr ""
+#~ "Поздравляем! PRO версия плагина была успешно загружена и активирована."
+
+#~ msgid "Please, go to"
+#~ msgstr "Пожалуйста, перейдите на"
+
+#, fuzzy
+#~| msgid "Network settings page"
+#~ msgid "the setting page"
+#~ msgstr "cтраницу настроек сети"
+
+#, fuzzy
+#~| msgid "All plugin settings were restored."
+#~ msgid "Restore all plugin settings to defaults"
+#~ msgstr "Все настройки плагина восстановлены."
+
+#, fuzzy
+#~| msgid "Network settings page"
+#~ msgid "Restore settings"
+#~ msgstr "cтраницу настроек сети"
+
+#, fuzzy
+#~| msgid ""
+#~| "Congratulations! The PRO version of the plugin is successfully download "
+#~| "and activated."
+#~ msgid ""
+#~ "Congratulations! Pro version of the plugin is  installed and activated "
+#~ "successfully."
+#~ msgstr ""
+#~ "Поздравляем! PRO версия плагина была успешно загружена и активирована."
+
+#, fuzzy
+#~| msgid "Rate the plugin"
+#~ msgid "version of the plugin."
+#~ msgstr "Оценить плагин"
+
+#~ msgid "New Mailout"
+#~ msgstr "Новая рассылка"
+
+#~ msgid "Letters Templates"
+#~ msgstr "Шаблоны писем"
+
+#~ msgid ""
+#~ "You may have entered too large a value in the \"Interval for sending mail"
+#~ "\" option. Check please."
+#~ msgstr ""
+#~ "Возможно, Вы ввели слишком большое значение в поле \"Интервал между "
+#~ "отправками сообщений\". Проверьте, пожалуйста."
+
+#~ msgid ""
+#~ "You may have entered too large a value in the \"Number of sent messages "
+#~ "at one time\" option. Check please."
+#~ msgstr ""
+#~ "Возможно, Вы ввели слишком большое значение в поле \"Количество "
+#~ "одновременно отправляемых сообщений\". Проверьте, пожалуйста."
+
+#~ msgid ""
+#~ "Email 'FROM' field option was changed, which may cause email messages "
+#~ "being moved to the spam folder or email delivery failures."
+#~ msgstr ""
+#~ "Опция \"Электронный адрес поля 'От'\" была изменена, что может приводить "
+#~ "к тому, что письма будут помечены как спам или не будут доставлены."
+
+#~ msgid "Go PRO"
+#~ msgstr "Перейти на PRO версию"
+
+#~ msgid "Interval for sending mail"
+#~ msgstr "Интервал между отправкой сообщений"
+
+#~ msgid "(min)"
+#~ msgstr "(мин.)"
+
+#~ msgid "Number of messages sent at one time"
+#~ msgstr "Количество одновременно отправляемых сообщений"
+
+#~ msgid "maximum number of sent mails:"
+#~ msgstr "максимальное число отправляемых сообщений:"
+
+#~ msgid "This function works not on all mail servers."
+#~ msgstr "Эта функция работает не на всех почтовых серверах."
+
+#~ msgid "Display fonts list on \"Edit letter\" or \"Edit Template\" Pages"
+#~ msgstr ""
+#~ "Показать список шрифтов на страницах редактирования писем и шаблонов"
+
+#~ msgid ""
+#~ "Due to security reasons, the additional fonts may not be reflected on "
+#~ "some postal services."
+#~ msgstr ""
+#~ "По соображениям безопасности дополнительные шрифты могут не отображаться "
+#~ "на некоторых почтовых серверах."
+
+#~ msgid "If you upgrade to Pro version all your settings will be saved."
+#~ msgstr "При установке Pro версии плагина, все ваши настройки сохраняются."
+
+#~ msgid "'FROM' field"
+#~ msgstr "Поле 'От'"
+
+#~ msgid "Wp-mail"
+#~ msgstr "Wp-mail"
+
+#~ msgid "You can use the wp_mail function for mailing"
+#~ msgstr "Вы можете использовать функцию wp_mail для расссылки"
+
+#~ msgid "To send mail you can use the php mail function"
+#~ msgstr "Для отправки писем Вы можете использовать функцию PHP mail"
+
+#~ msgid "Slug for 'view email in browser' link"
+#~ msgstr "Слаг для ссылки \"просмотреть письмо в браузере\""
+
+#~ msgid ""
+#~ "If you want to allows your site visitors to subscribe for newsletters, "
+#~ "coming from your website, use"
+#~ msgstr ""
+#~ "Если вы хотите, чтобы ваши посетители имели возможность подписаться на "
+#~ "новости вашего сайта, используйте"
+
+#~ msgid "that is an exclusive add-on for the Sender Plugin by BestWebSoft."
+#~ msgstr ""
+#~ "который является эксклюзивным дополнением для плагина Sender компании "
+#~ "BestWebSoft."
+
+#~ msgid "Sender Reports"
+#~ msgstr "Sender Отчеты"
 
 #~ msgid ""
 #~ "WARNING: as you are using multisite, the total number of sent mails may "
@@ -762,26 +1209,6 @@ msgstr "Активируйте Sender для сети"
 #~ msgid "Mailing Lists"
 #~ msgstr "Списки рассылок"
 
-#~ msgid ""
-#~ "You may have entered too large value in the \"Interval for sending mail\" "
-#~ "option. Check please."
-#~ msgstr ""
-#~ "Возможно, Вы ввели слишком большое значение в поле \"Интервал между "
-#~ "отправкой сообщений\". Проверьте, пожалуйста."
-
-#~ msgid ""
-#~ "You may have entered too large a value in the \"Number of sent messages "
-#~ "at the same time\" option. Check please."
-#~ msgstr ""
-#~ "Возможно, Вы ввели слишком большое значение в поле \"Количество "
-#~ "одновременно отправляемых сообщений\". Проверьте, пожалуйста."
-
-#~ msgid "This function may not work on all mail servers."
-#~ msgstr "Эта функция работает не на всех почтовых серверах."
-
-#~ msgid "Subscribe to newsletters"
-#~ msgstr "Подписаться на рассылку"
-
 #~ msgid "link to view letter in a new browser tab"
 #~ msgstr "ссылка для просмотра письма в новой вкладке браузера"
 
@@ -793,12 +1220,6 @@ msgstr "Активируйте Sender для сети"
 
 #~ msgid "use"
 #~ msgstr "используйте"
-
-#~ msgid "activate"
-#~ msgstr "активировать"
-
-#~ msgid "download"
-#~ msgstr "загрузите"
 
 #~ msgid ""
 #~ "In current plugin version, there is an opportunity to use SMTP method "
@@ -827,9 +1248,6 @@ msgstr "Активируйте Sender для сети"
 #~ msgid "и настройте его в соответствии с вашими настройками"
 #~ msgstr "и настройте его в соответствии с вашими настройками"
 
-#~ msgid "Sender"
-#~ msgstr "Sender"
-
 #~ msgid "SMTP"
 #~ msgstr "SMTP"
 
@@ -838,9 +1256,6 @@ msgstr "Активируйте Sender для сети"
 
 #~ msgid "SMTP Settings"
 #~ msgstr "SMTP Настройки"
-
-#~ msgid "SMTP server"
-#~ msgstr "SMTP Сервер"
 
 #~ msgid "SMTP port"
 #~ msgstr "SMTP Порт"
@@ -873,45 +1288,6 @@ msgstr "Активируйте Sender для сети"
 #~ msgid "Go"
 #~ msgstr "Перейти на"
 
-#~ msgid "Choose a user group"
-#~ msgstr "Выберите группу пользователей"
-
-#~ msgid "requires"
-#~ msgstr "необходимо"
-
-#~ msgid ""
-#~ "or higher, that is why it has been deactivated! Please upgrade WordPress "
-#~ "and try again."
-#~ msgstr ""
-#~ "или выше, по-этому плагин нобходимо деактивировать! Пожалуйста, обновите "
-#~ "WordPress и попробуйте снова."
-
-#~ msgid "Back to the WordPress"
-#~ msgstr "Назад к WordPress"
-
-#~ msgid "Plugins page"
-#~ msgstr "Странице плагинов"
-
-#~ msgid "Wrong license key"
-#~ msgstr "Неправильный лицензионный ключ"
-
-#~ msgid ""
-#~ "Something went wrong. Try again later. If the error will appear again, "
-#~ "please, contact us <a href=https://support.bestwebsoft.com>BestWebSoft</"
-#~ "a>. We are sorry for inconvenience."
-#~ msgstr ""
-#~ "Что-то пошло не так. Попробуйте еще раз позже. Если ошибка появится "
-#~ "снова, пожалуйста, свяжитесь с нами <a href=http://support.bestwebsoft."
-#~ "com>BestWebSoft</a>. Приносим извинения за неудобства."
-
-#~ msgid "This license key is bind to another site"
-#~ msgstr "Этот лицензионный ключ привязан к другому сайту"
-
-#~ msgid ""
-#~ "Unfortunately, you have exceeded the number of available tries per day. "
-#~ "Please, upload the plugin manually."
-#~ msgstr "К сожалению, вы превысили количество доступных попыток."
-
 #~ msgid ""
 #~ "Failed to download the zip archive. Please, upload the plugin manually"
 #~ msgstr ""
@@ -933,42 +1309,17 @@ msgstr "Активируйте Sender для сети"
 #~ "Папка загрузки не доступна для записи. Пожалуйста, загрузите плагин "
 #~ "вручную"
 
-#~ msgid ""
-#~ "Something went wrong. Try again later or upload the plugin manually. We "
-#~ "are sorry for inconvienience."
-#~ msgstr ""
-#~ "Что-то пошло не так. Повторите попытку позже или загрузите плагин "
-#~ "вручную. Приносим извинения за неудобства."
-
-#~ msgid "Please, enter Your license key"
-#~ msgstr "Пожалуйста, введите ваш лицензионный ключ"
-
 #~ msgid "If you enjoy our plugin, please give it 5 stars on WordPress"
 #~ msgstr "Если вам понравился плагин, то поставте нам 5 звезд на WordPress"
 
-#~ msgid "Rate the plugin"
-#~ msgstr "Оценить плагин"
-
 #~ msgid "If there is something wrong about it, please contact us"
 #~ msgstr "Если у вас есть какие-то вопросы, обращайтесь"
-
-#~ msgid ""
-#~ "Congratulations! The PRO version of the plugin is successfully download "
-#~ "and activated."
-#~ msgstr ""
-#~ "Поздравляем! PRO версия плагина была успешно загружена и активирована."
-
-#~ msgid "Please, go to"
-#~ msgstr "Пожалуйста, перейдите на"
 
 #~ msgid "You will be redirected automatically in 5 seconds."
 #~ msgstr "Вы будете перенаправлены автоматически через 5 секунд."
 
 #~ msgid "You can download and activate"
 #~ msgstr "Вы можете скачать и активировать"
-
-#~ msgid "version of this plugin by entering Your license key."
-#~ msgstr "версию этого плагина, введя ваш лицензионный ключ."
 
 #~ msgid ""
 #~ "You can find your license key on your personal page Client area, by "
@@ -978,30 +1329,14 @@ msgstr "Активируйте Sender для сети"
 #~ "area, нажав на ссылку"
 
 #~ msgid ""
-#~ "(your username is the email you specify when purchasing the product)."
-#~ msgstr ""
-#~ "(ваше имя пользователя - это электронный адрес, указанный при покупке "
-#~ "продукта)."
-
-#~ msgid ""
 #~ "It’s time to upgrade your <strong>Sender plugin</strong> to <strong>PRO</"
 #~ "strong> version!"
 #~ msgstr ""
 #~ "Пора обновить <strong>плагин Sender</strong> до <strong>PRO</strong> "
 #~ "версии!"
 
-#~ msgid "Extend standard plugin functionality with new great options"
-#~ msgstr "Расширение стандартного функционала плагина новыми опциями."
-
 #~ msgid "Such a user does not exist. Settings are not saved."
 #~ msgstr "Пользователь не существует. Настройки не сохранены."
-
-#~ msgid ""
-#~ "Please enter a valid email address in the 'FROM' field. Settings are not "
-#~ "saved."
-#~ msgstr ""
-#~ "Пожалуйста, введите правильный адрес электронной почты в поле \"От\". "
-#~ "Настройки не сохранены."
 
 #~ msgid "The user on whose behalf mailout will be created"
 #~ msgstr "Пользователь, от чьего имени будет создана рассылка"

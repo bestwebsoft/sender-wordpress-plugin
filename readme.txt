@@ -2,9 +2,9 @@
 Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
-Requires at least: 3.9
-Tested up to: 5.2.2
-Stable tag: 1.2.7
+Requires at least: 4.5
+Tested up to: 5.4.2
+Stable tag: 1.2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,12 +131,19 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Screenshots ==
 
-1. Plugin settings page.
-2. Plugin "Edit mail" page.
-3. Plugin "Reports" page.
-4. Plugin "Reports List" page with subscribers list.
+1. Sender Settings page.
+2. Plugin "Add New" page.
+3. Plugin "Campaigns" page.
+4. Plugin "Campaigns" page with subscribers list.
 
 == Changelog ==
+
+= V1.2.9 - 16.07.2020 =
+* Update : The plugin settings page was changed.
+* Update : BWS panel section was updated.
+
+= V1.2.8 - 04.09.2019 =
+* Update: The deactivation feedback has been changed. Misleading buttons have been removed.
 
 = V1.2.7 - 24.06.2019 =
 * Bugfix : Ability to save and send large letters has been added.
@@ -259,6 +266,12 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.2.9 =
+* Usability improved.
+
+= V1.2.8 =
+* Usability improved.
 
 = V1.2.7 =
 * Bugs fixed.
