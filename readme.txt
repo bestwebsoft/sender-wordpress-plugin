@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 4.5
-Tested up to: 5.4.2
-Stable tag: 1.2.9
+Tested up to: 5.5.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -138,6 +138,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
+= V1.3.0 - 21.09.2020 =
+* Update : All functionality was updated for wordpress 5.5.1
+* Update : BWS panel section was updated.
+
 = V1.2.9 - 16.07.2020 =
 * Update : The plugin settings page was changed.
 * Update : BWS panel section was updated.
@@ -266,6 +270,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.3.0 =
+* Plugin optimization completed.
 
 = V1.2.9 =
 * Usability improved.

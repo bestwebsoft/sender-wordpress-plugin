@@ -6,7 +6,7 @@ Description: Send bulk email messages to WordPress users. Custom templates, adva
 Author: BestWebSoft
 Text Domain: sender
 Domain Path: /languages
-Version: 1.2.9
+Version: 1.3.0
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -81,7 +81,7 @@ if ( ! function_exists( 'sndr_plugins_loaded' ) ) {
  */
 if ( ! function_exists ( 'sndr_init' ) ) {
 	function sndr_init() {
-		global $sndr_plugin_info;
+		global $sndr_plugin_info;	
 
 		require_once( dirname( __FILE__ ) . '/bws_menu/bws_include.php' );
 		bws_include_init( plugin_basename( __FILE__ ) );
@@ -91,9 +91,8 @@ if ( ! function_exists ( 'sndr_init' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 			$sndr_plugin_info = get_plugin_data( dirname(__FILE__) . '/sender.php' );
 		}
-
 		/* check WordPress version */
-		bws_wp_min_version_check( plugin_basename( __FILE__ ), $sndr_plugin_info, '4.5' );
+		bws_wp_min_version_check( plugin_basename( __FILE__ ), $sndr_plugin_info, '4.5' );		
 	}
 }
 
@@ -1497,11 +1496,8 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 		$sndr_options = ( is_multisite() ) ? get_site_option( 'sndr_options' ) : get_option( 'sndr_options' );
 		if ( ! function_exists( 'wp_get_current_user' ) ) {
 			require_once( ABSPATH . "wp-includes/pluggable.php" );
-		}
-		if ( 'wp_mail' != $sndr_options['sndr_method'] ) {
-			require_once( ABSPATH . WPINC . '/class-phpmailer.php' );
-			$mail = new PHPMailer();
-		}
+		}		
+		
 		$sended		=	$errors	=	array();
 		$from_name	= ( empty( $sndr_options['sndr_from_custom_name'] ) ) ? get_bloginfo( 'name' ) : $sndr_options['sndr_from_custom_name'];
 		if ( empty( $sndr_options['sndr_from_email'] ) ) {
@@ -1527,37 +1523,20 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 				$user_info				=	$wpdb->get_row( "SELECT * FROM `" . $wpdb->prefix . "sndr_mail_users_info` WHERE `id_user` = '" . $users_mail_send['id_user'] . "' LIMIT 1;", ARRAY_A );
 				$mail_message['body']	=	apply_filters( 'sbscrbr_add_unsubscribe_link', $mail_message['body'], $user_info );
 				$mail_message['body']	=	apply_filters( 'sbscrbrpr_add_unsubscribe_link', $mail_message['body'], $user_info );
-				if ( ! empty( $user_info ) && 1 == $user_info['subscribe'] ) {
-					if ( 'wp_mail' != $sndr_options['sndr_method'] ) {
+				$headers = 'From: ' . $from_name . ' <' . $from_email . '>' . "\r\n";
+				if ( ! empty( $user_info ) && 1 == $user_info['subscribe'] ) {					
+					if ( 'wp_mail' == $sndr_options['sndr_method'] ) {				
+						$body = stripcslashes( $mail_message['body'] );			
+						$success = wp_mail( $user_info['user_email'], $subject, $body, $headers );									
+					} else {						
 						$body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html><head><title></title></head><body>' . stripcslashes( $mail_message['body'] ) . '</body></html>';
-					} else {
-						$body = stripcslashes( $mail_message['body'] );
+						$success = mail( $user_info['user_email'], $subject, $body, $headers );						
 					}
-
-					/*send message*/
-					if ( 'mail' == $sndr_options['sndr_method'] ) {
-						$mail->CharSet = 'utf-8';
-						$mail->Subject = $subject;
-						$mail->MsgHTML( $body );
-						$mail->SetFrom( $from_email, $from_name );
-						$mail->AddAddress( $user_info['user_email'], $user_info['user_display_name'] );
-						$mail->isHTML( true );
-
-						if ( $mail->Send() )
-							$sended[] = $users_mail_send;
-						else
-							$errors[] = $users_mail_send;
-
-						$mail->ClearAddresses();
-						$mail->ClearAllRecipients();
-
+					if ( $success ) {
+						$sended[] = $users_mail_send;
 					} else {
-						$headers = 'From: ' . $from_name . ' <' . $from_email . '>' . "\r\n";
-						if ( wp_mail( $user_info['user_email'], $subject, $body, $headers ) )
-							$sended[] = $users_mail_send;
-						else
-							$errors[] = $users_mail_send;
-					}
+						$errors[] = $users_mail_send;
+					}						
 				}
 			}
 
