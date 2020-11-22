@@ -6,7 +6,7 @@ Description: Send bulk email messages to WordPress users. Custom templates, adva
 Author: BestWebSoft
 Text Domain: sender
 Domain Path: /languages
-Version: 1.3.0
+Version: 1.3.1
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -158,7 +158,7 @@ if ( ! function_exists( 'sndr_get_options_default' ) ) {
 if ( ! function_exists( 'sndr_register_settings' ) ) {
 	function sndr_register_settings() {
 		global $wpdb, $sndr_options, $sndr_plugin_info;
-		$sndr_db_version = '0.5';
+		$sndr_db_version = '0.6';
 
 		/* install the default plugin options */
 		if ( is_multisite() ) {
@@ -177,6 +177,15 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 		 * this code is needed to update plugin from old versions of plugin 0.1
 		 */
 		if ( ! isset( $sndr_options['plugin_db_version'] ) || $sndr_options['plugin_db_version'] != $sndr_db_version ) {
+
+			/**
+			 * @deprecated since 1.3.1
+			 * @todo remove after 15.04.2021
+			 */
+			if ( isset( $sndr_options['plugin_option_version'] ) && version_compare( $sndr_options['plugin_option_version'] , '1.3.1', '<' ) ) {
+				$wpdb->query( "ALTER TABLE `" . $wpdb->base_prefix . "sndr_users` CHANGE `id_user` `id_user` INT(11)" );
+			}
+			/* end deprecated */
 
 			/* change column`s data type 'body' from table 'sndr_mail_send' */
 			$data_type_body = $wpdb->get_row( "DESCRIBE `" . $wpdb->base_prefix . "sndr_mail_send` `body`", ARRAY_A );
@@ -300,7 +309,7 @@ if ( ! function_exists( 'sndr_send_activate' ) ) {
 		$mail_users =
 			"CREATE TABLE IF NOT EXISTS `" . $wpdb->prefix . "sndr_users` (
 			`mail_users_id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-			`id_user` INT NOT NULL ,
+			`id_user` INT ,
 			`id_mail` INT UNSIGNED NOT NULL ,
 			`status` INT( 1 ) NOT NULL DEFAULT '0',
 			`view` INT( 1 ) NOT NULL DEFAULT '0',
@@ -1519,11 +1528,12 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 				/* get users */
 				$current_message		=	$users_mail_send['id_mail'];
 				$mail_message			=	$wpdb->get_row( "SELECT * FROM `" . $wpdb->prefix . "sndr_mail_send` WHERE `mail_send_id` = '" . $current_message . "' LIMIT 1;", ARRAY_A );
-				$subject				=	'=?UTF-8?B?' . base64_encode( $mail_message['subject'] ) . '?=';
+				$subject				=	htmlspecialchars_decode( $mail_message['subject'], ENT_QUOTES );
 				$user_info				=	$wpdb->get_row( "SELECT * FROM `" . $wpdb->prefix . "sndr_mail_users_info` WHERE `id_user` = '" . $users_mail_send['id_user'] . "' LIMIT 1;", ARRAY_A );
 				$mail_message['body']	=	apply_filters( 'sbscrbr_add_unsubscribe_link', $mail_message['body'], $user_info );
 				$mail_message['body']	=	apply_filters( 'sbscrbrpr_add_unsubscribe_link', $mail_message['body'], $user_info );
-				$headers = 'From: ' . $from_name . ' <' . $from_email . '>' . "\r\n";
+				$headers                = 'From: ' . $from_name . ' <' . $from_email . '>' . "\r\n";
+
 				if ( ! empty( $user_info ) && 1 == $user_info['subscribe'] ) {					
 					if ( 'wp_mail' == $sndr_options['sndr_method'] ) {				
 						$body = stripcslashes( $mail_message['body'] );			

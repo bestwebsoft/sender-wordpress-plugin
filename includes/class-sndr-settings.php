@@ -33,7 +33,8 @@ if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
 				'tabs'				=> $tabs,
 				'wp_slug'			=> 'sender',
 				'link_key'			=> '9436d142212184502ae7f7af7183d0eb',
-				'link_pn'			=> '114'
+				'link_pn'			=> '114',
+                'doc_link'          => 'https://docs.google.com/document/d/1yazt_na2u364QCbUELlrBixZnRh6Jc0EbunXC02aYZM/'
 			) );
 
 			add_action( get_parent_class( $this ) . '_additional_misc_options_affected', array( $this, 'additional_misc_options_affected' ) );

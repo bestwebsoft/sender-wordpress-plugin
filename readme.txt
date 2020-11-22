@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 4.5
-Tested up to: 5.5.1
-Stable tag: 1.3.0
+Tested up to: 5.5.3
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,10 +58,10 @@ If you have a feature suggestion or idea you'd like to see in the plugin, we'd l
 
 = Documentation & Videos =
 
+* [[Doc] User Guide](https://docs.google.com/document/d/1yazt_na2u364QCbUELlrBixZnRh6Jc0EbunXC02aYZM/)
 * [[Doc] Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
 * [[Doc] Purchase](https://docs.google.com/document/d/1EUdBVvnm7IHZ6y0DNyldZypUQKpB8UVPToSc_LdOYQI/)
 * [[Video] Installation Instruction](https://www.youtube.com/watch?v=VIrkPiUJv08)
-* [[Doc] Sender & Subscriber Usage Instruction](https://docs.google.com/document/d/1yazt_na2u364QCbUELlrBixZnRh6Jc0EbunXC02aYZM)
 
 = Help & Support =
 
@@ -137,6 +137,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 4. Plugin "Campaigns" page with subscribers list.
 
 == Changelog ==
+
+= V1.3.1 - 19.11.2020 =
+* PRO : The issue with sending letters to custom emails has been fixed.
+* Bugfix : The issue with displaying some special characters in email subject lines has been fixed.
+* Update : BWS panel section was updated.
 
 = V1.3.0 - 21.09.2020 =
 * Update : All functionality was updated for wordpress 5.5.1
@@ -270,6 +275,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.3.1 =
+* Bugs fixed.
 
 = V1.3.0 =
 * Plugin optimization completed.
