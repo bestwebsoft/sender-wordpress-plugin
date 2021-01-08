@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sender\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-11 17:53+0200\n"
-"PO-Revision-Date: 2020-11-11 17:53+0200\n"
+"POT-Creation-Date: 2020-12-22 17:51+0200\n"
+"PO-Revision-Date: 2020-12-22 17:52+0200\n"
 "Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language-Team: BestWebSoft team <wp@bestwebsoft.com>\n"
 "Language: ru_RU\n"
@@ -219,11 +219,11 @@ msgstr "скачайте User Role Pro от BestWebSoft"
 msgid "Campaigns"
 msgstr "Кампании"
 
-#: sender.php:44 sender.php:1129 sender.php:1593
+#: sender.php:44 sender.php:1129 sender.php:1594
 msgid "Add New"
 msgstr "Создать новый"
 
-#: sender.php:46 sender.php:1591
+#: sender.php:46 sender.php:1592
 msgid "Letters"
 msgstr "Письма"
 
@@ -231,16 +231,16 @@ msgstr "Письма"
 msgid "Lists"
 msgstr "Списки"
 
-#: sender.php:48 sender.php:2032
+#: sender.php:48 sender.php:2033
 msgid "Templates"
 msgstr "Шаблоны"
 
-#: sender.php:49 sender.php:2206
+#: sender.php:49 sender.php:2207
 msgid "Priorities"
 msgstr "Приоритеты"
 
-#: sender.php:56 sender.php:1857 sender.php:2009 sender.php:2183
-#: sender.php:2377
+#: sender.php:56 sender.php:1858 sender.php:2010 sender.php:2184
+#: sender.php:2378
 msgid "Upgrade to Pro"
 msgstr "Обновить до Pro"
 
@@ -296,7 +296,7 @@ msgstr "все"
 msgid "Number of mails which would be sent"
 msgstr "Количество сообщений, которое будет отправлено"
 
-#: sender.php:577 sender.php:666 sender.php:1776 sender.php:1834
+#: sender.php:577 sender.php:666 sender.php:1777 sender.php:1835
 msgid "Subject"
 msgstr "Тема"
 
@@ -320,7 +320,7 @@ msgstr "отчеты"
 msgid "No messages sent"
 msgstr "Отправленных сообщений нет"
 
-#: sender.php:667 sender.php:956 sender.php:963 sender.php:2079 sender.php:2164
+#: sender.php:667 sender.php:956 sender.php:963 sender.php:2080 sender.php:2165
 msgid "Status"
 msgstr "Статус"
 
@@ -328,8 +328,8 @@ msgstr "Статус"
 msgid "Date"
 msgstr "Дата"
 
-#: sender.php:711 sender.php:1751 sender.php:1888 sender.php:2040
-#: sender.php:2214
+#: sender.php:711 sender.php:1752 sender.php:1889 sender.php:2041
+#: sender.php:2215
 msgid "All"
 msgstr "Все"
 
@@ -446,8 +446,8 @@ msgstr "Результаты поиска для &#8220;%s&#8221;"
 msgid "Filter reports list"
 msgstr "Фильтр списка отчетов"
 
-#: sender.php:1146 sender.php:1757 sender.php:1894 sender.php:2048
-#: sender.php:2220
+#: sender.php:1146 sender.php:1758 sender.php:1895 sender.php:2049
+#: sender.php:2221
 msgid "search"
 msgstr "поиск"
 
@@ -511,27 +511,27 @@ msgstr "отписан из профиля пользователя"
 msgid "Your interval"
 msgstr "Установить интервал"
 
-#: sender.php:1591
+#: sender.php:1592
 msgid "Add New Letters"
 msgstr "Создать новое письмо"
 
-#: sender.php:1607
+#: sender.php:1608
 msgid "Subject:"
 msgstr "Тема:"
 
-#: sender.php:1615
+#: sender.php:1616
 msgid "Select letter template:"
 msgstr "Выберите шаблон письма:"
 
-#: sender.php:1617
+#: sender.php:1618
 msgid "Default Templates:"
 msgstr "Шаблоны по умолчанию:"
 
-#: sender.php:1641
+#: sender.php:1642
 msgid "in order to use the necessary fonts you need:"
 msgstr "для использования дополнительных шрифтов Вам необходимо:"
 
-#: sender.php:1642
+#: sender.php:1643
 msgid ""
 "select the desired font (or multiple fonts), and click on the \"Load "
 "Additional Data\" button"
@@ -539,11 +539,11 @@ msgstr ""
 "выберите необходимый шрифт (или несколько шрифтов) и нажмите на кнопку "
 "\"Загрузить дополнительные данные\""
 
-#: sender.php:1643
+#: sender.php:1644
 msgid "click on the \"Text\" tab in content editor"
 msgstr "нажмите на вкладку \"Text\" в редакторе контента"
 
-#: sender.php:1644
+#: sender.php:1645
 msgid ""
 "find a necessary html-element and edit when using the attribute \"style\" "
 "and CSS-property \"font-family\" as in example"
@@ -551,191 +551,191 @@ msgstr ""
 "найдите необходимый html-элемент и отредактируйте его, используя аттрибут "
 "\"стиль\" и CSS-свойство \"font-family\", как показано в примере"
 
-#: sender.php:1646
+#: sender.php:1647
 msgid "Example:"
 msgstr "Пример:"
 
-#: sender.php:1648
+#: sender.php:1649
 msgid "Select additional fonts:"
 msgstr "Выберите дополнительные шрифты:"
 
-#: sender.php:1674
+#: sender.php:1675
 msgid "Load Additional Data"
 msgstr "Загрузить дополнительную информацию"
 
-#: sender.php:1675
+#: sender.php:1676
 msgid "Reset Additional Data"
 msgstr "Сбросить дополнительную информацию"
 
-#: sender.php:1681
+#: sender.php:1682
 msgid "You can use the following shortcodes in the letter:"
 msgstr "Вы можете использовать следующие шорткоды в письме:"
 
-#: sender.php:1685
+#: sender.php:1686
 msgid "site URL"
 msgstr "URL сайта"
 
-#: sender.php:1689
+#: sender.php:1690
 msgid "site name"
 msgstr "название сайта"
 
-#: sender.php:1693
+#: sender.php:1694
 msgid "user e-mail"
 msgstr "емейл пользователя"
 
-#: sender.php:1697
+#: sender.php:1698
 msgid "user name"
 msgstr "имя пользователя"
 
-#: sender.php:1701
+#: sender.php:1702
 msgid "new post title - only for automatic mailout when publishing a new post"
 msgstr ""
 "заголовок новой записи - только для авторассылки при появлении новой записи"
 
-#: sender.php:1705
+#: sender.php:1706
 msgid ""
 "link to new post - only for automatic mailout when publishing a new post"
 msgstr ""
 "ссылка на новую запись - только для авторассылки при появлении новой записи"
 
-#: sender.php:1709
+#: sender.php:1710
 msgid "link to profile page of current user"
 msgstr "ссылка на страницу профиля текущего пользователя"
 
-#: sender.php:1713
+#: sender.php:1714
 msgid "link to unsubscribe user from mailout"
 msgstr "ссылка для отписки пользователя от рассылки"
 
-#: sender.php:1717
+#: sender.php:1718
 msgid "link to view letter in new browser tab"
 msgstr "ссылка для просмотра письма в новой вкладке браузера"
 
-#: sender.php:1721
+#: sender.php:1722
 msgid "Use shortcodes!"
 msgstr "Использовать шорткоды!"
 
-#: sender.php:1726
+#: sender.php:1727
 msgid "Letter Content:"
 msgstr "Содержимое письма:"
 
-#: sender.php:1729
+#: sender.php:1730
 msgid "Add Media"
 msgstr "Add Media"
 
-#: sender.php:1731
+#: sender.php:1732
 msgid "Text"
 msgstr "Text"
 
-#: sender.php:1732
+#: sender.php:1733
 msgid "Visual"
 msgstr "Visual"
 
-#: sender.php:1743 sender.php:1747
+#: sender.php:1744 sender.php:1748
 msgid "Create Mailout"
 msgstr "Создать рассылку"
 
-#: sender.php:1744
+#: sender.php:1745
 msgid "Send Test Message"
 msgstr "Отправить тестовое сообщение"
 
-#: sender.php:1752 sender.php:1792 sender.php:1806 sender.php:1820
-#: sender.php:1846 sender.php:1889 sender.php:1900 sender.php:1936
-#: sender.php:1950 sender.php:1964 sender.php:1999 sender.php:2043
-#: sender.php:2054 sender.php:2092 sender.php:2108 sender.php:2124
-#: sender.php:2138 sender.php:2173 sender.php:2215 sender.php:2226
-#: sender.php:2262 sender.php:2276 sender.php:2290 sender.php:2304
-#: sender.php:2318 sender.php:2332 sender.php:2367
+#: sender.php:1753 sender.php:1793 sender.php:1807 sender.php:1821
+#: sender.php:1847 sender.php:1890 sender.php:1901 sender.php:1937
+#: sender.php:1951 sender.php:1965 sender.php:2000 sender.php:2044
+#: sender.php:2055 sender.php:2093 sender.php:2109 sender.php:2125
+#: sender.php:2139 sender.php:2174 sender.php:2216 sender.php:2227
+#: sender.php:2263 sender.php:2277 sender.php:2291 sender.php:2305
+#: sender.php:2319 sender.php:2333 sender.php:2368
 msgid "Trash"
 msgstr "Корзина"
 
-#: sender.php:1755 sender.php:1892 sender.php:2046 sender.php:2218
+#: sender.php:1756 sender.php:1893 sender.php:2047 sender.php:2219
 msgid "search:"
 msgstr "поиск:"
 
-#: sender.php:1761 sender.php:1845 sender.php:1899 sender.php:1998
-#: sender.php:2053 sender.php:2172 sender.php:2225 sender.php:2366
+#: sender.php:1762 sender.php:1846 sender.php:1900 sender.php:1999
+#: sender.php:2054 sender.php:2173 sender.php:2226 sender.php:2367
 msgid "Bulk Actions"
 msgstr "Действия"
 
-#: sender.php:1763 sender.php:1848 sender.php:1902 sender.php:2001
-#: sender.php:2056 sender.php:2175 sender.php:2228 sender.php:2369
+#: sender.php:1764 sender.php:1849 sender.php:1903 sender.php:2002
+#: sender.php:2057 sender.php:2176 sender.php:2229 sender.php:2370
 msgid "Apply"
 msgstr "Применить"
 
-#: sender.php:1765 sender.php:1850 sender.php:1904 sender.php:2003
-#: sender.php:2058 sender.php:2177 sender.php:2230 sender.php:2371
+#: sender.php:1766 sender.php:1851 sender.php:1905 sender.php:2004
+#: sender.php:2059 sender.php:2178 sender.php:2231 sender.php:2372
 msgid "items"
 msgstr "элементов"
 
-#: sender.php:1772 sender.php:1830 sender.php:1912 sender.php:1917
-#: sender.php:1977 sender.php:1982 sender.php:2066 sender.php:2071
-#: sender.php:2151 sender.php:2156 sender.php:2238 sender.php:2243
-#: sender.php:2345 sender.php:2350
+#: sender.php:1773 sender.php:1831 sender.php:1913 sender.php:1918
+#: sender.php:1978 sender.php:1983 sender.php:2067 sender.php:2072
+#: sender.php:2152 sender.php:2157 sender.php:2239 sender.php:2244
+#: sender.php:2346 sender.php:2351
 msgid "Select All"
 msgstr "Выбрать все"
 
-#: sender.php:1779 sender.php:1837 sender.php:1925 sender.php:1990
+#: sender.php:1780 sender.php:1838 sender.php:1926 sender.php:1991
 msgid "Date of creation"
 msgstr "Дата создания"
 
-#: sender.php:1791 sender.php:1805 sender.php:1819 sender.php:1935
-#: sender.php:1949 sender.php:1963 sender.php:2091 sender.php:2107
-#: sender.php:2123 sender.php:2137 sender.php:2261 sender.php:2275
-#: sender.php:2289 sender.php:2303 sender.php:2317 sender.php:2331
+#: sender.php:1792 sender.php:1806 sender.php:1820 sender.php:1936
+#: sender.php:1950 sender.php:1964 sender.php:2092 sender.php:2108
+#: sender.php:2124 sender.php:2138 sender.php:2262 sender.php:2276
+#: sender.php:2290 sender.php:2304 sender.php:2318 sender.php:2332
 msgid "Edit"
 msgstr "Редактировать"
 
-#: sender.php:1862 sender.php:2014 sender.php:2188 sender.php:2382
+#: sender.php:1863 sender.php:2015 sender.php:2189 sender.php:2383
 msgid "This tab contains Pro options only."
 msgstr "Эта вкладка содержит только Pro опции."
 
-#: sender.php:1864 sender.php:2016 sender.php:2190 sender.php:2384
+#: sender.php:1865 sender.php:2017 sender.php:2191 sender.php:2385
 #, php-format
 msgid "%sChange the settings%s to view the Pro options."
 msgstr "%sИзмените настройки%s, чтобы просмотреть Pro опции."
 
-#: sender.php:1880
+#: sender.php:1881
 msgid "Mailings Lists"
 msgstr "Списки рассылок"
 
-#: sender.php:1922 sender.php:1987 sender.php:2076 sender.php:2161
-#: sender.php:2248 sender.php:2355
+#: sender.php:1923 sender.php:1988 sender.php:2077 sender.php:2162
+#: sender.php:2249 sender.php:2356
 msgid "Title"
 msgstr "Название"
 
-#: sender.php:2041
+#: sender.php:2042
 msgid "Default templates"
 msgstr "Шаблоны по умолчанию"
 
-#: sender.php:2042
+#: sender.php:2043
 msgid "User`s templates"
 msgstr "Пользовательские шаблоны"
 
-#: sender.php:2098 sender.php:2114 sender.php:2130
+#: sender.php:2099 sender.php:2115 sender.php:2131
 msgid "default"
 msgstr "по умолчанию"
 
-#: sender.php:2144
+#: sender.php:2145
 msgid "user's"
 msgstr "пользовательские"
 
-#: sender.php:2251 sender.php:2358
+#: sender.php:2252 sender.php:2359
 msgid "Number"
 msgstr "Количество"
 
-#: sender.php:2495
+#: sender.php:2496
 msgid "Notice:"
 msgstr "Внимание:"
 
-#: sender.php:2497
+#: sender.php:2498
 msgid "Due to the peculiarities of the multisite work, Sender plugin has only"
 msgstr "В связи с особенностями работы мультисайта плагин Sender имеет только"
 
-#: sender.php:2497
+#: sender.php:2498
 msgid "Network settings page"
 msgstr "Страница настроек сети"
 
-#: sender.php:2499
+#: sender.php:2500
 msgid ""
 "Due to the peculiarities of the multisite work, Sender plugin has the "
 "network settings page only and it should be Network Activated. Please"
@@ -743,7 +743,7 @@ msgstr ""
 "В связи с особенностями работы мультисайта плагин Sender имеет только "
 "страницу настроек сети и должен быть активирован для сети. Пожалуйста"
 
-#: sender.php:2499
+#: sender.php:2500
 msgid "Activate Sender for Network"
 msgstr "Активируйте Sender для сети"
 

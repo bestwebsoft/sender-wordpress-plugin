@@ -6,12 +6,12 @@ Description: Send bulk email messages to WordPress users. Custom templates, adva
 Author: BestWebSoft
 Text Domain: sender
 Domain Path: /languages
-Version: 1.3.1
+Version: 1.3.2
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
 
-/*  © Copyright 2020  BestWebSoft  ( https://support.bestwebsoft.com )
+/*  © Copyright 2021  BestWebSoft  ( https://support.bestwebsoft.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
