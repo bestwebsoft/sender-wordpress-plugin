@@ -6,7 +6,7 @@ Description: Send bulk email messages to WordPress users. Custom templates, adva
 Author: BestWebSoft
 Text Domain: sender
 Domain Path: /languages
-Version: 1.3.2
+Version: 1.3.3
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -137,11 +137,11 @@ if ( ! function_exists( 'sndr_get_options_default' ) ) {
 
 		$default_options = array(
 			'plugin_option_version'		=>	$sndr_plugin_info["Version"],
-			'sndr_run_time'				=>	1,
-			'sndr_send_count'			=>	2,
-			'sndr_from_custom_name'		=>	get_bloginfo( 'name' ),
-			'sndr_from_email'			=>	$from_email,
-			'sndr_method'				=>	'wp_mail',
+			'run_time'					=>	1,
+			'send_count'				=>	2,
+			'from_custom_name'			=>	get_bloginfo( 'name' ),
+			'from_email'				=>	$from_email,
+			'method'					=>	'wp_mail',
 			'display_settings_notice'	=>	1,
 			'first_install'				=>	strtotime( "now" ),
 			'suggest_feature_banner'	=>	1
@@ -222,6 +222,21 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 		}
 
 		if ( ! isset( $sndr_options['plugin_option_version'] ) || $sndr_options['plugin_option_version'] != $sndr_plugin_info["Version"] ) {
+
+			/**
+			 * @deprecated since 1.3.3
+			 * @todo remove after 18.06.2021
+			 */
+			if ( isset( $sndr_options['plugin_option_version'] ) && version_compare( $sndr_options['plugin_option_version'] , '1.3.3', '<' ) ) {
+				$changed_options = array ( 'run_time', 'send_count', 'from_custom_name', 'from_email', 'method' );
+				foreach ( $changed_options as $option ) {
+					if ( isset( $sndr_options[ 'sndr_' . $option ] ) ) {
+						$sndr_options[ $option ] = $sndr_options[ 'sndr_' . $option ];
+						unset( $sndr_options[ 'sndr_' . $option ] );
+					}
+				}				
+			}
+			/* end deprecated */
 
 			/* array merge incase new version of plugin has added new options */
 			$sndr_options = array_merge( sndr_get_options_default(), $sndr_options );
@@ -429,7 +444,9 @@ if ( ! function_exists( 'sndr_settings_page' ) ) {
 		if ( ! class_exists( 'Bws_Settings_Tabs' ) )
 			require_once( dirname( __FILE__ ) . '/bws_menu/class-bws-settings.php' );
 		require_once( dirname( __FILE__ ) . '/includes/class-sndr-settings.php' );
-		$page = new Sndr_Settings_Tabs( plugin_basename( __FILE__ ) ); ?>
+		$page = new Sndr_Settings_Tabs( plugin_basename( __FILE__ ) ); 
+		if ( method_exists( $page,'add_request_feature' ) )
+            $page->add_request_feature(); ?>
         <div class="wrap">
             <h1><?php _e( 'Sender Settings', 'sender' ); ?></h1>
             <noscript>
@@ -1489,7 +1506,7 @@ if ( ! function_exists( 'sndr_update' ) ) {
 if ( ! function_exists( 'sndr_more_reccurences' ) ) {
 	function sndr_more_reccurences( $schedules ) {
 		$sndr_options = ( is_multisite() ) ? get_site_option( 'sndr_options' ) : get_option( 'sndr_options' );
-		$period = ( ! empty( $sndr_options['sndr_run_time'] ) ) ? $sndr_options['sndr_run_time'] * 60 : 60;
+		$period = ( ! empty( $sndr_options['run_time'] ) ) ? $sndr_options['run_time'] * 60 : 60;
 		$schedules['sndr_mail_run_time_period'] = array( 'interval' => $period, 'display' => __( 'Your interval', 'sender' ) );
 		return $schedules;
 	}
@@ -1508,20 +1525,20 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 		}		
 		
 		$sended		=	$errors	=	array();
-		$from_name	= ( empty( $sndr_options['sndr_from_custom_name'] ) ) ? get_bloginfo( 'name' ) : $sndr_options['sndr_from_custom_name'];
-		if ( empty( $sndr_options['sndr_from_email'] ) ) {
+		$from_name	= ( empty( $sndr_options['from_custom_name'] ) ) ? get_bloginfo( 'name' ) : $sndr_options['from_custom_name'];
+		if ( empty( $sndr_options['from_email'] ) ) {
 			$sitename = strtolower( $_SERVER['SERVER_NAME'] );
 			if ( substr( $sitename, 0, 4 ) == 'www.' ) {
 				$sitename = substr( $sitename, 4 );
 			}
 			$from_email = 'wordpress@' . $sitename;
 		} else
-			$from_email	= $sndr_options['sndr_from_email'];
+			$from_email	= $sndr_options['from_email'];
 
 		$from_name	=	'=?UTF-8?B?' . base64_encode( $from_name ) . '?=';
 
 		/* get messages */
-		$users_mail_sends = $wpdb->get_results( "SELECT * FROM `" . $wpdb->prefix . "sndr_users` WHERE `status` = '0' LIMIT " . $sndr_options['sndr_send_count'] . ";", ARRAY_A );
+		$users_mail_sends = $wpdb->get_results( "SELECT * FROM `" . $wpdb->prefix . "sndr_users` WHERE `status` = '0' LIMIT " . $sndr_options['send_count'] . ";", ARRAY_A );
 
 		if ( ! empty( $users_mail_sends ) ) {
 			foreach ( $users_mail_sends as $users_mail_send ) {
@@ -1535,7 +1552,7 @@ if ( ! function_exists( 'sndr_cron_mail' ) ) {
 				$headers                = 'From: ' . $from_name . ' <' . $from_email . '>' . "\r\n";
 
 				if ( ! empty( $user_info ) && 1 == $user_info['subscribe'] ) {					
-					if ( 'wp_mail' == $sndr_options['sndr_method'] ) {				
+					if ( 'wp_mail' == $sndr_options['method'] ) {				
 						$body = stripcslashes( $mail_message['body'] );			
 						$success = wp_mail( $user_info['user_email'], $subject, $body, $headers );									
 					} else {						

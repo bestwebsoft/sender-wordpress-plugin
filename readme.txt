@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 4.5
-Tested up to: 5.6
-Stable tag: 1.3.2
+Tested up to: 5.7
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,8 @@ Send bulk email messages to WordPress users. Custom templates, advanced settings
 Sender plugin sends a bulk newsletter mailing to your WordPress website users. Set the time interval and a number of messages sent at once, customize "FROM" field, choose the mail sending function, send emails with confirmation and more.
 
 Connect with your customers, increase traffic, and drive sales!
+
+[View Demo](https://bestwebsoft.com/demo-sender-plugin/?ref=readme)
 
 https://www.youtube.com/watch?v=kwbkOXrF10M
 
@@ -137,6 +139,12 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 4. Plugin "Campaigns" page with subscribers list.
 
 == Changelog ==
+
+= V1.3.3 - 31.03.2021 =
+* PRO : 'Subscribers Count', 'Received Count', 'View Count' сolumns were added to the campaigns table.
+* PRO : The issue with delayed mailout has been fixed.
+* Update : BWS panel section was updated.
+* Update : All functionality was updated for wordpress 5.7
 
 = V1.3.2 - 07.01.2021 =
 * PRO : The mailing list functionality has been improved.
@@ -279,6 +287,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.3.3 =
+* Functionality improved.
+* The compatibility with new WordPress version updated.
 
 = V1.3.2 =
 * Functionality improved.

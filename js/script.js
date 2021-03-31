@@ -11,10 +11,10 @@
 		//click event on "All" checkbox
 		checkboxAll.click( function() {
 			if ( $( this ).is( ':checked' ) ) {
-				roleCheckbox.attr( 'checked', true );
+				roleCheckbox.prop( 'checked', true );
 				counter.text( allCount );
 			} else {
-				roleCheckbox.attr( 'checked', false );
+				roleCheckbox.prop( 'checked', false );
 				counter.text( '0' );
 			}
 		});
@@ -22,7 +22,7 @@
 		roleCheckbox.click( function() {
 			var checked = roleCheckbox.filter( ':checked' );
 			if ( roleCheckbox.length == checked.length ) {
-				checkboxAll.attr( 'checked', true );
+				checkboxAll.prop( 'checked', true );
 			} else {
 				checkboxAll.removeAttr( 'checked' );
 			}

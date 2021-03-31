@@ -49,21 +49,21 @@ if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
 		public function save_options() {
             $message = $notice = $error = '';
 
-			$this->options['sndr_from_custom_name']      = ! empty( $_POST['sndr_from_custom_name'] ) ? sanitize_text_field( $_POST['sndr_from_custom_name'] ) : $this->options['from_custom_name'];
-			$this->options['sndr_from_email']            = is_email( trim( $_POST['sndr_from_email'] ) ) ? trim( $_POST['sndr_from_email'] ) : $this->options['from_email'];
-			$this->options['sndr_method']                = in_array( $_POST['sndr_method'], array( 'wp_mail', 'mail' ) ) ? $_POST['sndr_method'] : $this->options['method'];
+			$this->options['from_custom_name']      = ! empty( $_POST['sndr_from_custom_name'] ) ? sanitize_text_field( $_POST['sndr_from_custom_name'] ) : $this->options['from_custom_name'];
+			$this->options['from_email']            = is_email( trim( $_POST['sndr_from_email'] ) ) ? trim( $_POST['sndr_from_email'] ) : $this->options['from_email'];
+			$this->options['method']                = in_array( $_POST['sndr_method'], array( 'wp_mail', 'mail' ) ) ? $_POST['sndr_method'] : $this->options['method'];
 
 			if ( isset( $_POST['sndr_mail_send_count'] ) ) {
 				if ( 50 < $_POST['sndr_mail_send_count'] ) {
 					$notice .= __( 'You may have entered too large a value in the "Number of sent messages at the same time" option. Check please.', 'sender' ) . '<br/>';
 				}
-				$this->options['sndr_send_count'] = absint( $_POST['sndr_mail_send_count'] );
+				$this->options['send_count'] = absint( $_POST['sndr_mail_send_count'] );
 			}
 			if ( isset( $_POST['sndr_mail_run_time'] ) ) {
 				if ( 360 < $_POST['sndr_mail_run_time'] ) {
 					$notice .= __( 'You may have entered too large value in the "Interval for sending mail" option. Check please.', 'sender' ) . '<br/>';
 				}
-				$this->options['sndr_run_time'] = absint( $_POST['sndr_mail_run_time'] );
+				$this->options['run_time'] = absint( $_POST['sndr_mail_run_time'] );
 				add_filter( 'cron_schedules', 'sndr_more_reccurences' );
 			}
 
@@ -90,11 +90,11 @@ if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
 						<fieldset>
 							<label>
 								<?php _e( "Name", 'sender' ); ?><br />
-								<input type="text" name="sndr_from_custom_name" maxlength="250" value="<?php echo $this->options['sndr_from_custom_name']; ?>" />
+								<input type="text" name="sndr_from_custom_name" maxlength="250" value="<?php echo $this->options['from_custom_name']; ?>" />
 							</label><br />
 							<label>
 								<?php _e( "Email", 'sender' ); ?><br />
-								<input type="text" name="sndr_from_email" maxlength="250" value="<?php echo $this->options['sndr_from_email']; ?>" />
+								<input type="text" name="sndr_from_email" maxlength="250" value="<?php echo $this->options['from_email']; ?>" />
 							</label>
 						</fieldset>
 						<span class="bws_info"><?php _e( "If this option is changed, email messages may be moved to the spam folder or email delivery failures may occur.", 'sender' ); ?></span>
@@ -105,11 +105,11 @@ if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
 					<td>
 						<fieldset>
 							<label>
-								<input type='radio' name='sndr_method' value='wp_mail' <?php checked( 'wp_mail', $this->options['sndr_method'] ); ?> />
+								<input type='radio' name='sndr_method' value='wp_mail' <?php checked( 'wp_mail', $this->options['method'] ); ?> />
 								<?php _e( 'WP-Mail', 'sender' ); ?>
 							</label><br />
 							<label>
-								<input type='radio' name='sndr_method' value='mail' <?php checked( 'mail', $this->options['sndr_method'] ); ?> />
+								<input type='radio' name='sndr_method' value='mail' <?php checked( 'mail', $this->options['method'] ); ?> />
 								<?php _e( 'Mail', 'sender' ); ?>
 							</label>
 						</fieldset>
@@ -140,17 +140,17 @@ if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
                 <tr>
                     <th><?php _e( 'Frequency', 'sender' ); ?></th>
                     <td class="sndr_input_number">
-                        <input id="sndr_mail_send_count" name="sndr_mail_send_count" type="number" min="1" value="<?php echo $this->options['sndr_send_count']; ?>" />
+                        <input id="sndr_mail_send_count" name="sndr_mail_send_count" type="number" min="1" value="<?php echo $this->options['send_count']; ?>" />
 			            <?php _e( 'email(-s) every', 'sender' ); ?>
-                        <input id="sndr_mail_run_time" name="sndr_mail_run_time" type="number" min="1" value="<?php echo $this->options['sndr_run_time']; ?>" />
+                        <input id="sndr_mail_run_time" name="sndr_mail_run_time" type="number" min="1" value="<?php echo $this->options['run_time']; ?>" />
 			            <?php _e( 'minutes', 'sender' ); ?><br />
-			            <?php if ( intval( $this->options['sndr_run_time'] ) >= 60 ) {
-				            $number = intval( $this->options['sndr_send_count'] );
+			            <?php if ( intval( $this->options['run_time'] ) >= 60 ) {
+				            $number = intval( $this->options['send_count'] );
 			            } else {
-				            if ( 0 == ( 60 % intval( $this->options['sndr_run_time'] ) ) ) {
-					            $number = floor( 60 / intval( $this->options['sndr_run_time'] ) ) * intval( $this->options['sndr_send_count'] );
+				            if ( 0 == ( 60 % intval( $this->options['run_time'] ) ) ) {
+					            $number = floor( 60 / intval( $this->options['run_time'] ) ) * intval( $this->options['send_count'] );
 				            } else {
-					            $number = ( floor( 60 / intval( $this->options['sndr_run_time'] ) ) + 1 ) * intval( $this->options['sndr_send_count'] );
+					            $number = ( floor( 60 / intval( $this->options['run_time'] ) ) + 1 ) * intval( $this->options['send_count'] );
 				            }
 			            } ?>
                         <p><?php _e( 'Total:', 'sender' ); ?>&nbsp;<span id="sndr-calculate"><?php echo $number; ?></span>&nbsp;<?php _e( 'emails per hour', 'sender' ); ?></p>
