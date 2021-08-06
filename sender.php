@@ -6,7 +6,7 @@ Description: Send bulk email messages to WordPress users. Custom templates, adva
 Author: BestWebSoft
 Text Domain: sender
 Domain Path: /languages
-Version: 1.3.3
+Version: 1.3.4
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -48,7 +48,7 @@ if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
             add_submenu_page('view_mail_send', __('Templates', 'sender'), __('Templates', 'sender'), 'manage_options', 'sndr_letter_templates', 'sndr_letter_templates');
             add_submenu_page('view_mail_send', __('Priorities', 'sender'), __('Priorities', 'sender'), 'manage_options', 'sndr_priorities', 'sndr_priorities');
 
-            add_submenu_page('view_mail_send', 'Sender', __('Settings', 'sender'), 'manage_options', 'sndr_settings', 'sndr_settings_page');
+           	$settings_page = add_submenu_page('view_mail_send', 'Sender', __('Settings', 'sender'), 'manage_options', 'sndr_settings', 'sndr_settings_page');
 			add_submenu_page('view_mail_send', 'BWS Panel', 'BWS Panel', 'manage_options', 'sndr-bws-panel', 'bws_add_menu_render');
 
 			if ( isset( $submenu['view_mail_send'] ) ) {
@@ -58,9 +58,10 @@ if ( ! function_exists( 'sndr_admin_default_setup' ) ) {
 					'https://bestwebsoft.com/products/wordpress/plugins/sender/?k=9436d142212184502ae7f7af7183d0eb&pn=114&v=' . $sndr_plugin_info["Version"] . '&wp_v=' . $wp_version );
 			}
 
-			add_action("load-$settings", 'sndr_add_tabs');
-			add_action("load-$add_new", 'sndr_add_tabs');
-			add_action("load-$campaigns", 'sndr_screen_options');
+			add_action( "load-$settings", 'sndr_add_tabs' );
+			add_action( "load-$add_new", 'sndr_add_tabs' );
+			add_action( "load-$settings_page", 'sndr_add_tabs' );
+			add_action( "load-$campaigns", 'sndr_screen_options' );
 		}
 	}
 }
@@ -178,15 +179,6 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 		 */
 		if ( ! isset( $sndr_options['plugin_db_version'] ) || $sndr_options['plugin_db_version'] != $sndr_db_version ) {
 
-			/**
-			 * @deprecated since 1.3.1
-			 * @todo remove after 15.04.2021
-			 */
-			if ( isset( $sndr_options['plugin_option_version'] ) && version_compare( $sndr_options['plugin_option_version'] , '1.3.1', '<' ) ) {
-				$wpdb->query( "ALTER TABLE `" . $wpdb->base_prefix . "sndr_users` CHANGE `id_user` `id_user` INT(11)" );
-			}
-			/* end deprecated */
-
 			/* change column`s data type 'body' from table 'sndr_mail_send' */
 			$data_type_body = $wpdb->get_row( "DESCRIBE `" . $wpdb->base_prefix . "sndr_mail_send` `body`", ARRAY_A );
 
@@ -222,21 +214,6 @@ if ( ! function_exists( 'sndr_register_settings' ) ) {
 		}
 
 		if ( ! isset( $sndr_options['plugin_option_version'] ) || $sndr_options['plugin_option_version'] != $sndr_plugin_info["Version"] ) {
-
-			/**
-			 * @deprecated since 1.3.3
-			 * @todo remove after 18.06.2021
-			 */
-			if ( isset( $sndr_options['plugin_option_version'] ) && version_compare( $sndr_options['plugin_option_version'] , '1.3.3', '<' ) ) {
-				$changed_options = array ( 'run_time', 'send_count', 'from_custom_name', 'from_email', 'method' );
-				foreach ( $changed_options as $option ) {
-					if ( isset( $sndr_options[ 'sndr_' . $option ] ) ) {
-						$sndr_options[ $option ] = $sndr_options[ 'sndr_' . $option ];
-						unset( $sndr_options[ 'sndr_' . $option ] );
-					}
-				}				
-			}
-			/* end deprecated */
 
 			/* array merge incase new version of plugin has added new options */
 			$sndr_options = array_merge( sndr_get_options_default(), $sndr_options );

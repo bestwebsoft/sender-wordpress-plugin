@@ -34,10 +34,21 @@ if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
 				'wp_slug'			=> 'sender',
 				'link_key'			=> '9436d142212184502ae7f7af7183d0eb',
 				'link_pn'			=> '114',
-                'doc_link'          => 'https://docs.google.com/document/d/1yazt_na2u364QCbUELlrBixZnRh6Jc0EbunXC02aYZM/'
+                'doc_link'          => 'https://bestwebsoft.com/documentation/sender/sender-user-guide/'
 			) );
 
 			add_action( get_parent_class( $this ) . '_additional_misc_options_affected', array( $this, 'additional_misc_options_affected' ) );
+
+			$args = array(
+				'public'	=> true,
+				'_builtin'	=> false
+			);
+			$this->post_types = get_post_types( $args, 'names', 'and' );
+
+			$this->post_types = array_merge( array(
+				'post'		 => __( 'Post', 'sender' ),
+				'page' 		 => __( 'Page', 'sender' ),
+			), $this->post_types );
 		}
 
 		/**
@@ -175,26 +186,42 @@ if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
                                 </td>
                             </tr>
                             <tr class="sndr_new_post">
-                                <th><?php _e( 'Automatic Mailout when Publishing a New Post', 'sender' ); ?></th>
-                                <td>
-                                    <input disabled="disabled" type="checkbox" name="sndr_automailout_new_post" value="1" /><br /><br />
-                                    <div>
-                                        <p>
-                                            <select disabled="disabled" class="sndr-form-select"><option><?php _e( 'user group', 'sender' ); ?></option></select>
-		                                    <?php _e( 'Choose a mailing list', 'sender' ); ?>
-                                        </p>
-                                        <p>
-                                            <select disabled="disabled" class="sndr-form-select"><option><?php _e( 'letter', 'sender' ); ?></option></select>
-		                                    <?php _e( 'Choose a letter', 'sender' ); ?>
-                                        </p>
-                                        <p>
-                                            <select disabled="disabled" class="sndr-form-select"><option><?php _e( 'letter priority', 'sender' ); ?></option></select>
-		                                    <?php _e( 'Select letter priority', 'sender' ); ?><br />
-                                            <span class="bws_info"><?php  _e( 'Less number - higher priority', 'sender' ) ?></span>
-                                        </p>
-                                    </div>
-                                </td>
-                            </tr>
+			                    <th><?php _e( 'Automatic Mailout when Publishing a New', 'sender' ); ?></th>
+			                    <td>
+			                    	<fieldset>
+										<?php foreach ( $this->post_types as $post_type => $post_type_name ) { ?>
+			                                <label>
+			                                	<input type="checkbox" disabled="disabled"/> 
+			                                	<?php $post_obj = get_post_type_object( $post_type_name );
+			                                    	if ( ! isset( $post_obj ) ) {
+			                                    		echo ucfirst( $post_type_name ); 
+			                                    	} else {
+			                                    		echo ucfirst( $post_obj->labels->singular_name );
+			                                    	} ?>
+			                                </label><br />
+			                                <div data-post-type="<?php echo $post_type; ?>">
+			                                	<p>
+			                                		<select name="sndr_distribution_select[post]" id="sndr-distribution-select-post" class="sndr-form-select" disabled="disabled">
+				                                		<option><?php _e( 'Example of mailing list', 'sender' ); ?></option>
+				                                	</select><?php _e( 'Choose a mailing list', 'sender' ); ?>
+			                                	</p>
+		                        				<p>
+		                        					<select name="sndr_templates_select[post]" id="sndr-templates-select-post" class="sndr-form-select" disabled="disabled">
+		                        						<option><?php _e( 'Example of letter', 'sender' ); ?></option>
+		                        					</select><?php _e( 'Choose a letter', 'sender' ); ?>
+		                        				</p>
+				                        		<p>
+						                    		<select name="sndr_priority[post]" id="sndr-priority-select-post" class="sndr-form-select" disabled="disabled">
+						                    			<option><?php _e( 'Example of priority', 'sender' ); ?></option>
+						                    		</select><?php _e( 'Select mailout priority	', 'sender' ); ?>		                            
+						                    		<br />
+						                    		<span class="bws_info"><?php _e( 'Less number - higher priority', 'sender' ); ?></span>
+						                        </p><br/>
+						                    </div>
+			                            <?php } ?>
+									</fieldset>
+								</td>
+                			</tr>
                         </table>
                     </div>
 					<?php $this->bws_pro_block_links(); ?>

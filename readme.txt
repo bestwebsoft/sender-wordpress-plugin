@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 4.5
-Tested up to: 5.7
-Stable tag: 1.3.3
+Tested up to: 5.8
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,7 +51,10 @@ https://www.youtube.com/watch?v=kwbkOXrF10M
 > * Send email with confirmation
 > * Display fonts list on Edit letter/Edit Template pages
 > * Provide the access for Editors to create email templates, emails and send test emails
-> * Automatic mailout for new posts
+> * Automatic mailout for new:
+>	* Posts
+>	* Pages [NEW]
+>	* Custom post types [NEW]
 > * Get answer to your question within one business day ([Support Policy](https://bestwebsoft.com/support-policy/))
 >
 > [Upgrade to Pro Now](https://bestwebsoft.com/products/wordpress/plugins/sender/?k=f658a48b03f44d5d82ec3cbccba9664b)
@@ -60,9 +63,9 @@ If you have a feature suggestion or idea you'd like to see in the plugin, we'd l
 
 = Documentation & Videos =
 
-* [[Doc] User Guide](https://docs.google.com/document/d/1yazt_na2u364QCbUELlrBixZnRh6Jc0EbunXC02aYZM/)
-* [[Doc] Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
-* [[Doc] Purchase](https://docs.google.com/document/d/1EUdBVvnm7IHZ6y0DNyldZypUQKpB8UVPToSc_LdOYQI/)
+* [[Doc] User Guide](https://bestwebsoft.com/documentation/sender/sender-user-guide/)
+* [[Doc] Installation](https://bestwebsoft.com/documentation/how-to-install-a-wordpress-product/how-to-install-a-wordpress-plugin/)
+* [[Doc] Purchase](https://bestwebsoft.com/documentation/how-to-purchase-a-wordpress-plugin/how-to-purchase-wordpress-plugin-from-bestwebsoft/)
 * [[Video] Installation Instruction](https://www.youtube.com/watch?v=VIrkPiUJv08)
 
 = Help & Support =
@@ -89,7 +92,7 @@ Some of these translations are not complete. We are constantly adding new featur
 2. Activate the plugin via the 'Plugins' menu in WordPress.
 3. Plugin settings are located in 'Sender'->'Settings'.
 
-[View a Step-by-step Instruction on Sender Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
+[View a Step-by-step Instruction on Sender Installation](https://bestwebsoft.com/documentation/how-to-install-a-wordpress-product/how-to-install-a-wordpress-plugin/)
 
 https://www.youtube.com/watch?v=VIrkPiUJv08
 
@@ -129,7 +132,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 1. the link to the page where the problem occurs
 2. the name of the plugin and its version. If you are using a pro version - your order number.
 3. the version of your WordPress installation
-4. copy and paste into the message your system status report. Please read more here: [Instruction on System Status](https://docs.google.com/document/d/1Wi2X8RdRGXk9kMszQy1xItJrpN0ncXgioH935MaBKtc/edit)
+4. copy and paste into the message your system status report. Please read more here: [Instruction on System Status](https://bestwebsoft.com/documentation/admin-panel-issues/system-status/)
 
 == Screenshots ==
 
@@ -139,6 +142,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 4. Plugin "Campaigns" page with subscribers list.
 
 == Changelog ==
+
+= V1.3.4 - 05.08.2021 =
+* PRO : Automatic mailout for new pages and custom post types was added.
+* Update : BWS panel section was updated.
+* Update : All functionality was updated for wordpress 5.8
 
 = V1.3.3 - 31.03.2021 =
 * PRO : 'Subscribers Count', 'Received Count', 'View Count' сolumns were added to the campaigns table.
@@ -287,6 +295,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.3.4 =
+* Plugin optimization completed.
+* The compatibility with new WordPress version updated.
 
 = V1.3.3 =
 * Functionality improved.
