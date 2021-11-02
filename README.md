@@ -3,6 +3,7 @@
 
 <p>Sender plugin sends a bulk newsletter mailing to your WordPress website users. Set the time interval and a number of messages sent at once, customize &#8220;FROM&#8221; field, choose the mail sending function, send emails with confirmation and more.</p>
 <p>Connect with your customers, increase traffic, and drive sales!</p>
+<p><a href="https://bestwebsoft.com/demo-sender-plugin/?ref=readme" rel="nofollow ugc">View Demo</a></p>
 <p><span class="embed-youtube" style="text-align:center; display: block;"></span></p>
 <h4>Free Features</h4>
 <ul>
@@ -41,13 +42,14 @@
 <li>Send email with confirmation</li>
 <li>Display fonts list on Edit letter/Edit Template pages</li>
 <li>Provide the access for Editors to create email templates, emails and send test emails</li>
-<li>Automatic mailout for new posts:
+<li>Automatic mailout for new:
 <ul>
 <li>Posts</li>
-<li>Pages [NEW]</li>
-<li>Custom post types [NEW]</li>
+<li>Pages</li>
+<li>Custom post types</li>
 </ul>
 </li>
+<li>Import user`s emails list from CSV file [NEW]</li>
 <li>Get answer to your question within one business day (<a href="https://bestwebsoft.com/support-policy/" rel="nofollow ugc">Support Policy</a>)</li>
 </ul>
 <p><a href="https://bestwebsoft.com/products/wordpress/plugins/sender/?k=f658a48b03f44d5d82ec3cbccba9664b" rel="nofollow ugc">Upgrade to Pro Now</a></p>
@@ -63,7 +65,7 @@
 <h4>Help &amp; Support</h4>
 <p>Visit our Help Center if you have any questions, our friendly Support Team is happy to help &#8211; <a href="https://support.bestwebsoft.com/" rel="nofollow ugc">https://support.bestwebsoft.com/</a></p>
 <h4>Affiliate Program</h4>
-<p>Earn 20% commission by selling the premium WordPress plugins and themes by BestWebSoft — <a href="https://bestwebsoft.com/affiliate/" rel="nofollow">https://bestwebsoft.com/affiliate/</a></p>
+<p>Earn 20% commission by selling the premium WordPress plugins and themes by BestWebSoft — https://bestwebsoft.com/affiliate/</p>
 <h4>Translation</h4>
 <ul>
 <li>Russian (ru_RU)</li>

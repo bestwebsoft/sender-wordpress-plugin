@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 4.5
-Tested up to: 5.8
-Stable tag: 1.3.4
+Tested up to: 5.8.1
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,8 +53,9 @@ https://www.youtube.com/watch?v=kwbkOXrF10M
 > * Provide the access for Editors to create email templates, emails and send test emails
 > * Automatic mailout for new:
 >	* Posts
->	* Pages [NEW]
->	* Custom post types [NEW]
+>	* Pages
+>	* Custom post types
+> * Import user`s emails list from CSV file [NEW]
 > * Get answer to your question within one business day ([Support Policy](https://bestwebsoft.com/support-policy/))
 >
 > [Upgrade to Pro Now](https://bestwebsoft.com/products/wordpress/plugins/sender/?k=f658a48b03f44d5d82ec3cbccba9664b)
@@ -71,6 +72,10 @@ If you have a feature suggestion or idea you'd like to see in the plugin, we'd l
 = Help & Support =
 
 Visit our Help Center if you have any questions, our friendly Support Team is happy to help - <https://support.bestwebsoft.com/>
+
+= Affiliate Program =
+
+Earn 20% commission by selling the premium WordPress plugins and themes by BestWebSoft — https://bestwebsoft.com/affiliate/
 
 = Translation =
 
@@ -142,6 +147,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 4. Plugin "Campaigns" page with subscribers list.
 
 == Changelog ==
+
+= V1.3.5 - 29.10.2021 =
+* Pro : Import user`s emails list from CSV file has been added.
+* Update : BWS panel section was updated.
+* Update : All functionality was updated for wordpress 5.8.1.
 
 = V1.3.4 - 05.08.2021 =
 * PRO : Automatic mailout for new pages and custom post types was added.
@@ -295,6 +305,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.3.5 =
+* New features added.
+* The compatibility with new WordPress version updated.
+* Plugin optimization completed.
 
 = V1.3.4 =
 * Plugin optimization completed.
