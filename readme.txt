@@ -2,9 +2,9 @@
 Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
-Requires at least: 4.5
-Tested up to: 5.9
-Stable tag: 1.3.7
+Requires at least: 5.6
+Tested up to: 6.4
+Stable tag: 1.3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -147,6 +147,13 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 4. Plugin "Campaigns" page with subscribers list.
 
 == Changelog ==
+
+= V1.3.8 - 21.03.2024 =
+* Update : BWS panel section was updated.
+* Update : All functionality was updated for wordpress 6.4.
+* Bugfix: The issue with Priority field has been fixed.
+* Bugfix: The issue with Send mails has been fixed.
+* Bugfix: The issue with mailing list has been fixed.
 
 = V1.3.7 - 26.04.2022 =
 * Bugfix : Deactivation Feedback Fix.
@@ -312,6 +319,12 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.3.8 =
+* Functionality improved.
+* The compatibility with new WordPress version updated.
+* Plugin optimization completed.
+* Bug fixed.
 
 = V1.3.7 =
 * Bug fixed.
