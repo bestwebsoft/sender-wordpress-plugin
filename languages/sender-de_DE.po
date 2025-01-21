@@ -1,0 +1,1140 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Sender\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-16 18:16+0300\n"
+"PO-Revision-Date: 2024-05-16 18:26+0300\n"
+"Last-Translator: \n"
+"Language-Team: BestWebSoft team <wp@bestwebsoft.com>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _e;__;esc_html_e;esc_html__;esc_attr__;esc_attr_e\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 3.4.3\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: bws_menu\n"
+
+#: includes/class-sndr-report-list.php:21
+msgid "report"
+msgstr "Bericht"
+
+#: includes/class-sndr-report-list.php:22
+msgid "reports"
+msgstr "Reporte"
+
+#: includes/class-sndr-report-list.php:61
+msgid "No messages sent"
+msgstr "Keine Nachrichten gesendet"
+
+#: includes/class-sndr-report-list.php:73 sender.php:633 sender.php:1545
+#: sender.php:1603
+msgid "Subject"
+msgstr "Betreff"
+
+#: includes/class-sndr-report-list.php:74
+#: includes/class-sndr-report-list.php:393
+#: includes/class-sndr-report-list.php:400 sender.php:1862 sender.php:1947
+msgid "Status"
+msgstr "Status"
+
+#: includes/class-sndr-report-list.php:75
+msgid "Date"
+msgstr "Datum"
+
+#: includes/class-sndr-report-list.php:122 sender.php:1520 sender.php:1664
+#: sender.php:1823 sender.php:2004
+msgid "All"
+msgstr "Alle"
+
+#: includes/class-sndr-report-list.php:123
+#: includes/class-sndr-report-list.php:223
+msgid "In Progress"
+msgstr "In Bearbeitung"
+
+#: includes/class-sndr-report-list.php:124
+msgid "Done"
+msgstr "Erledigt"
+
+#: includes/class-sndr-report-list.php:135
+msgid "Delete Campaigns"
+msgstr "Kampagnen löschen"
+
+#: includes/class-sndr-report-list.php:179 sender.php:437
+msgid "Show Report"
+msgstr "Bericht anzeigen"
+
+#: includes/class-sndr-report-list.php:182
+msgid "Hide Report"
+msgstr "Bericht ausblenden"
+
+#: includes/class-sndr-report-list.php:184
+msgid "Delete Report"
+msgstr "Bericht löschen"
+
+#: includes/class-sndr-report-list.php:223
+#: includes/class-sndr-report-list.php:494
+msgid "of"
+msgstr "von"
+
+#: includes/class-sndr-report-list.php:226
+msgid "All Done"
+msgstr "Alles erledigt"
+
+#: includes/class-sndr-report-list.php:312
+msgid "No Subject"
+msgstr "Kein Betreff"
+
+#: includes/class-sndr-report-list.php:392
+#: includes/class-sndr-report-list.php:399
+msgid "Username"
+msgstr "Benutzername"
+
+#: includes/class-sndr-report-list.php:394
+#: includes/class-sndr-report-list.php:401
+msgid "Try"
+msgstr "Versuche"
+
+#: includes/class-sndr-report-list.php:411
+msgid "User was deleted"
+msgstr "Benutzer wurde gelöscht"
+
+#: includes/class-sndr-report-list.php:417
+msgid "received"
+msgstr "Erhalten"
+
+#: includes/class-sndr-report-list.php:419
+msgid "in the queue"
+msgstr "in der Warteschlange"
+
+#: includes/class-sndr-report-list.php:424
+msgid "read"
+msgstr "lesen"
+
+#: includes/class-sndr-report-list.php:426
+msgid "not read"
+msgstr "nicht gelesen"
+
+#: includes/class-sndr-report-list.php:437
+msgid "The list of subscribers can't be found."
+msgstr "Die Liste der Abonnenten kann nicht gefunden werden."
+
+#: includes/class-sndr-report-list.php:468
+msgid "Total Subscribers:"
+msgstr "Abonnenten insgesamt:"
+
+#: includes/class-sndr-report-list.php:470
+msgid "Number of Subscribers on Page"
+msgstr "Anzahl der Abonnenten auf der Seite"
+
+#: includes/class-sndr-report-list.php:471
+msgid "on page"
+msgstr "auf Seite"
+
+#: includes/class-sndr-report-list.php:484
+msgid "Go to the First Page"
+msgstr "Zur ersten Seite gehen"
+
+#: includes/class-sndr-report-list.php:485
+msgid "Go to the Previous Page"
+msgstr "Zur vorherigen Seite gehen"
+
+#: includes/class-sndr-report-list.php:493
+msgid "Current Page"
+msgstr "Aktuelle Seite"
+
+#: includes/class-sndr-report-list.php:494
+msgid "pages"
+msgstr "Seiten"
+
+#: includes/class-sndr-report-list.php:499
+msgid "Go to the Next Page"
+msgstr "Zur nächsten Seite gehen"
+
+#: includes/class-sndr-report-list.php:500
+msgid "Go to the Last Page"
+msgstr "Zur letzten Seite gehen"
+
+#: includes/class-sndr-settings.php:28 sender.php:51 sender.php:266
+#: sender.php:286
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: includes/class-sndr-settings.php:29
+msgid "Misc"
+msgstr "Verschiedenes"
+
+#: includes/class-sndr-settings.php:30
+msgid "License Key"
+msgstr "Lizenzschlüssel"
+
+#: includes/class-sndr-settings.php:59
+msgid "Post"
+msgstr "Beitrag"
+
+#: includes/class-sndr-settings.php:60
+msgid "Page"
+msgstr "Seite"
+
+#: includes/class-sndr-settings.php:85
+msgid ""
+"You may have entered too large a value in the \"Number of sent messages at "
+"the same time\" option. Check please."
+msgstr ""
+"Sie haben möglicherweise einen zu großen Wert in die Option \"Anzahl der "
+"gleichzeitig gesendeten Nachrichten\" eingegeben. Bitte überprüfen Sie dies."
+
+#: includes/class-sndr-settings.php:91
+msgid ""
+"You may have entered too large value in the \"Interval for sending mail\" "
+"option. Check please."
+msgstr ""
+"Möglicherweise haben Sie bei der Option \"Intervall für den Versand von E-"
+"Mails\" einen zu großen Wert eingegeben. Bitte überprüfen Sie dies."
+
+#: includes/class-sndr-settings.php:104
+msgid "Settings saved."
+msgstr "Einstellungen gespeichert."
+
+#: includes/class-sndr-settings.php:115 sender.php:465
+msgid "Sender Settings"
+msgstr "Absender-Einstellungen"
+
+#: includes/class-sndr-settings.php:120
+msgid "Send from"
+msgstr "Gesendet von"
+
+#: includes/class-sndr-settings.php:124
+msgid "Name"
+msgstr "Vorname"
+
+#: includes/class-sndr-settings.php:128
+msgid "Email"
+msgstr "E-Mail"
+
+#: includes/class-sndr-settings.php:132
+msgid ""
+"If this option is changed, email messages may be moved to the spam folder or "
+"email delivery failures may occur."
+msgstr ""
+"Wenn Sie diese Option ändern, werden E-Mail-Nachrichten möglicherweise in "
+"den Spam-Ordner verschoben oder die Zustellung von E-Mails kann fehlschlagen."
+
+#: includes/class-sndr-settings.php:136
+msgid "Sending Method"
+msgstr "Übermittlungsmethode"
+
+#: includes/class-sndr-settings.php:141
+msgid "WP-Mail"
+msgstr "WP-Mail"
+
+#: includes/class-sndr-settings.php:145
+msgid "Mail"
+msgstr "E-Mail"
+
+#: includes/class-sndr-settings.php:154 includes/class-sndr-settings.php:201
+#: includes/class-sndr-settings.php:270
+msgid "Close"
+msgstr "Schließen"
+
+#: includes/class-sndr-settings.php:158
+msgid "HTML Format"
+msgstr "HTML-Format"
+
+#: includes/class-sndr-settings.php:162
+msgid "Enable to send emails in HTML format"
+msgstr "Senden von E-Mails im HTML-Format ermöglichen"
+
+#: includes/class-sndr-settings.php:173
+msgid "Frequency"
+msgstr "Häufigkeit"
+
+#: includes/class-sndr-settings.php:176
+msgid "email(-s) every"
+msgstr "email(-s) jede"
+
+#: includes/class-sndr-settings.php:178
+msgid "minutes"
+msgstr "Minuten"
+
+#: includes/class-sndr-settings.php:190
+msgid "Total:"
+msgstr "Gesamt:"
+
+#: includes/class-sndr-settings.php:190
+msgid "emails per hour"
+msgstr "emails pro Stunde"
+
+#: includes/class-sndr-settings.php:192
+msgid ""
+"Make sure that this number is smaller than max allowed number allowed by "
+"your hosting provider."
+msgstr ""
+"Achten Sie darauf, dass diese Zahl kleiner ist als die von Ihrem Hosting-"
+"Provider zugelassene Höchstzahl."
+
+#: includes/class-sndr-settings.php:193
+msgid ""
+"This counter shows only the number of messages that will be sended by Sender "
+"Pro plugin, and does not shows the total number of outgoing messages from "
+"your site."
+msgstr ""
+"Dieser Zähler zeigt nur die Anzahl der Nachrichten an, die vom Sender Pro "
+"Plugin versendet werden, und nicht die Gesamtzahl der von Ihrer Website "
+"ausgehenden Nachrichten."
+
+#: includes/class-sndr-settings.php:205
+msgid "Attempts"
+msgstr "Versuche"
+
+#: includes/class-sndr-settings.php:208
+msgid "Maximum number of attempts per user."
+msgstr "Maximale Anzahl von Versuchen pro Benutzer."
+
+#: includes/class-sndr-settings.php:212
+msgid "Automatic Mailout when Publishing a New"
+msgstr "Automatisches Mailing bei der Veröffentlichung eines neuen"
+
+#: includes/class-sndr-settings.php:230
+msgid "Example of mailing list"
+msgstr "Beispiel einer Mailingliste"
+
+#: includes/class-sndr-settings.php:231
+msgid "Choose a mailing list"
+msgstr "Wähle eine Mailingliste"
+
+#: includes/class-sndr-settings.php:235
+msgid "Example of letter"
+msgstr "Beispiel für einen Brief"
+
+#: includes/class-sndr-settings.php:236
+msgid "Choose a letter"
+msgstr "Wählen Sie einen Buchstaben"
+
+#: includes/class-sndr-settings.php:240
+msgid "Example of priority"
+msgstr "Beispiel für Priorität"
+
+#: includes/class-sndr-settings.php:241
+msgid "Select mailout priority\t"
+msgstr "Wählen Sie die Versandpriorität\t"
+
+#: includes/class-sndr-settings.php:243
+msgid "Less number - higher priority"
+msgstr "Geringere Anzahl - höhere Priorität"
+
+#: includes/class-sndr-settings.php:274
+msgid "Sender Slug"
+msgstr "Absender Schnecke"
+
+#: includes/class-sndr-settings.php:277
+msgid "Used for browser view."
+msgstr "Wird für die Browseransicht verwendet."
+
+#: includes/class-sndr-settings.php:281
+msgid "Send Email with Confirmation"
+msgstr "E-Mail mit Bestätigung senden"
+
+#: includes/class-sndr-settings.php:285
+msgid "This function may not work on all mail servers."
+msgstr ""
+"Diese Funktion funktioniert möglicherweise nicht auf allen Mailservern."
+
+#: includes/class-sndr-settings.php:289
+msgid "Editors Access"
+msgstr "Redakteure Zugang"
+
+#: includes/class-sndr-settings.php:293
+msgid ""
+"Enable to provide the access for Editors to create letter templates, letters "
+"and send test letters."
+msgstr ""
+"Aktivieren Sie den Zugang für Redakteure, um Briefvorlagen und Briefe zu "
+"erstellen und Testbriefe zu versenden."
+
+#: includes/class-sndr-settings.php:296
+msgid "If you want to create another role with special capabilities"
+msgstr ""
+"Wenn Sie eine weitere Rolle mit besonderen Fähigkeiten erstellen möchten"
+
+#: includes/class-sndr-settings.php:296
+msgid "download User Role Pro by BestWebSoft"
+msgstr "herunterladen User Role Pro von BestWebSoft"
+
+#: sender.php:43 sender.php:556 sender.php:558 sender.php:734
+msgid "Campaigns"
+msgstr "Kampagnen"
+
+#: sender.php:44 sender.php:735 sender.php:1354
+msgid "Add New"
+msgstr "Neu hinzufügen"
+
+#: sender.php:46 sender.php:1352
+msgid "Letters"
+msgstr "Buchstaben"
+
+#: sender.php:47
+msgid "Lists"
+msgstr "Listen"
+
+#: sender.php:48 sender.php:1815
+msgid "Templates"
+msgstr "Vorlagen"
+
+#: sender.php:49 sender.php:1996
+msgid "Priorities"
+msgstr "Prioritäten"
+
+#: sender.php:56 sender.php:1626 sender.php:1785 sender.php:1966
+#: sender.php:2167
+msgid "Upgrade to Pro"
+msgstr "Upgrade auf die Pro-Version"
+
+#: sender.php:288
+msgid "FAQ"
+msgstr "FAQ"
+
+#: sender.php:289
+msgid "Support"
+msgstr "Support"
+
+#: sender.php:436
+msgid "Close Report"
+msgstr "Fall schließen"
+
+#: sender.php:438
+msgid "The data of this report can't be found."
+msgstr "Die Daten dieses Berichts können nicht gefunden werden."
+
+#: sender.php:439
+msgid "Error while sending request."
+msgstr "Fehler beim Senden der Anfrage."
+
+#: sender.php:440
+msgid "Are you sure that you want to enter such a large value?"
+msgstr "Sind Sie sicher, dass Sie einen so großen Wert eingeben wollen?"
+
+#: sender.php:468
+msgid "WARNING"
+msgstr "WARNUNG"
+
+#: sender.php:468
+msgid "The plugin works correctly only if JavaScript is enabled."
+msgstr "Das Plugin funktioniert nur korrekt, wenn JavaScript aktiviert ist."
+
+#: sender.php:571
+msgid "You can check sending reports on the page"
+msgstr "Sie können die Sendeberichte auf der Seite"
+
+#: sender.php:589
+msgid "Send to"
+msgstr "Senden an"
+
+#: sender.php:599
+msgid "all"
+msgstr "alle"
+
+#: sender.php:617
+msgid "Number of mails which would be sent"
+msgstr "Anzahl der Mails, die gesendet werden sollen"
+
+#: sender.php:644
+msgid "Content"
+msgstr "Inhalt"
+
+#: sender.php:656
+msgid "Save Campaign"
+msgstr "Kampagne Speichern"
+
+#: sender.php:690
+msgid "Reports per page"
+msgstr "Berichte pro Seite"
+
+#: sender.php:759
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr "Suchergebnisse für &#8220;%s&#8221;"
+
+#: sender.php:761
+msgid "Filter reports list"
+msgstr "Liste der Berichte filtern"
+
+#: sender.php:767 sender.php:1526 sender.php:1670 sender.php:1831
+#: sender.php:2010
+msgid "search"
+msgstr "suchen"
+
+#: sender.php:798
+msgid "You need to choose some reports."
+msgstr "Sie müssen einige Berichte auswählen."
+
+#: sender.php:799
+msgid "Error while deleting report."
+msgstr "Fehler beim Löschen des Berichts."
+
+#: sender.php:800
+msgid "Error while deleting mail."
+msgstr "Fehler beim Löschen von Mails."
+
+#: sender.php:801
+msgid "You cannot send an empty mail."
+msgstr "Sie können keine leere E-Mail versenden."
+
+#: sender.php:802
+msgid "Select a list of users to send messages."
+msgstr ""
+"Wählen Sie eine Liste von Benutzern aus, an die Sie Nachrichten senden "
+"möchten."
+
+#: sender.php:803
+msgid "It is impossible to get the list of users."
+msgstr "Es ist unmöglich, die Liste der Benutzer zu erhalten."
+
+#: sender.php:804
+msgid "Please, try it later."
+msgstr "Bitte versuchen Sie es später."
+
+#: sender.php:805
+msgid "New mailout was created successfully."
+msgstr "Neues Mailing wurde erfolgreich erstellt."
+
+#: sender.php:806
+msgid "Mailout was not create"
+msgstr "Mailing wurde nicht erstellt"
+
+#: sender.php:1085
+msgid "Subscribe on newsletters"
+msgstr "Newsletter abonnieren"
+
+#: sender.php:1090
+msgid "Sorry, but you denied to subscribe to the newsletter."
+msgstr "Sie haben sich leider nicht für den Newsletter angemeldet."
+
+#: sender.php:1128
+msgid "unsubscribed from the user profile"
+msgstr "aus dem Benutzerprofil abgemeldet"
+
+#: sender.php:1190
+msgid "Your interval"
+msgstr "Ihr Intervall"
+
+#: sender.php:1352
+msgid "Add New Letters"
+msgstr "Neue Briefe hinzufügen"
+
+#: sender.php:1368
+msgid "Subject:"
+msgstr "Betreff:"
+
+#: sender.php:1376
+msgid "Select letter template:"
+msgstr "Wählen Sie eine Briefvorlage:"
+
+#: sender.php:1378
+msgid "Default Templates:"
+msgstr "Standardvorlagen:"
+
+#: sender.php:1381 sender.php:1382
+msgid "One Column"
+msgstr "Eine Spalte"
+
+#: sender.php:1387 sender.php:1388
+msgid "Two Column: Text Below the Image"
+msgstr "Zweispaltig: Text unter dem Bild"
+
+#: sender.php:1393 sender.php:1394
+msgid "Two Column: Text Content Beside the Image"
+msgstr "Zweispaltig: Textinhalt neben dem Bild"
+
+#: sender.php:1404
+msgid "in order to use the necessary fonts you need:"
+msgstr "um die notwendigen Schriftarten zu verwenden, die Sie benötigen:"
+
+#: sender.php:1405
+msgid ""
+"select the desired font (or multiple fonts), and click on the \"Load "
+"Additional Data\" button"
+msgstr ""
+"wählen Sie die gewünschte Schriftart (oder mehrere Schriftarten) und klicken "
+"Sie auf die Schaltfläche \"Zusätzliche Daten laden\""
+
+#: sender.php:1406
+msgid "click on the \"Text\" tab in content editor"
+msgstr "klicken Sie auf die Registerkarte \"Text\" im Inhaltseditor"
+
+#: sender.php:1407
+msgid ""
+"find a necessary html-element and edit when using the attribute \"style\" "
+"and CSS-property \"font-family\" as in example"
+msgstr ""
+"suchen Sie ein notwendiges html-Element und bearbeiten Sie es, indem Sie das "
+"Attribut \"style\" und die CSS-Eigenschaft \"font-family\" wie im Beispiel "
+"verwenden"
+
+#: sender.php:1409
+msgid "Example:"
+msgstr "Beispiel:"
+
+#: sender.php:1412
+msgid "Select additional fonts:"
+msgstr "Wählen Sie zusätzliche Schriftarten:"
+
+#: sender.php:1439
+msgid "Load Additional Data"
+msgstr "Zusätzliche Daten laden"
+
+#: sender.php:1440
+msgid "Reset Additional Data"
+msgstr "Zusätzliche Daten zurücksetzen"
+
+#: sender.php:1448
+msgid "You can use the following shortcodes in the letter:"
+msgstr "Sie können die folgenden Shortcodes in dem Brief verwenden:"
+
+#: sender.php:1452
+msgid "site URL"
+msgstr "uRL der Website"
+
+#: sender.php:1456
+msgid "site name"
+msgstr "Seitenname"
+
+#: sender.php:1460
+msgid "user e-mail"
+msgstr "benutzer-E-Mail"
+
+#: sender.php:1464
+msgid "user name"
+msgstr "Benutzer-Name"
+
+#: sender.php:1468
+msgid "new post title - only for automatic mailout when publishing a new post"
+msgstr ""
+"neuer Beitragstitel - nur für die automatische Versendung bei der "
+"Veröffentlichung eines neuen Beitrags"
+
+#: sender.php:1472
+msgid ""
+"link to new post - only for automatic mailout when publishing a new post"
+msgstr ""
+"link zu einem neuen Beitrag - nur für den automatischen Versand bei "
+"Veröffentlichung eines neuen Beitrags"
+
+#: sender.php:1476
+msgid "link to profile page of current user"
+msgstr "link zur Profilseite des aktuellen Benutzers"
+
+#: sender.php:1480
+msgid "link to unsubscribe user from mailout"
+msgstr "link zum Abmelden des Benutzers vom Mailing"
+
+#: sender.php:1484
+msgid "link to view letter in new browser tab"
+msgstr "link zum Anzeigen des Briefes in einem neuen Browser-Tab"
+
+#: sender.php:1490
+msgid "Use shortcodes!"
+msgstr "Verwenden Sie Shortcodes!"
+
+#: sender.php:1495
+msgid "Letter Content:"
+msgstr "Inhalt des Briefes:"
+
+#: sender.php:1498
+msgid "Add Media"
+msgstr "Medien hinzufügen"
+
+#: sender.php:1500
+msgid "Text"
+msgstr "Text"
+
+#: sender.php:1501
+msgid "Visual"
+msgstr "Visuell"
+
+#: sender.php:1512 sender.php:1516
+msgid "Create Mailout"
+msgstr "Mailing erstellen"
+
+#: sender.php:1513
+msgid "Send Test Message"
+msgstr "Testnachricht senden"
+
+#: sender.php:1521 sender.php:1561 sender.php:1575 sender.php:1589
+#: sender.php:1615 sender.php:1665 sender.php:1676 sender.php:1712
+#: sender.php:1726 sender.php:1740 sender.php:1775 sender.php:1826
+#: sender.php:1837 sender.php:1875 sender.php:1891 sender.php:1907
+#: sender.php:1921 sender.php:1956 sender.php:2005 sender.php:2016
+#: sender.php:2052 sender.php:2066 sender.php:2080 sender.php:2094
+#: sender.php:2108 sender.php:2122 sender.php:2157
+msgid "Trash"
+msgstr "Papierkorb"
+
+#: sender.php:1524 sender.php:1668 sender.php:1829 sender.php:2008
+msgid "search:"
+msgstr "suche:"
+
+#: sender.php:1530 sender.php:1614 sender.php:1675 sender.php:1774
+#: sender.php:1836 sender.php:1955 sender.php:2015 sender.php:2156
+msgid "Bulk Actions"
+msgstr "Mehrfachaktionen"
+
+#: sender.php:1532 sender.php:1617 sender.php:1678 sender.php:1777
+#: sender.php:1839 sender.php:1958 sender.php:2018 sender.php:2159
+msgid "Apply"
+msgstr "Übernehmen"
+
+#: sender.php:1534 sender.php:1619 sender.php:1680 sender.php:1779
+#: sender.php:1841 sender.php:1960 sender.php:2020 sender.php:2161
+msgid "items"
+msgstr "Artikel"
+
+#: sender.php:1541 sender.php:1599 sender.php:1688 sender.php:1693
+#: sender.php:1753 sender.php:1758 sender.php:1849 sender.php:1854
+#: sender.php:1934 sender.php:1939 sender.php:2028 sender.php:2033
+#: sender.php:2135 sender.php:2140
+msgid "Select All"
+msgstr "Alle auswählen"
+
+#: sender.php:1548 sender.php:1606 sender.php:1701 sender.php:1766
+msgid "Date of creation"
+msgstr "Erstellungsdatum"
+
+#: sender.php:1560 sender.php:1574 sender.php:1588 sender.php:1711
+#: sender.php:1725 sender.php:1739 sender.php:1874 sender.php:1890
+#: sender.php:1906 sender.php:1920 sender.php:2051 sender.php:2065
+#: sender.php:2079 sender.php:2093 sender.php:2107 sender.php:2121
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: sender.php:1632 sender.php:1791 sender.php:1972 sender.php:2173
+msgid "This tab contains Pro options only."
+msgstr "Diese Registerkarte enthält nur die Pro-Option."
+
+#: sender.php:1634 sender.php:1793 sender.php:1974 sender.php:2175
+#, php-format
+msgid "%1$sChange the settings%2$s to view the Pro options."
+msgstr "%1$sÄndern Sie die Einstellungen%2$s, um die Pro-Optionen anzuzeigen."
+
+#: sender.php:1656
+msgid "Mailings Lists"
+msgstr "Mailing-Listen"
+
+#: sender.php:1698 sender.php:1763 sender.php:1859 sender.php:1944
+#: sender.php:2038 sender.php:2145
+msgid "Title"
+msgstr "Titel"
+
+#: sender.php:1824
+msgid "Default templates"
+msgstr "Standardvorlagen"
+
+#: sender.php:1825
+msgid "User`s templates"
+msgstr "Vorlagen für Benutzer"
+
+#: sender.php:1881 sender.php:1897 sender.php:1913
+msgid "default"
+msgstr "Standard"
+
+#: sender.php:1927
+msgid "user's"
+msgstr "Benutzers"
+
+#: sender.php:2041 sender.php:2148
+msgid "Number"
+msgstr "Nummer"
+
+#: sender.php:2295
+msgid "Notice:"
+msgstr "Hinweis:"
+
+#: sender.php:2298
+msgid "Due to the peculiarities of the multisite work, Sender plugin has only"
+msgstr ""
+"Aufgrund der Besonderheiten der Multisite-Arbeit hat das Sender-Plugin nur"
+
+#: sender.php:2300
+msgid "Network settings page"
+msgstr "Seite Netzwerkeinstellungen"
+
+#: sender.php:2303
+msgid ""
+"Due to the peculiarities of the multisite work, Sender plugin has the "
+"network settings page only and it should be Network Activated. Please"
+msgstr ""
+"Aufgrund der Besonderheiten der Multisite-Arbeit verfügt das Sender-Plugin "
+"nur über die Seite mit den Netzwerkeinstellungen und sollte daher als "
+"Netzwerk aktiviert sein. Bitte"
+
+#: sender.php:2305
+msgid "Activate Sender for Network"
+msgstr "Sender für Netzwerk aktivieren"
+
+msgid "user group"
+msgstr "benutzergruppe"
+
+msgid "letter"
+msgstr "Buchstabe"
+
+msgid "New Letter"
+msgstr "Neuer Brief"
+
+msgid "Learn More"
+msgstr "Mehr erfahren"
+
+msgid "Letters Lists"
+msgstr "Briefe Listen"
+
+msgid "Send"
+msgstr "Senden"
+
+msgid "Reports"
+msgstr "Berichte"
+
+msgid "Delete Reports"
+msgstr "Berichte löschen"
+
+msgid "New Mailout"
+msgstr "Neues Mailing"
+
+msgid "Letters Templates"
+msgstr "Vorlagen für Briefe"
+
+msgid ""
+"You may have entered too large a value in the \"Interval for sending mail\" "
+"option. Check please."
+msgstr ""
+"Möglicherweise haben Sie bei der Option \"Intervall für den Mailversand\" "
+"einen zu großen Wert eingegeben. Bitte überprüfen Sie dies."
+
+msgid ""
+"You may have entered too large a value in the \"Number of sent messages at "
+"one time\" option. Check please."
+msgstr ""
+"Möglicherweise haben Sie bei der Option \"Anzahl der gleichzeitig gesendeten "
+"Nachrichten\" einen zu großen Wert eingegeben. Bitte überprüfen Sie dies."
+
+msgid ""
+"Email 'FROM' field option was changed, which may cause email messages being "
+"moved to the spam folder or email delivery failures."
+msgstr ""
+"Die Option für das E-Mail-Feld 'FROM' wurde geändert, was dazu führen kann, "
+"dass E-Mail-Nachrichten in den Spam-Ordner verschoben werden oder die E-Mail-"
+"Zustellung fehlschlägt."
+
+msgid "All plugin settings were restored."
+msgstr "Alle Plugin-Einstellungen wurden wiederhergestellt."
+
+msgid "Go PRO"
+msgstr "Gehen Sie PRO"
+
+msgid "Interval for sending mail"
+msgstr "Intervall für den Postversand"
+
+msgid "(min)"
+msgstr "(min)"
+
+msgid "Number of messages sent at one time"
+msgstr "Anzahl der auf einmal gesendeten Nachrichten"
+
+msgid "maximum number of sent mails:"
+msgstr "maximale Anzahl der gesendeten Mails:"
+
+msgid "This function works not on all mail servers."
+msgstr "Diese Funktion funktioniert nicht auf allen Mailservern."
+
+msgid "Display fonts list on \"Edit letter\" or \"Edit Template\" Pages"
+msgstr ""
+"Schriftartenliste auf den Seiten \"Brief bearbeiten\" oder \"Vorlage "
+"bearbeiten\" anzeigen"
+
+msgid ""
+"Due to security reasons, the additional fonts may not be reflected on some "
+"postal services."
+msgstr ""
+"Aus Sicherheitsgründen kann es sein, dass die zusätzlichen Schriftarten bei "
+"einigen Postdiensten nicht angezeigt werden."
+
+msgid "If you upgrade to Pro version all your settings will be saved."
+msgstr ""
+"Wenn Sie auf die Pro-Version upgraden, werden all Ihre Einstellungen "
+"gespeichert."
+
+msgid "'FROM' field"
+msgstr "feld 'FROM'"
+
+msgid "Wp-mail"
+msgstr "Wp-mail"
+
+msgid "You can use the wp_mail function for mailing"
+msgstr "Sie können die Funktion wp_mail für Mailings verwenden"
+
+msgid "To send mail you can use the php mail function"
+msgstr ""
+"Um eine E-Mail zu versenden, können Sie die php-Mail-Funktion verwenden"
+
+msgid "Slug for 'view email in browser' link"
+msgstr "Slug für 'E-Mail im Browser anzeigen'-Link"
+
+msgid ""
+"If you want to allows your site visitors to subscribe for newsletters, "
+"coming from your website, use"
+msgstr ""
+"Wenn Sie Ihren Website-Besuchern die Möglichkeit geben möchten, von Ihrer "
+"Website aus einen Newsletter zu abonnieren, verwenden Sie"
+
+msgid "that is an exclusive add-on for the Sender Plugin by BestWebSoft."
+msgstr "das ist ein exklusives Add-on für das Sender Plugin von BestWebSoft."
+
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+msgid "Sender Reports"
+msgstr "Senderberichte"
+
+msgid ""
+"WARNING: as you are using multisite, the total number of sent mails may not "
+"coincide with the counter. It will be fixed in the stable version of plugin."
+msgstr ""
+"ACHTUNG: Da Sie eine Multisite verwenden, kann es sein, dass die Gesamtzahl "
+"der gesendeten Mails nicht mit dem Zähler übereinstimmt. Dies wird in der "
+"stabilen Version des Plugins behoben werden."
+
+msgid "Mailing Lists"
+msgstr "Mailing-Listen"
+
+msgid "Subscribe to newsletters"
+msgstr "Abonnieren Sie die Newsletters"
+
+msgid "link to view letter in a new browser tab"
+msgstr "link zur Ansicht des Briefes in einem neuen Browser-Tab"
+
+msgid "Letters List"
+msgstr "Briefe Liste"
+
+msgid "Unlock premium options by upgrading to Pro version"
+msgstr "Entsperren Sie Premium-Optionen durch ein Upgrade auf Pro-Version"
+
+msgid "use"
+msgstr "Verwenden"
+
+msgid "activate"
+msgstr "aktivieren"
+
+msgid "download"
+msgstr "Download"
+
+msgid ""
+"In current plugin version, there is an opportunity to use SMTP method from "
+"old plugin settings. If you're using this method for sending e-mails, please"
+msgstr ""
+"In der aktuellen Plugin-Version gibt es die Möglichkeit, die SMTP-Methode "
+"aus den alten Plugin-Einstellungen zu verwenden. Wenn Sie diese Methode für "
+"den Versand von E-Mails verwenden, sollten Sie"
+
+msgid "and configure it in accordance with your settings"
+msgstr "und konfigurieren Sie es entsprechend Ihren Einstellungen"
+
+msgid "What to use?"
+msgstr "Was ist zu verwenden?"
+
+msgid ""
+"В текущей версии плагина возможность использования SMTP-метода из настроек "
+"плагина deprecated. Если вы использовали именно этот метод для отправки "
+"почты пожалуйста"
+msgstr ""
+
+msgid "и настройте его в соответствии с вашими настройками"
+msgstr ""
+
+msgid "SMTP"
+msgstr "SMTP"
+
+msgid "You can use SMTP for sending mails"
+msgstr "Sie können SMTP für den Versand von Mails verwenden"
+
+msgid "SMTP Settings"
+msgstr "SMTP Einstellungen"
+
+msgid "SMTP server"
+msgstr "SMTP-Server"
+
+msgid "SMTP port"
+msgstr "SMTP-Port"
+
+msgid "SMTP account"
+msgstr "SMTP-Konto"
+
+msgid "SMTP password"
+msgstr "SMTP-Passwort"
+
+msgid "Use SMTP SSL"
+msgstr "SMTP SSL verwenden"
+
+msgid "In progress"
+msgstr "In Bearbeitung"
+
+msgid "done"
+msgstr "erledigt"
+
+msgid "Unknown Status"
+msgstr "Status unbekannt"
+
+msgid ""
+"The plugin's settings have been changed. In order to save them please don't "
+"forget to click the 'Save Changes' button."
+msgstr ""
+"Die Einstellungen des Plugins wurden geändert. Um sie zu speichern, klicken "
+"Sie bitte auf die Schaltfläche."
+
+msgid "Go"
+msgstr "Weiter"
+
+msgid "requires"
+msgstr "erforderlich"
+
+msgid ""
+"or higher, that is why it has been deactivated! Please upgrade WordPress and "
+"try again."
+msgstr ""
+"oder höher, deshalb wurde es deaktiviert! Bitte aktualisieren Sie WordPress "
+"und versuchen Sie es erneut."
+
+msgid "Back to the WordPress"
+msgstr "Zurück zu WordPress"
+
+msgid "Plugins page"
+msgstr "Plugin Seite"
+
+msgid ""
+"Something went wrong. Try again later. If the error will appear again, "
+"please, contact us <a href=https://support.bestwebsoft.com>BestWebSoft</a>. "
+"We are sorry for inconvenience."
+msgstr ""
+"Es ist ein Fehler aufgetreten. Versuchen Sie es später noch einmal. Wenn der "
+"Fehler erneut auftritt, kontaktieren Sie uns bitte <a href=https://support."
+"bestwebsoft.com>BestWebSoft</a>. Wir entschuldigen uns für die "
+"Unannehmlichkeiten."
+
+msgid "This license key is bind to another site"
+msgstr "Dieser Lizenzschlüssel ist an eine andere Webseite gebunden"
+
+msgid ""
+"Unfortunately, you have exceeded the number of available tries per day. "
+"Please, upload the plugin manually."
+msgstr ""
+"Leider haben Sie die Anzahl der verfügbaren Versuche pro Tag überschritten. "
+"Bitte laden Sie das Plugin manuell hoch."
+
+msgid "Failed to download the zip archive. Please, upload the plugin manually"
+msgstr ""
+"Der Download des Zip-Archiv ist gesheidert. Bitte laden Sie das Plugin "
+"manuell"
+
+msgid "Failed to open the zip archive. Please, upload the plugin manually"
+msgstr ""
+"Das Zip-Archiv konnte nicht geöfnnet werden. Bitte laden Sie das Plugin "
+"manuell"
+
+msgid ""
+"Your server does not support either ZipArchive or Phar. Please, upload the "
+"plugin manually"
+msgstr ""
+"Ihr Server unterstützt keine ZipArchive oder Par. Bitte laden Sie das Plugin "
+"manuell"
+
+msgid "UploadDir is not writable. Please, upload the plugin manually"
+msgstr ""
+"UploadDir ist nicht beschreibbar. Bitte, laden Sie das Plugin manuell hoch"
+
+msgid ""
+"Something went wrong. Try again later or upload the plugin manually. We are "
+"sorry for inconvienience."
+msgstr ""
+"Etwas ist schief gelaufen. Versuchen Sie es später noch einmal oder laden "
+"Sie das Plugin manuell hoch. Wir entschuldigen uns für die "
+"Unannehmlichkeiten."
+
+msgid "Please, enter Your license key"
+msgstr "Trage bitte Deinen Lizenz-Schlüssel ein"
+
+msgid "If you enjoy our plugin, please give it 5 stars on WordPress"
+msgstr ""
+"Wenn Sie unser Plugin mögen, geben Sie ihm bitte 5 Sterne auf WordPress"
+
+msgid "Rate the plugin"
+msgstr "Bewerte das Plugin"
+
+msgid "If there is something wrong about it, please contact us"
+msgstr "Wenn etwas nicht in Ordnung ist, kontaktieren Sie uns bitte"
+
+msgid ""
+"Congratulations! The PRO version of the plugin is successfully download and "
+"activated."
+msgstr ""
+"Herzlichen Glückwunsch! Die PRO-Version des Plugins wurde erfolgreich "
+"heruntergeladen und aktiviert."
+
+msgid "Please, go to"
+msgstr "Bitte, gehen Sie zu"
+
+msgid "You will be redirected automatically in 5 seconds."
+msgstr "Sie werden in 5 Sekunden automatisch weitergeleitet."
+
+msgid "You can download and activate"
+msgstr "Sie können Folgendes herunterladen und aktivieren"
+
+msgid "version of this plugin by entering Your license key."
+msgstr "version dieses Plugins durch Eingabe Ihres Lizenzschlüssels."
+
+msgid ""
+"You can find your license key on your personal page Client area, by clicking "
+"on the link"
+msgstr ""
+"Sie können Ihren Lizenzschlüssel auf Ihrer persönlichen Seite im "
+"Kundenbereich finden, indem Sie auf den Link"
+
+msgid "(your username is the email you specify when purchasing the product)."
+msgstr ""
+"(Ihr Benutzername ist die E-Mail, die Sie beim Kauf des Produkts angegeben "
+"haben)."
+
+msgid ""
+"It’s time to upgrade your <strong>Sender plugin</strong> to <strong>PRO</"
+"strong> version!"
+msgstr ""
+"Es ist an der Zeit, Ihr <strong>Sender-Plugin</strong> auf die <strong>PRO-"
+"Version</strong> zu aktualisieren!"
+
+msgid "Extend standard plugin functionality with new great options"
+msgstr ""
+"Erweitern Sie die Standard-Plugin-Funktionalität mit neuen großartigen "
+"Optionen"
+
+msgid "Such a user does not exist. Settings are not saved."
+msgstr ""
+"Ein solcher Benutzer existiert nicht. Die Einstellungen werden nicht "
+"gespeichert."
+
+msgid ""
+"Please enter a valid email address in the 'FROM' field. Settings are not "
+"saved."
+msgstr ""
+"Bitte geben Sie eine gültige E-Mail-Adresse in das Feld 'FROM' ein. Die "
+"Einstellungen werden nicht gespeichert."
+
+msgid "The user on whose behalf mailout will be created"
+msgstr "Der Benutzer, in dessen Namen das Mailing erstellt werden soll"
+
+msgid "The name of the user be used in the 'From' field."
+msgstr "Der Name des Benutzers, der im Feld \"Von\" verwendet wird."
+
+msgid "This text will be used in the 'FROM' field"
+msgstr "Dieser Text wird im Feld „VON“ verwendet"
+
+msgid "This email address will be used in the 'From' field."
+msgstr "Diese E-Mail-Adresse wird im Feld \"von\" verwendet."

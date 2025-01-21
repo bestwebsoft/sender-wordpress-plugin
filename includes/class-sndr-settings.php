@@ -3,7 +3,14 @@
  * Displays the content on the plugin settings page
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
+	/**
+	 * Sndr_Settings_Tabs Class
+	 */
 	class Sndr_Settings_Tabs extends Bws_Settings_Tabs {
 		/**
 		 * Constructor.
@@ -12,7 +19,7 @@ if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
 		 *
 		 * @see Bws_Settings_Tabs::__construct() for more information on default arguments.
 		 *
-		 * @param string $plugin_basename
+		 * @param string $plugin_basename Plugin basename.
 		 */
 		public function __construct( $plugin_basename ) {
 			global $sndr_options, $sndr_plugin_info;
@@ -60,14 +67,15 @@ if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
 		 * Save plugin options to the database
 		 *
 		 * @access public
-		 * @param  void
 		 * @return array    The action results
 		 */
 		public function save_options() {
-			$message = $notice = $error = '';
+			$message = '';
+			$notice  = '';
+			$error   = '';
 
 			if ( isset( $_POST['sndr_nonce_admin'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['sndr_nonce_admin'] ) ), plugin_basename( __FILE__ ) ) ) {
-				
+
 				$this->options['from_custom_name'] = isset( $_POST['sndr_from_custom_name'] ) && ! empty( $_POST['sndr_from_custom_name'] ) ? sanitize_text_field( wp_unslash( $_POST['sndr_from_custom_name'] ) ) : $this->options['from_custom_name'];
 				$this->options['from_email']       = isset( $_POST['sndr_from_email'] ) && is_email( trim( sanitize_text_field( wp_unslash( $_POST['sndr_from_email'] ) ) ) ) ? trim( sanitize_text_field( wp_unslash( $_POST['sndr_from_email'] ) ) ) : $this->options['from_email'];
 				$this->options['method']           = isset( $_POST['sndr_method'] ) && in_array( sanitize_text_field( wp_unslash( $_POST['sndr_method'] ) ), array( 'wp_mail', 'mail' ) ) ? sanitize_text_field( wp_unslash( $_POST['sndr_method'] ) ) : $this->options['method'];
@@ -100,6 +108,9 @@ if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
 			return compact( 'message', 'notice', 'error' );
 		}
 
+		/**
+		 * Display tab settings
+		 */
 		public function tab_settings() { ?>
 			<h3 class="bws_tab_label"><?php esc_html_e( 'Sender Settings', 'sender' ); ?></h3>
 			<?php $this->help_phrase(); ?>
@@ -245,6 +256,11 @@ if ( ! class_exists( 'Sndr_Settings_Tabs' ) ) {
 			wp_nonce_field( plugin_basename( __FILE__ ), 'sndr_nonce_admin' );
 		}
 
+		/**
+		 * Display custom options on the 'misc' tab
+		 *
+		 * @access public
+		 */
 		public function additional_misc_options_affected() {
 			if ( ! $this->hide_pro_tabs ) {
 				?>

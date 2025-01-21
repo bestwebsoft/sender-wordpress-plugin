@@ -1,0 +1,773 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Sender\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-16 18:33+0300\n"
+"PO-Revision-Date: 2024-05-20 15:50+0300\n"
+"Last-Translator: \n"
+"Language-Team: BestWebSoft team <wp@bestwebsoft.com>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _e;__;esc_html_e;esc_html__;esc_attr__;esc_attr_e\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 3.4.3\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: bws_menu\n"
+
+#: includes/class-sndr-report-list.php:21
+msgid "report"
+msgstr "informe"
+
+#: includes/class-sndr-report-list.php:22
+msgid "reports"
+msgstr "informes"
+
+#: includes/class-sndr-report-list.php:61
+msgid "No messages sent"
+msgstr "No se envían mensajes"
+
+#: includes/class-sndr-report-list.php:73 sender.php:633 sender.php:1545
+#: sender.php:1603
+msgid "Subject"
+msgstr "Tema"
+
+#: includes/class-sndr-report-list.php:74
+#: includes/class-sndr-report-list.php:393
+#: includes/class-sndr-report-list.php:400 sender.php:1862 sender.php:1947
+msgid "Status"
+msgstr "Estado"
+
+#: includes/class-sndr-report-list.php:75
+msgid "Date"
+msgstr "Fecha"
+
+#: includes/class-sndr-report-list.php:122 sender.php:1520 sender.php:1664
+#: sender.php:1823 sender.php:2004
+msgid "All"
+msgstr "Todo"
+
+#: includes/class-sndr-report-list.php:123
+#: includes/class-sndr-report-list.php:223
+msgid "In Progress"
+msgstr "En Progreso"
+
+#: includes/class-sndr-report-list.php:124
+msgid "Done"
+msgstr "Hecho"
+
+#: includes/class-sndr-report-list.php:135
+msgid "Delete Campaigns"
+msgstr "Eliminar campañas"
+
+#: includes/class-sndr-report-list.php:179 sender.php:437
+msgid "Show Report"
+msgstr "Mostrar Informe"
+
+#: includes/class-sndr-report-list.php:182
+msgid "Hide Report"
+msgstr "Ocultar informe"
+
+#: includes/class-sndr-report-list.php:184
+msgid "Delete Report"
+msgstr "Eliminar informe"
+
+#: includes/class-sndr-report-list.php:223
+#: includes/class-sndr-report-list.php:494
+msgid "of"
+msgstr "de"
+
+#: includes/class-sndr-report-list.php:226
+msgid "All Done"
+msgstr "Todo hecho"
+
+#: includes/class-sndr-report-list.php:312
+msgid "No Subject"
+msgstr "Sin asunto"
+
+#: includes/class-sndr-report-list.php:392
+#: includes/class-sndr-report-list.php:399
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: includes/class-sndr-report-list.php:394
+#: includes/class-sndr-report-list.php:401
+msgid "Try"
+msgstr "Probar"
+
+#: includes/class-sndr-report-list.php:411
+msgid "User was deleted"
+msgstr "El usuario fue eliminado"
+
+#: includes/class-sndr-report-list.php:417
+msgid "received"
+msgstr "pago recibido/pedido completado"
+
+#: includes/class-sndr-report-list.php:419
+msgid "in the queue"
+msgstr "en la cola"
+
+#: includes/class-sndr-report-list.php:424
+msgid "read"
+msgstr "leer"
+
+#: includes/class-sndr-report-list.php:426
+msgid "not read"
+msgstr "no leer"
+
+#: includes/class-sndr-report-list.php:437
+msgid "The list of subscribers can't be found."
+msgstr "No se encuentra la lista de suscriptores."
+
+#: includes/class-sndr-report-list.php:468
+msgid "Total Subscribers:"
+msgstr "Total de Suscriptores:"
+
+#: includes/class-sndr-report-list.php:470
+msgid "Number of Subscribers on Page"
+msgstr "Número de suscriptores en la página"
+
+#: includes/class-sndr-report-list.php:471
+msgid "on page"
+msgstr "en la página"
+
+#: includes/class-sndr-report-list.php:484
+msgid "Go to the First Page"
+msgstr "Ir a la primera página"
+
+#: includes/class-sndr-report-list.php:485
+msgid "Go to the Previous Page"
+msgstr "Ir a la página anterior"
+
+#: includes/class-sndr-report-list.php:493
+msgid "Current Page"
+msgstr "Página actual"
+
+#: includes/class-sndr-report-list.php:494
+msgid "pages"
+msgstr "páginas"
+
+#: includes/class-sndr-report-list.php:499
+msgid "Go to the Next Page"
+msgstr "Ir a la página siguiente"
+
+#: includes/class-sndr-report-list.php:500
+msgid "Go to the Last Page"
+msgstr "Ir a la última página"
+
+#: includes/class-sndr-settings.php:28 sender.php:51 sender.php:266
+#: sender.php:286
+msgid "Settings"
+msgstr "Ajustes"
+
+#: includes/class-sndr-settings.php:29
+msgid "Misc"
+msgstr "Otros"
+
+#: includes/class-sndr-settings.php:30
+msgid "License Key"
+msgstr "Clave de licencia"
+
+#: includes/class-sndr-settings.php:59
+msgid "Post"
+msgstr "Entrada"
+
+#: includes/class-sndr-settings.php:60
+msgid "Page"
+msgstr "Página"
+
+#: includes/class-sndr-settings.php:85
+msgid ""
+"You may have entered too large a value in the \"Number of sent messages at "
+"the same time\" option. Check please."
+msgstr ""
+"Puede que haya introducido un valor demasiado grande en la opción \"Número "
+"de mensajes enviados al mismo tiempo\". Compruébelo por favor."
+
+#: includes/class-sndr-settings.php:91
+msgid ""
+"You may have entered too large value in the \"Interval for sending mail\" "
+"option. Check please."
+msgstr ""
+"Puede que haya introducido un valor demasiado grande en la opción "
+"\"Intervalo para el envío de correo\". Compruébelo por favor."
+
+#: includes/class-sndr-settings.php:104
+msgid "Settings saved."
+msgstr "Ajustes guardados."
+
+#: includes/class-sndr-settings.php:115 sender.php:465
+msgid "Sender Settings"
+msgstr "Ajustes del remitente"
+
+#: includes/class-sndr-settings.php:120
+msgid "Send from"
+msgstr "Enviado desde"
+
+#: includes/class-sndr-settings.php:124
+msgid "Name"
+msgstr "Nombre"
+
+#: includes/class-sndr-settings.php:128
+msgid "Email"
+msgstr "Email"
+
+#: includes/class-sndr-settings.php:132
+msgid ""
+"If this option is changed, email messages may be moved to the spam folder or "
+"email delivery failures may occur."
+msgstr ""
+"Si se cambia esta opción, es posible que los mensajes de correo electrónico "
+"se muevan a la carpeta de correo no deseado o que se produzcan fallos en la "
+"entrega del correo electrónico."
+
+#: includes/class-sndr-settings.php:136
+msgid "Sending Method"
+msgstr "Método de envío"
+
+#: includes/class-sndr-settings.php:141
+msgid "WP-Mail"
+msgstr "WP-Mail"
+
+#: includes/class-sndr-settings.php:145
+msgid "Mail"
+msgstr "Correo"
+
+#: includes/class-sndr-settings.php:154 includes/class-sndr-settings.php:201
+#: includes/class-sndr-settings.php:270
+msgid "Close"
+msgstr "Cerrar"
+
+#: includes/class-sndr-settings.php:158
+msgid "HTML Format"
+msgstr "Formato HTML"
+
+#: includes/class-sndr-settings.php:162
+msgid "Enable to send emails in HTML format"
+msgstr "Habilitar el envío de correos electrónicos en formato HTML"
+
+#: includes/class-sndr-settings.php:173
+msgid "Frequency"
+msgstr "Frecuencia"
+
+#: includes/class-sndr-settings.php:176
+msgid "email(-s) every"
+msgstr "email(-s) cada"
+
+#: includes/class-sndr-settings.php:178
+msgid "minutes"
+msgstr "minutos"
+
+#: includes/class-sndr-settings.php:190
+msgid "Total:"
+msgstr "Total:"
+
+#: includes/class-sndr-settings.php:190
+msgid "emails per hour"
+msgstr "correos electrónicos por hora"
+
+#: includes/class-sndr-settings.php:192
+msgid ""
+"Make sure that this number is smaller than max allowed number allowed by "
+"your hosting provider."
+msgstr ""
+"Asegúrese de que este número es inferior al número máximo permitido por su "
+"proveedor de alojamiento."
+
+#: includes/class-sndr-settings.php:193
+msgid ""
+"This counter shows only the number of messages that will be sended by Sender "
+"Pro plugin, and does not shows the total number of outgoing messages from "
+"your site."
+msgstr ""
+"Este contador sólo muestra el número de mensajes que serán enviados por el "
+"plugin Sender Pro, y no muestra el número total de mensajes salientes de su "
+"sitio."
+
+#: includes/class-sndr-settings.php:205
+msgid "Attempts"
+msgstr "Intentos"
+
+#: includes/class-sndr-settings.php:208
+msgid "Maximum number of attempts per user."
+msgstr "Número máximo de intentos por usuario."
+
+#: includes/class-sndr-settings.php:212
+msgid "Automatic Mailout when Publishing a New"
+msgstr "Envío automático al publicar un nuevo"
+
+#: includes/class-sndr-settings.php:230
+msgid "Example of mailing list"
+msgstr "Ejemplo de lista de correo"
+
+#: includes/class-sndr-settings.php:231
+msgid "Choose a mailing list"
+msgstr "Elija una lista de correo"
+
+#: includes/class-sndr-settings.php:235
+msgid "Example of letter"
+msgstr "Ejemplo de carta"
+
+#: includes/class-sndr-settings.php:236
+msgid "Choose a letter"
+msgstr "Elija una letra"
+
+#: includes/class-sndr-settings.php:240
+msgid "Example of priority"
+msgstr "Ejemplo de prioridad"
+
+#: includes/class-sndr-settings.php:241
+msgid "Select mailout priority\t"
+msgstr "Seleccione la prioridad de envoi "
+
+#: includes/class-sndr-settings.php:243
+msgid "Less number - higher priority"
+msgstr "Menor número - mayor prioridad"
+
+#: includes/class-sndr-settings.php:274
+msgid "Sender Slug"
+msgstr "Babosa remitente"
+
+#: includes/class-sndr-settings.php:277
+msgid "Used for browser view."
+msgstr "Se utiliza para la vista del navegador."
+
+#: includes/class-sndr-settings.php:281
+msgid "Send Email with Confirmation"
+msgstr "Enviar correo electrónico con confirmación"
+
+#: includes/class-sndr-settings.php:285
+msgid "This function may not work on all mail servers."
+msgstr ""
+"Es posible que esta función no funcione en todos los servidores de correo."
+
+#: includes/class-sndr-settings.php:289
+msgid "Editors Access"
+msgstr "Acceso para editores"
+
+#: includes/class-sndr-settings.php:293
+msgid ""
+"Enable to provide the access for Editors to create letter templates, letters "
+"and send test letters."
+msgstr ""
+"Habilite el acceso para que los editores puedan crear plantillas de cartas, "
+"cartas y enviar cartas de prueba."
+
+#: includes/class-sndr-settings.php:296
+msgid "If you want to create another role with special capabilities"
+msgstr "Si desea crear otro rol con capacidades especiales"
+
+#: includes/class-sndr-settings.php:296
+msgid "download User Role Pro by BestWebSoft"
+msgstr "descargar User Role Pro de BestWebSoft"
+
+#: sender.php:43 sender.php:556 sender.php:558 sender.php:734
+msgid "Campaigns"
+msgstr "Campañas"
+
+#: sender.php:44 sender.php:735 sender.php:1354
+msgid "Add New"
+msgstr "Añadir nuevo"
+
+#: sender.php:46 sender.php:1352
+msgid "Letters"
+msgstr "Letras"
+
+#: sender.php:47
+msgid "Lists"
+msgstr "Listas"
+
+#: sender.php:48 sender.php:1815
+msgid "Templates"
+msgstr "Plantillas"
+
+#: sender.php:49 sender.php:1996
+msgid "Priorities"
+msgstr "Prioridades"
+
+#: sender.php:56 sender.php:1626 sender.php:1785 sender.php:1966
+#: sender.php:2167
+msgid "Upgrade to Pro"
+msgstr "Actualizar a Pro"
+
+#: sender.php:288
+msgid "FAQ"
+msgstr "FAQ"
+
+#: sender.php:289
+msgid "Support"
+msgstr "Soporte"
+
+#: sender.php:436
+msgid "Close Report"
+msgstr "Cerrar Reporte"
+
+#: sender.php:438
+msgid "The data of this report can't be found."
+msgstr "Los datos de este informe no se pueden encontrar."
+
+#: sender.php:439
+msgid "Error while sending request."
+msgstr "Error al enviar la solicitud."
+
+#: sender.php:440
+msgid "Are you sure that you want to enter such a large value?"
+msgstr "¿Está seguro de que desea introducir un valor tan grande?"
+
+#: sender.php:468
+msgid "WARNING"
+msgstr "ADVERTENCIA"
+
+#: sender.php:468
+msgid "The plugin works correctly only if JavaScript is enabled."
+msgstr "El plugin funciona correctamente sólo si JavaScript está activado."
+
+#: sender.php:571
+msgid "You can check sending reports on the page"
+msgstr "Puede consultar los informes de envío en la página"
+
+#: sender.php:589
+msgid "Send to"
+msgstr "Enviar a"
+
+#: sender.php:599
+msgid "all"
+msgstr "todo"
+
+#: sender.php:617
+msgid "Number of mails which would be sent"
+msgstr "Número de correos que se enviarían"
+
+#: sender.php:644
+msgid "Content"
+msgstr "Contenido"
+
+#: sender.php:656
+msgid "Save Campaign"
+msgstr "Guardar Campaña"
+
+#: sender.php:690
+msgid "Reports per page"
+msgstr "Informes por página"
+
+#: sender.php:759
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr "Resultados de búsqueda para &#8220;%s&#8221;"
+
+#: sender.php:761
+msgid "Filter reports list"
+msgstr "Filtrar la lista de informes"
+
+#: sender.php:767 sender.php:1526 sender.php:1670 sender.php:1831
+#: sender.php:2010
+msgid "search"
+msgstr "buscar"
+
+#: sender.php:798
+msgid "You need to choose some reports."
+msgstr "Debe elegir algunos informes."
+
+#: sender.php:799
+msgid "Error while deleting report."
+msgstr "Error al borrar el informe."
+
+#: sender.php:800
+msgid "Error while deleting mail."
+msgstr "Error al borrar correo."
+
+#: sender.php:801
+msgid "You cannot send an empty mail."
+msgstr "No puede enviar un correo vacío."
+
+#: sender.php:802
+msgid "Select a list of users to send messages."
+msgstr "Seleccione una lista de usuarios a los que enviar mensajes."
+
+#: sender.php:803
+msgid "It is impossible to get the list of users."
+msgstr "Es imposible obtener la lista de usuarios."
+
+#: sender.php:804
+msgid "Please, try it later."
+msgstr "Por favor, inténtelo más tarde."
+
+#: sender.php:805
+msgid "New mailout was created successfully."
+msgstr "El nuevo mailout se ha creado correctamente."
+
+#: sender.php:806
+msgid "Mailout was not create"
+msgstr "No se ha creado el envío"
+
+#: sender.php:1085
+msgid "Subscribe on newsletters"
+msgstr "Suscribirse a los boletines"
+
+#: sender.php:1090
+msgid "Sorry, but you denied to subscribe to the newsletter."
+msgstr "Lo sentimos, pero se ha negado a suscribirse al boletín de noticias."
+
+#: sender.php:1128
+msgid "unsubscribed from the user profile"
+msgstr "darse de baja del perfil de usuario"
+
+#: sender.php:1190
+msgid "Your interval"
+msgstr "Su intervalo"
+
+#: sender.php:1352
+msgid "Add New Letters"
+msgstr "Añadir nuevas cartas"
+
+#: sender.php:1368
+msgid "Subject:"
+msgstr "Tema:"
+
+#: sender.php:1376
+msgid "Select letter template:"
+msgstr "Seleccione la plantilla de la carta:"
+
+#: sender.php:1378
+msgid "Default Templates:"
+msgstr "Plantillas por defecto:"
+
+#: sender.php:1381 sender.php:1382
+msgid "One Column"
+msgstr "Una columna"
+
+#: sender.php:1387 sender.php:1388
+msgid "Two Column: Text Below the Image"
+msgstr "Dos columnas: Texto debajo de la imagen"
+
+#: sender.php:1393 sender.php:1394
+msgid "Two Column: Text Content Beside the Image"
+msgstr "Dos columnas: Contenido de texto junto a la imagen"
+
+#: sender.php:1404
+msgid "in order to use the necessary fonts you need:"
+msgstr "para poder utilizar las fuentes que necesite:"
+
+#: sender.php:1405
+msgid ""
+"select the desired font (or multiple fonts), and click on the \"Load "
+"Additional Data\" button"
+msgstr ""
+"seleccione la fuente deseada (o varias fuentes) y pulse el botón \"Cargar "
+"datos adicionales\""
+
+#: sender.php:1406
+msgid "click on the \"Text\" tab in content editor"
+msgstr "haga clic en la pestaña \"Texto\" del editor de contenidos"
+
+#: sender.php:1407
+msgid ""
+"find a necessary html-element and edit when using the attribute \"style\" "
+"and CSS-property \"font-family\" as in example"
+msgstr ""
+"encuentre un elemento html necesario y edítelo utilizando el atributo "
+"\"style\" y la propiedad CSS \"font-family\" como en el ejemplo"
+
+#: sender.php:1409
+msgid "Example:"
+msgstr "Ejemplo:"
+
+#: sender.php:1412
+msgid "Select additional fonts:"
+msgstr "Seleccione fuentes adicionales:"
+
+#: sender.php:1439
+msgid "Load Additional Data"
+msgstr "Cargar datos adicionales"
+
+#: sender.php:1440
+msgid "Reset Additional Data"
+msgstr "Restablecer datos adicionales"
+
+#: sender.php:1448
+msgid "You can use the following shortcodes in the letter:"
+msgstr "Puede utilizar los siguientes shortcodes en la carta:"
+
+#: sender.php:1452
+msgid "site URL"
+msgstr "uRL del sitio"
+
+#: sender.php:1456
+msgid "site name"
+msgstr "nombre del sitio"
+
+#: sender.php:1460
+msgid "user e-mail"
+msgstr "correo electrónico del usuario"
+
+#: sender.php:1464
+msgid "user name"
+msgstr "nombre de usuario"
+
+#: sender.php:1468
+msgid "new post title - only for automatic mailout when publishing a new post"
+msgstr ""
+"título del nuevo post - sólo para el envío automático al publicar un nuevo "
+"post"
+
+#: sender.php:1472
+msgid ""
+"link to new post - only for automatic mailout when publishing a new post"
+msgstr ""
+"enlace al nuevo post - sólo para el envío automático al publicar un nuevo "
+"post"
+
+#: sender.php:1476
+msgid "link to profile page of current user"
+msgstr "enlace a la página de perfil del usuario actual"
+
+#: sender.php:1480
+msgid "link to unsubscribe user from mailout"
+msgstr "enlace para dar de baja al usuario del envío de correo"
+
+#: sender.php:1484
+msgid "link to view letter in new browser tab"
+msgstr "enlace para ver la carta en una nueva pestaña del navegador"
+
+#: sender.php:1490
+msgid "Use shortcodes!"
+msgstr "Utilice códigos cortos!"
+
+#: sender.php:1495
+msgid "Letter Content:"
+msgstr "Contenido de la carta:"
+
+#: sender.php:1498
+msgid "Add Media"
+msgstr "Agregar multimedia"
+
+#: sender.php:1500
+msgid "Text"
+msgstr "Texto"
+
+#: sender.php:1501
+msgid "Visual"
+msgstr "Visual"
+
+#: sender.php:1512 sender.php:1516
+msgid "Create Mailout"
+msgstr "Crear envío"
+
+#: sender.php:1513
+msgid "Send Test Message"
+msgstr "Enviar mensaje de prueba"
+
+#: sender.php:1521 sender.php:1561 sender.php:1575 sender.php:1589
+#: sender.php:1615 sender.php:1665 sender.php:1676 sender.php:1712
+#: sender.php:1726 sender.php:1740 sender.php:1775 sender.php:1826
+#: sender.php:1837 sender.php:1875 sender.php:1891 sender.php:1907
+#: sender.php:1921 sender.php:1956 sender.php:2005 sender.php:2016
+#: sender.php:2052 sender.php:2066 sender.php:2080 sender.php:2094
+#: sender.php:2108 sender.php:2122 sender.php:2157
+msgid "Trash"
+msgstr "Papelera"
+
+#: sender.php:1524 sender.php:1668 sender.php:1829 sender.php:2008
+msgid "search:"
+msgstr "buscar:"
+
+#: sender.php:1530 sender.php:1614 sender.php:1675 sender.php:1774
+#: sender.php:1836 sender.php:1955 sender.php:2015 sender.php:2156
+msgid "Bulk Actions"
+msgstr "Acciones en lote"
+
+#: sender.php:1532 sender.php:1617 sender.php:1678 sender.php:1777
+#: sender.php:1839 sender.php:1958 sender.php:2018 sender.php:2159
+msgid "Apply"
+msgstr "Aplicar"
+
+#: sender.php:1534 sender.php:1619 sender.php:1680 sender.php:1779
+#: sender.php:1841 sender.php:1960 sender.php:2020 sender.php:2161
+msgid "items"
+msgstr "artículos"
+
+#: sender.php:1541 sender.php:1599 sender.php:1688 sender.php:1693
+#: sender.php:1753 sender.php:1758 sender.php:1849 sender.php:1854
+#: sender.php:1934 sender.php:1939 sender.php:2028 sender.php:2033
+#: sender.php:2135 sender.php:2140
+msgid "Select All"
+msgstr "Seleccionar todo"
+
+#: sender.php:1548 sender.php:1606 sender.php:1701 sender.php:1766
+msgid "Date of creation"
+msgstr "Fecha de creación"
+
+#: sender.php:1560 sender.php:1574 sender.php:1588 sender.php:1711
+#: sender.php:1725 sender.php:1739 sender.php:1874 sender.php:1890
+#: sender.php:1906 sender.php:1920 sender.php:2051 sender.php:2065
+#: sender.php:2079 sender.php:2093 sender.php:2107 sender.php:2121
+msgid "Edit"
+msgstr "Editar"
+
+#: sender.php:1632 sender.php:1791 sender.php:1972 sender.php:2173
+msgid "This tab contains Pro options only."
+msgstr "Esta pestaña sólo contiene opciones Pro."
+
+#: sender.php:1634 sender.php:1793 sender.php:1974 sender.php:2175
+#, php-format
+msgid "%1$sChange the settings%2$s to view the Pro options."
+msgstr "%1$sCambie los ajustes%2$s para ver las opciones Pro."
+
+#: sender.php:1656
+msgid "Mailings Lists"
+msgstr "Listas de correo"
+
+#: sender.php:1698 sender.php:1763 sender.php:1859 sender.php:1944
+#: sender.php:2038 sender.php:2145
+msgid "Title"
+msgstr "Título"
+
+#: sender.php:1824
+msgid "Default templates"
+msgstr "Plantillas predeterminadas"
+
+#: sender.php:1825
+msgid "User`s templates"
+msgstr "Plantillas de usuario"
+
+#: sender.php:1881 sender.php:1897 sender.php:1913
+msgid "default"
+msgstr "por defecto"
+
+#: sender.php:1927
+msgid "user's"
+msgstr "del usuario"
+
+#: sender.php:2041 sender.php:2148
+msgid "Number"
+msgstr "Número"
+
+#: sender.php:2295
+msgid "Notice:"
+msgstr "Aviso:"
+
+#: sender.php:2298
+msgid "Due to the peculiarities of the multisite work, Sender plugin has only"
+msgstr ""
+"Debido a las peculiaridades del trabajo multisitio, el plugin Sender sólo "
+"tiene"
+
+#: sender.php:2300
+msgid "Network settings page"
+msgstr "Página de configuración de la red"
+
+#: sender.php:2303
+msgid ""
+"Due to the peculiarities of the multisite work, Sender plugin has the "
+"network settings page only and it should be Network Activated. Please"
+msgstr ""
+"Debido a las peculiaridades del trabajo multisitio, el plugin Sender sólo "
+"tiene la página de configuración de red y debe estar Activado en Red. Por "
+"favor"
+
+#: sender.php:2305
+msgid "Activate Sender for Network"
+msgstr "Activar remitente para la red"

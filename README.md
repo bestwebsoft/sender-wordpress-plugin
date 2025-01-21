@@ -4,7 +4,7 @@
 <p>Sender plugin sends a bulk newsletter mailing to your WordPress website users. Set the time interval and a number of messages sent at once, customize &#8220;FROM&#8221; field, choose the mail sending function, send emails with confirmation and more.</p>
 <p>Connect with your customers, increase traffic, and drive sales!</p>
 <p><a href="https://bestwebsoft.com/demo-sender-plugin/?ref=readme" rel="nofollow ugc">View Demo</a></p>
-<p><span class="embed-youtube" style="text-align:center; display: block;"></span></p>
+<p></p>
 <h4>Free Features</h4>
 <ul>
 <li>Add and manage unlimited mailouts</li>
@@ -70,6 +70,11 @@
 <ul>
 <li>Russian (ru_RU)</li>
 <li>Ukrainian (uk)</li>
+<li>Spanish (es_ES)</li>
+<li>French (fr_FR)</li>
+<li>Italian (it_IT)</li>
+<li>Arabic (ar)</li>
+<li>German (de_DE)</li>
 </ul>
 <p>Some of these translations are not complete. We are constantly adding new features which should be translated. If you would like to create your own language pack or update the existing one, you can send <a href="https://codex.wordpress.org/Translating_WordPress" rel="nofollow ugc">the text of PO and MO files</a> to <a href="https://support.bestwebsoft.com/hc/en-us/requests/new" rel="nofollow ugc">BestWebSoft</a> and we&#8217;ll add it to the plugin. You can download the latest version of the program for work with PO and MO <a href="https://www.poedit.net/download.php" rel="nofollow ugc">files Poedit</a>.</p>
 <h4>Recommended Plugins</h4>

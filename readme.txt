@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: sender, sender plugin, mail sender, mail sender plugin, mailout, bulk mailing, create mailout, send mail to all users, send mail to categories of users, send mail to users, send mail with interval, email
 Requires at least: 5.6
-Tested up to: 6.4
-Stable tag: 1.3.8
+Tested up to: 6.7
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,11 @@ Earn 20% commission by selling the premium WordPress plugins and themes by BestW
 
 * Russian (ru_RU)
 * Ukrainian (uk)
+* Spanish (es_ES)
+* French (fr_FR)
+* Italian (it_IT)
+* Arabic (ar)
+* German (de_DE)
 
 Some of these translations are not complete. We are constantly adding new features which should be translated. If you would like to create your own language pack or update the existing one, you can send [the text of PO and MO files](https://codex.wordpress.org/Translating_WordPress) to [BestWebSoft](https://support.bestwebsoft.com/hc/en-us/requests/new) and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO [files Poedit](https://www.poedit.net/download.php).
 
@@ -147,6 +152,14 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 4. Plugin "Campaigns" page with subscribers list.
 
 == Changelog ==
+
+= V1.4.1 - 21.01.2025 =
+* Update : All functionality was updated for wordpress 6.7.
+* Update : Available languages updated.
+
+= V1.3.9 - 16.05.2024 =
+* Bugfix : Minor bugs fixed.
+* Update : All functionality was updated for wordpress 6.5.
 
 = V1.3.8 - 21.03.2024 =
 * Update : BWS panel section was updated.
@@ -319,6 +332,12 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : Russian language files were added to the plugin.
 
 == Upgrade Notice ==
+
+= V1.4.1 =
+* Functionality improved.
+
+= V1.3.9 =
+* The compatibility with new WordPress version updated.
 
 = V1.3.8 =
 * Functionality improved.
